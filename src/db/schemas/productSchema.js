@@ -2,30 +2,15 @@ import { Schema } from 'mongoose';
 
 const { types: { ObjectId } } = Schema;
 const ProductSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  imageUrl: {
-    type: String,
-    required: true,
-  },
-  price: {
-    type: Number,
-    required: true,
-  },
-  quantity: {
-    type: Number,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
+  title: String,
+  imageUrl: String,
+  price: Number,
+  quantity: Number,
+  description: String,
   category: {
     type: ObjectId,
-    ref: 'Category',
-  },
+    ref: 'Category'
+  }
 }, {
   timestamps: true,
 });

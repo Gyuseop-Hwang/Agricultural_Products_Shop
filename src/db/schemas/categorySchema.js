@@ -2,8 +2,7 @@ import Schema from "Schema";
 
 const CategorySchema = new Schema({
   name: String,
-  isLocal: Boolean,
-  isOrganic: Boolean,
+  total: Number,
 });
 
 export { CategorySchema };
