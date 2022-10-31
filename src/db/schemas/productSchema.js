@@ -2,7 +2,11 @@ import { Schema } from 'mongoose';
 
 const { types: { ObjectId } } = Schema;
 const ProductSchema = new Schema({
-  name: {
+  title: {
+    type: String,
+    required: true,
+  },
+  imageUrl: {
     type: String,
     required: true,
   },
