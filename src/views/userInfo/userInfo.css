@@ -1,0 +1,34 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 25px;
+  font-weight: 700;
+}
+
+header {
+  width: auto;
+  height: 50px;
+  background-color: lightgray;
+}
+
+form {
+  margin: 0 auto;
+  width: 400px;
+}
+
+#user-info {
+  width: 400px;
+}
+
+hr {
+  margin: 20px auto;
+  width: 800px;
+}
+
+#beforeOrderList {
+  margin: 0 auto;
+  width: 800px;
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UserInfo</title>
+    <!-- bulma css 관련 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="userInfo.css" />
+  </head>
+  <body>
+    <header>
+      <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
+        <ul id="navbar">
+          <li><a href="/login">로그인</a></li>
+          <li><a href="/register">회원가입</a></li>
+          <li>
+            <a href="#cart" aria-current="page">
+              <span class="icon">
+                <i class="fas fa-cart-shopping"></i>
+              </span>
+              <span>카트</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </header>
+    <form>
+      <div id="user-info">
+        <h1>회원정보</h1>
+        <div id="nameInput" class="field">
+          <label for="name" class="label">이름</label>
+          <div class="control">
+            <input
+              id="name"
+              class="input"
+              type="text"
+              placeholder="vegetable"
+            />
+          </div>
+        </div>
+
+        <div id="emailInput" class="field">
+          <label for="email" class="label">이메일</label>
+          <div class="control">
+            <input
+              id="email"
+              class="input"
+              type="email"
+              placeholder="vegetable@gmail.com"
+            />
+          </div>
+        </div>
+
+        <div id="addressInput" class="field">
+          <label for="address" class="label">주소</label>
+          <div class="control">
+            <input
+              id="address"
+              class="input"
+              type="text"
+              placeholder="서울시 야채구"
+            />
+          </div>
+        </div>
+
+        <button class="button is-light">수정</button>
+        <button class="button is-light">완료</button>
+        <button class="button is-danger">탈퇴</button>
+      </div>
+    </form>
+    <hr />
+    <div id="beforeOrderList">
+      <h1>주문내역</h1>
+      <ul>
+        <li>
+          <div>
+            <img src="#" alt="상품사진" />
+            <span>사과</span>
+            <span>과일</span>
+            <span>가격</span>
+          </div>
+        </li>
+        <li>주문 목록이 없습니다.</li>
+      </ul>
+    </div>
+  </body>
+</html>
