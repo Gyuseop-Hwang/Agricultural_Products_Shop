@@ -4,3 +4,4 @@
 export * from './viewsRouter';
 export * from './userRouter';
 export * from './productRouter';
+export * from './orderRouter';
