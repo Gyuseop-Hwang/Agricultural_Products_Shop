@@ -1,5 +1,6 @@
 import { model } from 'mongoose';
 import { ProductSchema } from '../schemas/productSchema';
+
 import { CategorySchema } from '../schemas/categorySchema';
 
 const Product = model('Product', ProductSchema);
@@ -104,3 +105,4 @@ export class ProductModel {
 const productModel = new ProductModel();
 
 export { productModel };
+
