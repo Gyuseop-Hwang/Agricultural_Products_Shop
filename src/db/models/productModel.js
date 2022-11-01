@@ -40,7 +40,7 @@ export class ProductModel {
     const category = Category.findOne({ name });
     product.category = category;
     category.total++;
-    await category.sava();
+    await category.save();
     // const newProduct = await Product.create(product);
     const createdProduct = await product.save();
     return createdProduct
