@@ -1,59 +1,43 @@
 import { model } from 'mongoose';
 import { OrderSchema } from '../schemas/orderSchema';
 
-
 const Order = model('Order', OrderSchema);
 
 export class OrderModel {
+    async findAll() {
+        const orders = await Order.find({});
+        return orders;
+    }
 
-  async findAllOrders() {
-    const orders = await Order.find({});
-    return orders;
-  }
+    async findByUserId(userId) {
+        const findedOrder = await Order.find({ userId });
+        if (findedOrder.length < 1) return null;
 
-  async findOrder(userId) {
-    const order = await Order.findOne({ userId });
-    if (!order) return null;
-    // throw new AppError(404, "해당 주문을 찾을 수 없습니다.")
-    return order;
-  }
+        return findedOrder;
+    }
 
-  async createOrder(userId, orderInfo) {
-    const createdOrder = new Order(orderInfo);
-    createdOrder.userId = userId;
-    await createOrder.save();
-    return createdOrder;
-  }
+    async create(orderInfo) {
+        const createdOrder = new Order(orderInfo);
+        await createdOrder.save();
+        return createdOrder;
+    }
 
-  // async updateShippingStatus(userId, shippingStatus) {
-  //   const order = await Order.findById(userId);
-  //   if (!order) return null;
-  //   // throw new AppError(404, "해당 주문이 존재하지 않습니다.");
-  //   const updatedOrder = await Order.findByIdAndUpdate({ userId }, shippingStatus, { new: true })
-  //   return updatedOrder;
-  // }
+    async update(orderId, updateInfo) {
+        const filter = { _id: orderId };
+        const option = { ...updateInfo };
 
-  async updateShippingInfo(userId, shippingInfo) {
-    const order = await Order.findById(userId);
-    if (!order) return null;
-    // throw new AppError(404, "해당 주문이 존재하지 않습니다.");
-    const updatedOrder = await Order.findByIdAndUpdate({ userId }, shippingInfo, { new: true })
-    return updatedOrder;
-  }
+        const updatedOrder = await Order.findOneAndUpdate(filter, option, {
+            new: true,
+        });
 
-  async deleteOrder(userId) {
-    const order = await Order.findById(userId);
-    if (!order) return null;
-    // throw new AppError(404, "해당 주문이 존재하지 않습니다.");
-    const res = await Order.findByIdAndDelete({ userId })
-    return res;
-  }
+        return updatedOrder;
+    }
 
+    async delete(orderId) {
+        const deletedOrder = await Order.findOneAndDelete({ _id: orderId });
+        return deletedOrder;
+    }
 }
-
 
 const orderModel = new OrderModel();
 export { orderModel };
-
-
-

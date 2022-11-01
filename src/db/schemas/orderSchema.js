@@ -8,7 +8,7 @@ const OrderSchema = new Schema(
     {
         status: {
             type: String,
-            required: true,
+            default: '주문 완료',
         },
         recipient: {
             type: String,
@@ -27,12 +27,12 @@ const OrderSchema = new Schema(
 
         products: [
             {
-                productId: { type: ObjectId, ref: 'Product' },
+                productId: { type: ObjectId, ref: 'Product', required: true },
                 quantity: Number,
             },
         ],
 
-        user: {
+        userId: {
             type: Schema.Types.ObjectId,
             required: true,
             ref: 'user',
