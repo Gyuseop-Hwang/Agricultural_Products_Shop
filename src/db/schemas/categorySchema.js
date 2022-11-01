@@ -1,10 +1,16 @@
 import { Schema } from 'mongoose';
 
-const CategorySchema = new Schema({
-    name: {
-        type: String,
-        required: true,
+const CategorySchema = new Schema(
+    {
+        name: String,
+        total: {
+            type: Number,
+            default: 0,
+        },
     },
-});
+    {
+        timestamps: true,
+    }
+);
 
 export { CategorySchema };
