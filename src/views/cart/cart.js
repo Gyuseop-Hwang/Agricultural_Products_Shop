@@ -32,6 +32,10 @@ function deleteSelectedProduct() {
       }
     }
   });
+
+  if (newProducts.length < 1) {
+    emptyCartMessage.classList.remove("hidden");
+  }
   saveProduct(newProducts);
   sumPrice(newProducts);
 }
@@ -40,6 +44,7 @@ function deleteAllProduct() {
   // dom에서 전체 삭제
   const allProduct = document.querySelectorAll(".product");
   allProduct.forEach((product) => product.remove());
+  emptyCartMessage.classList.remove("hidden");
   // localstorage에 빈 배열 저장
   const emptyCart = [];
   saveProduct(emptyCart);
@@ -82,13 +87,15 @@ function paintProduct(product) {
     product.id
   }"/></td>
     <td>이미지 추후 삽입</td>
-    <td class="product-name"><p>${product.name}</p></td>
+    <td class="product-name has-text-left"><p>${product.name}</p></td>
     <td class="product-price ${product.id}" data-price="${
     product.price
   }">${product.price.toLocaleString()}원</td>
-    <td><input type="number" class="number-input ${product.id}"  value="${
+    <td class="product-quantity"><input type="number" class="number-input ${
+      product.id
+    }"  value="${
     product.quantity
-  }" /><button class="change-quantity-button" data-product-id="${
+  }" min="1"/><button class="change-quantity-button" data-product-id="${
     product.id
   }">변경</button></td>
     <td class="product-total-price ${product.id}">${(
@@ -110,16 +117,20 @@ function sumPrice(newProducts) {
   totalPriceTxt.innerText = TOTAL_PRICE;
 }
 
-// localStorage에 저장된 상품이 있을 때
 const savedProducts = localStorage.getItem("products");
+const emptyCartMessage = document.getElementById("emptyCartMessage");
+
+// localStorage에 저장된 상품이 있을 때
 if (savedProducts) {
   products = JSON.parse(savedProducts);
   products.forEach(paintProduct);
   sumPrice(products);
+  emptyCartMessage.className = "hidden";
 }
 
 // 장바구니 비어있을 때
 if (products.length < 1) {
+  emptyCartMessage.classList.remove("hidden");
 }
 
 deleteSelectedButton.addEventListener("click", deleteSelectedProduct);

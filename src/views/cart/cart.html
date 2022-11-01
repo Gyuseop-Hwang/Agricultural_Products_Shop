@@ -68,30 +68,41 @@
     </nav>
 
     <!-- 장바구니 -->
-    <div class="section">
+    <div class="container">
       <h2 class="block">장바구니</h2>
       <div>
-        <table id="cart-item" class="table is-bordered is-hoverable">
+        <table
+          id="cart-item"
+          class="table is-bordered is-hoverable has-text-centered mb-4"
+        >
           <thead>
-            <tr>
-              <th></th>
+            <tr class="has-text-centered">
+              <th class="check-box"></th>
               <th>이미지</th>
               <th class="product-name th">상품정보</th>
               <th>판매가</th>
-              <th>수량</th>
+              <th class="product-quantity">수량</th>
               <th>합계</th>
             </tr>
           </thead>
           <tbody id="cartProductList"></tbody>
         </table>
+        <div>
+          <p id="emptyCartMessage">장바구니가 비어 있습니다.</p>
+        </div>
       </div>
-      <div class="block">
+      <div class="total-price mb-4">
         <p>총 <span id="totalPrice">0</span>원</p>
       </div>
+      <div class="delete-button-box mb-4">
+        <button class="button is-light" id="deleteSelectedButton">
+          선택 항목 삭제
+        </button>
+        <button class="button is-light" id="deleteAllButton">전체 삭제</button>
+      </div>
+
       <div>
-        <button>주문하기</button>
-        <button id="deleteSelectedButton">선택 항목 삭제</button>
-        <button id="deleteAllButton">전체 삭제</button>
+        <button class="button is-success is-outlined">주문하기</button>
       </div>
     </div>
   </body>
