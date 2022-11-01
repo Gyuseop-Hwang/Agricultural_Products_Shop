@@ -20,6 +20,7 @@ async function printCategories() {
 	categories.forEach(category => {
 		const a = document.createElement("a");
 		const span = document.createElement("span");
+		a.href = `/products/categorization/${category.name}`;
 		a.classList.add("button", "is-rounded", "ml-2")
 		span.innerText = category.name;
 		a.appendChild(span);
@@ -30,7 +31,6 @@ async function printCategories() {
 //상품 목록 출력하기
 async function printProducts() {
 	const products = await getAllProducts();
-	console.log(products);
 	products.forEach(product => {
 		const div = document.createElement("div");
 		div.classList.add("list-item", "product-container");
@@ -43,7 +43,7 @@ async function printProducts() {
 
 		<div class="product-contents">
 			<div class="product-title">
-				<a href="/${product.id}">${product.title}</a>
+				<a href="/products/:${product.id}">${product.title}</a>
 			</div>
 			<div class="product-price">
 				<span>${product.price.toLocaleString('ko-KR')}원</span>
