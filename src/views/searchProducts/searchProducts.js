@@ -20,7 +20,7 @@ async function printCategories() {
 	categories.forEach(category => {
 		const a = document.createElement("a");
 		const span = document.createElement("span");
-		a.href = `/products/categorization/${category.name}`;
+		a.href = `/products/categorization/:${category.name}`;
 		a.classList.add("button", "is-rounded", "ml-2")
 		span.innerText = category.name;
 		a.appendChild(span);
