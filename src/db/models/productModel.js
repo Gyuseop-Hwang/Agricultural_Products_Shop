@@ -65,7 +65,7 @@ export class ProductModel {
     const category = await Category.findOne({ name: product.category.name });
     category.total--;
     await category.save();
-    const res = await Product.findByIdAndDelete(productId)
+    const res = await Product.deleteOne({ category });
 
     return res;
   }
