@@ -3,6 +3,7 @@ import { ProductSchema } from '../schemas/productSchema';
 
 import { CategorySchema } from '../schemas/categorySchema';
 
+// const { types: { ObjectId } } = Schema;
 const Product = model('Product', ProductSchema);
 const Category = model('Category', CategorySchema);
 
@@ -19,7 +20,7 @@ export class ProductModel {
   // user 가능, 특정 상품 조회
   async findProduct(productId) {
     const product = await Product.findById(productId).populate('category');
-    if (!product) return null;
+    // if (!product) return null;
     //throw new AppError(404, '상품을 찾을 수 없습니다.')
     return product;
   }
@@ -35,11 +36,12 @@ export class ProductModel {
   }
 
   // 관리자가 상품 생성
-  async createProduct(name, productInfo) {
+  async addProduct(name, productInfo) {
     // const { title, imageUrl, price, quantity, description } = productInfo;
     const product = new Product(productInfo);
-    const category = Category.findOne({ name });
-    product.category = category;
+    const category = await Category.findOne({ name });
+    if (!category) return null;
+    product.category = category._id;
     category.total++;
     await category.save();
     // const newProduct = await Product.create(product);
@@ -57,10 +59,10 @@ export class ProductModel {
   }
   // 관리자만 상품 삭제
   async deleteProduct(productId) {
-    const product = await Product.findById(productId);
+    const product = await Product.findById(productId).populate('category');
     if (!product) return null;
     // throw new AppError(404, '해당 상품이 없습니다.')
-    const category = Category.findById(product.toString());
+    const category = await Category.findOne({ name: product.category.name });
     category.total--;
     await category.save();
     const res = await Product.findByIdAndDelete(productId)
@@ -69,7 +71,7 @@ export class ProductModel {
   }
 
   // 관리자는 모든 카테고리 조회 가능.
-  async getAllCategories() {
+  async findAllCategories() {
     const categories = await Category.find({});
     return categories;
   }
@@ -84,17 +86,17 @@ export class ProductModel {
     const category = await Category.findOne({ name });
     if (!category) return null;
     // throw new AppError(404, '해당 카테고리가 없습니다.')
-    const newCategory = await Category.findOneAndUpdate({ name }, update, { new: true });
+    const newCategory = await Category.findOneAndUpdate({ name }, update, { returnOriginal: false });
 
     return newCategory;
   }
   // 관리자만 카테고리 삭제
   async deleteCategory(name) {
     const category = await Category.findOne({ name });
-    if (!category) return null;
+    if (!category) return 404;
     //throw new AppError(404, '해당 카테고리가 없습니다.')
     const products = await Product.find({ category });
-    if (products) return null;
+    if (products.length > 0) return 403;
     // throw new AppError(403, '이미 카테고리가 등록된 상품이 존재하여 현재 대상 카테고리를 삭제할 수 없습니다.')
     const res = await Category.deleteOne({ name })
     return res;
