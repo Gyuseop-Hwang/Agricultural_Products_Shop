@@ -1,0 +1,19 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.number-input {
+  width: 40px;
+}
+
+.product-name {
+  white-space: nowrap;
+  width: 400px;
+  display: block;
+}
+.product-name p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
