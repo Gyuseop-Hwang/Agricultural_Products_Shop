@@ -18,15 +18,16 @@ export class ProductModel {
   // user 가능, 특정 상품 조회
   async findProduct(productId) {
     const product = await Product.findById(productId).populate('category');
-    if (!product) throw new Error('상품을 찾을 수 없습니다.')
+    if (!product) return null;
+    //throw new AppError(404, '상품을 찾을 수 없습니다.')
     return product;
   }
   // user 가능, category별 상품 조회
   async findByCategory(name) {
     const category = await Category.findOne({ name });
-    if (!category) {
-      throw new Error("해당하는 category가 없습니다.")
-    }
+    if (!category) return null;
+    // throw new AppError(404, "해당하는 category가 없습니다.")
+
     const productsByCategory = await Product.find({ category });
     return productsByCategory;
     // res.json(productsByCategory);
@@ -47,7 +48,8 @@ export class ProductModel {
   // 관리자만 상품 업데이트
   async updateProduct(productId, update) {
     const product = await Product.findById(productId);
-    if (!product) throw new Error('해당 상품이 없습니다.');
+    if (!product) return null;
+    // throw new AppError(404, '해당 상품이 없습니다.');
     const newProduct = await Product.findByIdAndUpdate(productId, update, { new: true });
 
     return newProduct;
@@ -55,7 +57,8 @@ export class ProductModel {
   // 관리자만 상품 삭제
   async deleteProduct(productId) {
     const product = await Product.findById(productId);
-    if (!product) throw new Error('해당 상품이 없습니다.')
+    if (!product) return null;
+    // throw new AppError(404, '해당 상품이 없습니다.')
     const category = Category.findById(product.toString());
     category.total--;
     await category.save();
@@ -78,13 +81,8 @@ export class ProductModel {
   // 관리자만 카테고리 업데이트
   async updateCategory(name, update) {
     const category = await Category.findOne({ name });
-    if (!category) {
-      throw new Error('해당 카테고리가 없습니다.')
-    }
-    // const products = await Product.find({ category });
-    // if (!products) {
-    //   throw new Error('이미 카테고리가 등록된 상품이 존재하여 현재 대상 카테고리를 업데이트 할 수 없습니다.')
-    // }
+    if (!category) return null;
+    // throw new AppError(404, '해당 카테고리가 없습니다.')
     const newCategory = await Category.findOneAndUpdate({ name }, update, { new: true });
 
     return newCategory;
@@ -92,11 +90,11 @@ export class ProductModel {
   // 관리자만 카테고리 삭제
   async deleteCategory(name) {
     const category = await Category.findOne({ name });
-    if (!category) throw new Error('해당 카테고리가 없습니다.')
+    if (!category) return null;
+    //throw new AppError(404, '해당 카테고리가 없습니다.')
     const products = await Product.find({ category });
-    if (products) {
-      throw new Error('이미 카테고리가 등록된 상품이 존재하여 현재 대상 카테고리를 삭제할 수 없습니다.')
-    }
+    if (products) return null;
+    // throw new AppError(403, '이미 카테고리가 등록된 상품이 존재하여 현재 대상 카테고리를 삭제할 수 없습니다.')
     const res = await Category.deleteOne({ name })
     return res;
   }

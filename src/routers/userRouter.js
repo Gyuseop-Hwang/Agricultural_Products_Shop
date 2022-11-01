@@ -1,7 +1,8 @@
 import { Router } from "express";
 import is from "@sindresorhus/is";
 // 폴더에서 import하면, 자동으로 폴더의 index.js에서 가져옴
-import { loginRequired, wrapAsync } from "../middlewares";
+import { loginRequired } from "../middlewares";
+import { AppError, wrapAsync } from "../utils";
 import { userService } from "../services";
 
 const userRouter = Router();
@@ -12,7 +13,7 @@ userRouter.post("/register", wrapAsync(async (req, res) => {
   // Content-Type: application/json 설정을 안 한 경우, 에러를 만들도록 함.
   // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
   if (is.emptyObject(req.body)) {
-    throw new Error(
+    throw new AppError(400,
       "headers의 Content-Type을 application/json으로 설정해주세요"
     );
   }
@@ -40,7 +41,8 @@ userRouter.post("/login", wrapAsync(async (req, res) => {
 
   // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
   if (is.emptyObject(req.body)) {
-    throw new Error(
+    throw new AppError(
+      400,
       "headers의 Content-Type을 application/json으로 설정해주세요"
     );
   }
@@ -78,7 +80,8 @@ userRouter.patch(
     // content-type 을 application/json 로 프론트에서
     // 설정 안 하고 요청하면, body가 비어 있게 됨.
     if (is.emptyObject(req.body)) {
-      throw new Error(
+      throw new AppError(
+        400,
         "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
@@ -98,7 +101,7 @@ userRouter.patch(
 
     // currentPassword 없을 시, 진행 불가
     if (!currentPassword) {
-      throw new Error("정보를 변경하려면, 현재의 비밀번호가 필요합니다.");
+      throw new AppError(403, "정보를 변경하려면, 현재의 비밀번호가 필요합니다.");
     }
 
     const userInfoRequired = { userId, currentPassword };
