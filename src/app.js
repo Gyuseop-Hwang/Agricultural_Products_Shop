@@ -2,9 +2,13 @@ import cors from "cors";
 import express from "express";
 import { viewsRouter, userRouter, productRouter, orderRouter } from "./routers";
 import { authRequired, errorHandler, loginRequired, notFound } from "./middlewares";
+import { morgan } from 'morgan';
 
 
 const app = express();
+
+// log 기록
+app.use(morgan('dev'))
 
 // CORS 에러 방지
 app.use(cors());
