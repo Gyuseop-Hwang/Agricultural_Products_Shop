@@ -8,6 +8,12 @@ const middlePhoneNumber = document.getElementById("middlePhoneNumber");
 const lastPhoneNumber = document.getElementById("lastPhoneNumber");
 const payButton = document.getElementById("payButton");
 
+// const userToken = sessionStorage.getItem("token");
+
+// if (!userToken) {
+//   //리다이렉트?
+// }
+
 function getOrderInfo() {
   let products = JSON.parse(localStorage.getItem("products"));
   products = products.map((product) => {
