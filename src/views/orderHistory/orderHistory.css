@@ -28,3 +28,12 @@ table {
   display: flex;
   flex-direction: row;
 }
+
+#orderReciptId,
+#orderDate,
+#shippingStatus,
+#quantity {
+  text-align: center;
+  /* align-items: center;
+  justify-content: center; */
+}
