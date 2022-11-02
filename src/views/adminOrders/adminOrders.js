@@ -30,15 +30,15 @@ async function paintOrders(order) {
     <p>${phoneNumber}</p>
   </td>
   <td>
-    <select name="" id=""">
+    <select class="select is-small" name="" id=""">
       <option value="" selected>배송준비중</option>
       <option value="">배송중</option>
       <option value="">배송완료</option>
     </select>
-    <button id="modifyStatusBtn">수정</button>
+    <button class="button is-small" id="modifyStatusBtn">수정</button>
   </td>
   <td>
-    <button id="cancleOrderBtn">주문취소</button>
+    <button class="button is-small" id="cancleOrderBtn">주문취소</button>
   </td>`;
   orderList.appendChild(tr);
 }
