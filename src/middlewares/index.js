@@ -5,4 +5,5 @@
 export * from "./errorHandler";
 export * from "./loginRequired";
 export * from './notFound';
-
+export * from './authRequired';
+export * from './joiValidator';

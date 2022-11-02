@@ -1,7 +1,7 @@
 import cors from "cors";
 import express from "express";
 import { viewsRouter, userRouter, productRouter, orderRouter } from "./routers";
-import { errorHandler, notFound } from "./middlewares";
+import { authRequired, errorHandler, loginRequired, notFound } from "./middlewares";
 
 const app = express();
 
@@ -23,6 +23,7 @@ app.use(viewsRouter);
 app.use('/api', userRouter);
 app.use('/api', productRouter);
 app.use('/api', orderRouter);
+// app.use('/api', loginRequired, authRequired, administrationRouter)
 
 
 // 순서 중요 (errorHandler은 다른 일반 라우팅보다 나중에 있어야 함)
