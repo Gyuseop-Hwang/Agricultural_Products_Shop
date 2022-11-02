@@ -3,34 +3,34 @@ const categoryDiv = document.getElementById("category")
 const productsList = document.getElementById("productsList")
 
 
-//전체 상품 가져오기
+//전체 상품 및 카테고리 조회
 function getAllProducts() {
-	const response = fetch("http://localhost:4000/products");
+	const response = fetch("http://localhost:4000/data");
 	return response.then(res => res.json());
 }
-//전체 카테고리 가져오기
-function getAllCategories() {
-	const response = fetch("http://localhost:4000/categories");
+function getProductsByCategory(categoryName) {
+	const response = fetch("http://localhost:4000/data");
 	return response.then(res => res.json());
 }
+
 //dom에 카테고리 버튼 생성
 async function printCategories() {
-	const categories = await getAllCategories();
+	const { categories } = await getAllProducts();
 	console.log(categories)
-	categories.forEach(category => {
-		const a = document.createElement("a");
+	categories.forEach(categoryName => {
+		const button = document.createElement("button");
 		const span = document.createElement("span");
-		a.href = `/products/categorization/:${category.name}`;
-		a.classList.add("button", "is-rounded", "ml-2")
-		span.innerText = category.name;
-		a.appendChild(span);
-		categoryDiv.appendChild(a);
+		button.classList.add("button", "is-rounded", "ml-2")
+		span.innerText = categoryName;
+		button.appendChild(span);
+		categoryDiv.appendChild(button);
 	});
 }
 
 //상품 목록 출력하기
 async function printProducts() {
-	const products = await getAllProducts();
+	const { products } = await getAllProducts();
+	console.log(products);
 	products.forEach(product => {
 		const div = document.createElement("div");
 		div.classList.add("list-item", "product-container");
