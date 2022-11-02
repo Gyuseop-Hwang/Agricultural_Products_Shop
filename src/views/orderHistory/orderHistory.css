@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin: 30px auto;
+  width: 300px;
+  text-align: center;
+  align-items: center;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+#orderHistory {
+  margin: 50px auto;
+  width: 800px;
+  height: 600px;
+}
+
+table {
+  margin: 20px auto;
+  text-align: center;
+  align-items: center;
+}
+
+#orderedProduct {
+  display: flex;
+  flex-direction: row;
+}
