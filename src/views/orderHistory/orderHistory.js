@@ -25,12 +25,6 @@ fetch("http://localhost:4000/orders")
 
       tableBody.innerHTML += itemData;
     });
-
-    // if (shippingStatus === "베송완료") {
-    //   shippingStatus.style.color = "blue";
-    // } else if (shippingStatus === "배송중") {
-    //   shippingStatus.style.color = "green";
-    // }
   })
   .catch((err) => console.log("Error : ", err));
 
