@@ -34,17 +34,7 @@ orderRouter.post(
             req.body;
         // 여러 유효성 검사
 
-        const arr = [
-            {
-                price: 1000,
-                quantity: 3,
-            },
-            {
-                price: 2000,
-                quantity: 2,
-            },
-        ];
-        const totalPrice = orderService.calculateTotalPrice(arr);
+        const totalPrice = await orderService.calculateTotalPrice(products);
 
         const result = await orderService.addOrder({
             recipient,
