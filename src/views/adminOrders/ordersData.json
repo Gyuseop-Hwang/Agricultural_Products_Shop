@@ -1,0 +1,23 @@
+{
+  "data": [
+    {
+      "id": "ddddd",
+      "userId": "elice",
+      "products": [
+        {
+          "product": "감자",
+          "quantity": 2
+        },
+        {
+          "product": "토마토",
+          "quantity": 1
+        }
+      ],
+      "recipient": "엘리스",
+      "shippringAddress": "서울특별시 성동구 성수2가3동 광나루로6길 49",
+      "phoneNumber": "010-1111-1111",
+      "status": "배송중",
+      "totalPrice": 40000
+    }
+  ]
+}

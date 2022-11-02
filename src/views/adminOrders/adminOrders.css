@@ -1,0 +1,12 @@
+.level {
+  width: 100%;
+}
+
+.table {
+  font-size: 0.9rem;
+}
+
+.table th,
+.table td {
+  padding: 1em;
+}
