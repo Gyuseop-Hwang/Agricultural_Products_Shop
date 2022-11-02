@@ -2,17 +2,17 @@ import { Router } from 'express';
 import is from '@sindresorhus/is';
 // 폴더에서 import하면, 자동으로 폴더의 index.js에서 가져옴
 
-import { loginRequired, authRequired } from "../middlewares";
-import { AppError, wrapAsync } from "../utils";
-import { userService } from "../services";
-import { body, validationResult } from 'express-validator'
-
+import { loginRequired, authRequired } from '../middlewares';
+import { AppError, wrapAsync } from '../utils';
+import { userService } from '../services';
+import { body, validationResult } from 'express-validator';
 
 const userRouter = Router();
 
 // 회원가입 api (아래는 /register이지만, 실제로는 /api/register로 요청해야 함.)
 
-userRouter.post("/register",
+userRouter.post(
+  '/register',
   body('fullName').isString(),
   body('email').isEmail(),
   body('password').isLength({ min: 8 }),
@@ -21,11 +21,11 @@ userRouter.post("/register",
       throw new AppError(400, 'Password confirmation does not match password');
     }
     return true;
-  }), wrapAsync(async (req, res) => {
-
+  }),
+  wrapAsync(async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      throw new AppError(400, errors)
+      throw new AppError(400, errors);
     }
 
     // req (request)의 body 에서 데이터 가져오기
@@ -40,9 +40,8 @@ userRouter.post("/register",
     // 추가된 유저의 db 데이터를 프론트에 다시 보내줌
     // 물론 프론트에서 안 쓸 수도 있지만, 편의상 일단 보내 줌
     res.status(201).json(newUser);
-
-  }));
-
+  })
+);
 
 // 로그인 api (아래는 /login 이지만, 실제로는 /api/login로 요청해야 함.)
 userRouter.post(
@@ -70,14 +69,17 @@ userRouter.post(
 // 전체 유저 목록을 가져옴 (배열 형태임)
 // 미들웨어로 loginRequired 를 썼음 (이로써, jwt 토큰이 없으면 사용 불가한 라우팅이 됨)
 
-userRouter.get("administration/userlist", loginRequired, authRequired, wrapAsync(async (req, res) => {
-  // 전체 사용자 목록을 얻음
-  const users = await userService.getUsers();
+userRouter.get(
+  '/admin/userlist',
+  loginRequired,
+  authRequired,
+  wrapAsync(async (req, res) => {
+    // 전체 사용자 목록을 얻음
+    const users = await userService.getUsers();
 
-
-  // 사용자 목록(배열)을 JSON 형태로 프론트에 보냄
-  res.status(200).json(users);
-})
+    // 사용자 목록(배열)을 JSON 형태로 프론트에 보냄
+    res.status(200).json(users);
+  })
 );
 
 // 사용자 정보 수정

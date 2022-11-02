@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { orderService } from '../services';
 import { wrapAsync } from '../utils';
-import { orderValidator, orderUpdateValidator } from '../middlewares'
+import { orderValidator, orderUpdateValidator } from '../middlewares';
 
 const orderRouter = Router();
 
@@ -30,18 +30,13 @@ orderRouter.post(
   '/orders',
   orderValidator,
   wrapAsync(async (req, res) => {
-    const { recipient, phoneNumber, products, userId, shippingAddress } =
-      req.body;
+    const { products } = req.body;
 
     const totalPrice = await orderService.calculateTotalPrice(products);
 
-    const result = await orderService.addOrder({
-      recipient,
-      phoneNumber,
+    const result = await orderService.createOrder({
+      ...req.body,
       totalPrice,
-      products,
-      shippingAddress,
-      userId,
     });
 
     res.status(201).send(result);

@@ -4,39 +4,31 @@ import { OrderSchema } from '../schemas/orderSchema';
 const Order = model('Order', OrderSchema);
 
 export class OrderModel {
-    async findAll() {
-        const orders = await Order.find({});
-        return orders;
-    }
+  async findAll() {
+    return await Order.find({});
+  }
 
-    async findByUserId(userId) {
-        const findedOrder = await Order.find({ userId });
-        if (findedOrder.length < 1) return null;
+  async findByUserId(userId) {
+    const findedOrder = await Order.find({ userId });
 
-        return findedOrder;
-    }
+    return findedOrder.length >= 1 ? findedOrder : null;
+  }
 
-    async create(orderInfo) {
-        const createdOrder = new Order(orderInfo);
-        await createdOrder.save();
-        return createdOrder;
-    }
+  async create(orderInfo) {
+    return await Order.create({ ...orderInfo });
+  }
 
-    async update(orderId, updateInfo) {
-        const filter = { _id: orderId };
-        const option = { ...updateInfo };
+  async update(orderId, updateInfo) {
+    const filter = { _id: orderId };
+    const update = { ...updateInfo };
+    const options = { new: true };
 
-        const updatedOrder = await Order.findOneAndUpdate(filter, option, {
-            new: true,
-        });
+    return await Order.findOneAndUpdate(filter, update, options);
+  }
 
-        return updatedOrder;
-    }
-
-    async delete(orderId) {
-        const deletedOrder = await Order.findOneAndDelete({ _id: orderId });
-        return deletedOrder;
-    }
+  async delete(orderId) {
+    return await Order.findOneAndDelete({ _id: orderId });
+  }
 }
 
 const orderModel = new OrderModel();

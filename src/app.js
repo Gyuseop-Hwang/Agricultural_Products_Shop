@@ -1,13 +1,9 @@
 import cors from 'cors';
 import express from 'express';
 import { viewsRouter, userRouter, productRouter, orderRouter } from './routers';
-import {
-  authRequired,
-  errorHandler,
-  loginRequired,
-  notFound,
-} from './middlewares';
+import { authRequired, errorHandler, loginRequired } from './middlewares';
 import morgan from 'morgan';
+import { NotFoundError } from './utils';
 
 const app = express();
 
@@ -37,7 +33,9 @@ app.use('/api', loginRequired, orderRouter);
 // 순서 중요 (errorHandler은 다른 일반 라우팅보다 나중에 있어야 함)
 // 그래야, 에러가 났을 때 next(error) 했을 때 여기로 오게 됨
 
-app.use('*', notFound);
+app.use('*', (req, res, next) =>
+  next(new NotFoundError('페이지를 찾을 수 없습니다.'))
+);
 
 app.use(errorHandler);
 
