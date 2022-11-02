@@ -91,7 +91,7 @@ async function onClickDeleteBtn(e) {
   confirm("탈퇴하시겠습니까?");
 
   // 끝부분에 식별할 수 있는 아이디를 넣어줘야 작동함
-  await fetch("http://localhost:4000/users/0", {
+  await fetch("http://localhost:4000/api/users/0", {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
   }).catch((err) => console.error("Error : ", err));
