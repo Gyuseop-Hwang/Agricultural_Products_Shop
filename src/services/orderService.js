@@ -1,5 +1,6 @@
 import { orderModel } from '../db';
-import { productModel } from './productService';
+import { productModel } from '../db';
+import { AppError } from '../utils';
 
 class OrderService {
   constructor(orderModel) {
@@ -53,13 +54,17 @@ class OrderService {
     return deletedOrder;
   }
 
-  // 추후 async 함수로 변경해야함
-  calculateTotalPrice(productsArr) {
-    const totalPrice = productsArr.reduce((acc, { price, quantity }) => {
-      // product 서비스가 완성되면  구현 예정
-      return acc + price * quantity;
-    }, 0);
-
+  async calculateTotalPrice(requestedProducts) {
+    const allProducts = await productModel.findAllProducts();
+    const totalPrice = requestedProducts.reduce(
+      (acc, { productId, quantity }) => {
+        const pickedProduct = allProducts.find(
+          (v) => v._id.toString() === productId
+        );
+        return acc + pickedProduct.price * quantity;
+      },
+      0
+    );
     return totalPrice;
   }
 }

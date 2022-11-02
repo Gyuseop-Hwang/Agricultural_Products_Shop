@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { productService } from '../services';
 import { wrapAsync } from '../utils';
-import { loginRequired, authRequired, joiValidator } from '../middlewares'
+import { loginRequired, authRequired, productValidator } from '../middlewares'
 
 const productRouter = Router();
 
@@ -30,7 +30,7 @@ productRouter.get('/products/categorization/:categoryName', wrapAsync(async (req
 }))
 
 // 관리자 
-productRouter.post('/products/:categoryName', joiValidator, wrapAsync(async (req, res) => {
+productRouter.post('/products/:categoryName', loginRequired, authRequired, productValidator, wrapAsync(async (req, res) => {
   const { categoryName } = req.params;
   const update = req.body;
   const createdProduct = await productService.createProduct(categoryName, update);
@@ -38,7 +38,7 @@ productRouter.post('/products/:categoryName', joiValidator, wrapAsync(async (req
 }))
 
 // 관리자
-productRouter.put('/products/:productId', loginRequired, authRequired, joiValidator, wrapAsync(async (req, res) => {
+productRouter.put('/products/:productId', loginRequired, authRequired, productValidator, wrapAsync(async (req, res) => {
   const { productId } = req.params;
   const update = req.body;
   const newProduct = await productService.renewProduct(productId, update)
