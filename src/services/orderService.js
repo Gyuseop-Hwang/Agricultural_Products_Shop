@@ -1,6 +1,6 @@
 import { orderModel } from '../db';
 import { productModel } from '../db';
-import { AppError } from '../utils';
+import { BadRequestError } from '../utils';
 
 class OrderService {
   constructor(orderModel) {
@@ -8,19 +8,18 @@ class OrderService {
   }
 
   async findAllOrders() {
-    const orders = await this.orderModel.findAll();
-    return orders;
+    return await this.orderModel.findAll();
   }
 
   async findOrdersByUserId(userId) {
-    const orders = await this.orderModel.findByUserId(userId);
-    return orders;
+    return await this.orderModel.findByUserId(userId);
   }
 
-  async addOrder(orderInfo) {
+  async createOrder(orderInfo) {
     const createdOrder = await this.orderModel.create(orderInfo);
+
     if (!createdOrder)
-      throw new AppError(400, '등록 요청을 실행할 수 없습니다.');
+      throw new BadRequestError('등록 요청을 실행할 수 없습니다.');
 
     return createdOrder;
   }
@@ -29,7 +28,7 @@ class OrderService {
     const updatedOrder = await this.orderModel.update(orderId, orderStatus);
 
     if (!updatedOrder)
-      throw new AppError(400, '수정 요청을 실행할 수 없습니다.');
+      throw new BadRequestError('배송 상태 수정 요청을 실행할 수 없습니다.');
 
     return updatedOrder;
   }
@@ -41,7 +40,7 @@ class OrderService {
     );
 
     if (!updatedOrder)
-      throw new AppError(400, '수정 요청을 실행할 수 없습니다.');
+      throw new BadRequestError('도착지 수정 요청을 실행할 수 없습니다.');
 
     return updatedOrder;
   }
@@ -49,13 +48,14 @@ class OrderService {
   async deleteOrder(orderId) {
     const deletedOrder = await this.orderModel.delete(orderId);
 
-    if (!deletedOrder) throw new AppError(400, '삭제할 주문이 없습니다!');
+    if (!deletedOrder)
+      throw new BadRequestError('삭제 요청을 실행할 수 없습니다.');
 
     return deletedOrder;
   }
 
   async calculateTotalPrice(requestedProducts) {
-    const allProducts = await productModel.findAllProducts();
+    const allProducts = await productModel.findProducts();
     const totalPrice = requestedProducts.reduce(
       (acc, { productId, quantity }) => {
         const pickedProduct = allProducts.find(
