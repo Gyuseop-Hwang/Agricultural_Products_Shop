@@ -1,13 +1,41 @@
+import * as Api from "/api.js";
+
 const cartProductList = document.getElementById("cartProductList");
-const totalPriceTxt = document.getElementById("totalPrice");
 const deleteSelectedButton = document.getElementById("deleteSelectedButton");
+const deleteAllButton = document.getElementById("deleteAllButton");
+const totalPriceTxt = document.getElementById("totalPrice");
 
 let products = [];
-
+const savedProducts = JSON.parse(localStorage.getItem("products"));
 let TOTAL_PRICE;
 
-function saveProduct(newProducts) {
-  localStorage.setItem("products", JSON.stringify(newProducts));
+// 수량 변경 및 삭제 시 새 배열 만들어서 로컬스토리지 저장
+function saveToLocalStorage(newProducts) {
+  const products = newProducts.map((product) => {
+    if (product.product) {
+      // api 호출시 불러온 데이터일 때
+      return { id: product.product._id, count: product.count };
+    }
+    // 선택 삭제 클릭시
+    return { id: product.id, count: product.count };
+  });
+  localStorage.setItem("products", JSON.stringify(products));
+}
+
+// products배열에 저장 => 로컬스토리지 저장(saveProductsToLocalStorage) 및 dom에 추가(paintProduct, sumPrice)
+function saveProduct(product, count) {
+  const newProductObj = { product, count };
+  for (let i = 0; i < products.length; i++) {
+    if (products[i].product === newProductObj.product) {
+      products[i] = newProductObj;
+      saveToLocalStorage(products);
+      return;
+    }
+  }
+  products.push(newProductObj);
+  saveToLocalStorage(products);
+  paintProduct(product, count);
+  sumPrice();
 }
 
 function deleteSelectedProduct() {
@@ -21,57 +49,76 @@ function deleteSelectedProduct() {
   }
 
   // localstorage에 선택항목 삭제된 배열 저장
-  const newProducts = products.filter((product) => {
+  const newProducts = savedProducts.filter((product) => {
     for (let i = 0; i < checkBoxes.length; i++) {
       if (
         checkBoxes[i].checked !== true &&
-        checkBoxes[i].dataset.productId === product._id.$oid
+        checkBoxes[i].dataset.productId === product.id
+      ) {
+        return true;
+      }
+    }
+  });
+  products = products.filter(({ product }) => {
+    for (let i = 0; i < checkBoxes.length; i++) {
+      if (
+        checkBoxes[i].checked !== true &&
+        checkBoxes[i].dataset.productId === product._id
       ) {
         return true;
       }
     }
   });
 
-  saveProduct(newProducts);
-  sumPrice(newProducts);
+  saveToLocalStorage(newProducts);
+  sumPrice(products);
 }
 
-function paintProduct(product) {
+// dom에 장바구니 항목 추가
+function paintProduct(product, count) {
   const tr = document.createElement("tr");
+
   tr.className = "product";
   tr.innerHTML = `<td><input type="checkbox" class="check-box" data-product-id="${
-    product._id.$oid
+    product._id
   }"/></td>
     <td>이미지 추후 삽입</td>
-    <td class="product-name has-text-left"><p>${product.name}</p></td>
-    <td class="product-price ${product._id.$oid}" data-price="${
+    <td class="product-name has-text-left">${product.title}</td>
+    <td class="product-price ${product._id}" data-price="${
     product.price
   }">${product.price.toLocaleString()}원</td>
-    <td class="product-quantity">${product.quantity}</td>
-    <td class="product-total-price ${product._id.$oid}">${(
-    product.price * product.quantity
+    <td class="product-quantity"><input type="number" class="number-input ${
+      product._id
+    }"  value="${count}" min="1"/></td>
+    <td class="product-total-price ${product._id}">${(
+    product.price * count
   ).toLocaleString()}원</td>
   `;
+
   cartProductList.appendChild(tr);
 }
 
-function sumPrice(newProducts) {
-  if (newProducts.length < 1) {
+// 상품 금액 총 합계
+function sumPrice() {
+  if (savedProducts.length < 1) {
     TOTAL_PRICE = 0;
   }
-  TOTAL_PRICE = newProducts
-    .map((product) => product.price * product.quantity)
+  TOTAL_PRICE = products
+    .map(({ product, count }) => product.price * count)
     .reduce((acc, cur) => acc + cur, 0)
     .toLocaleString();
   totalPriceTxt.innerText = TOTAL_PRICE;
 }
 
-const savedProducts = localStorage.getItem("products");
-
+// localStorage에 저장된 상품이 있을 때
 if (savedProducts) {
-  products = JSON.parse(savedProducts);
-  products.forEach(paintProduct);
-  sumPrice(products);
+  savedProducts.forEach(async (product) => {
+    const result = await Api.get(
+      "http://localhost:5500/api/products",
+      product.id
+    );
+    saveProduct(result, product.count);
+  });
 }
 
 deleteSelectedButton.addEventListener("click", deleteSelectedProduct);
