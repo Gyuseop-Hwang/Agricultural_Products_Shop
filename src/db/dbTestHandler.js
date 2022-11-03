@@ -86,6 +86,7 @@ export const dbTestHandler = async (db) => {
   });
 
   orderModel.create({
+    _id: '6363834966e64222e7cf64db',
     recipient: 'root',
     phoneNumber: '010-0000-0000',
     products: [
