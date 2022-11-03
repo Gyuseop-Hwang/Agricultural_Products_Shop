@@ -8,6 +8,7 @@ export const dbTestHandler = async (db) => {
     _id: '63632d4ddfb91201fe8d5eec',
     email: 'root@root.com',
     fullName: 'root',
+    phoneNumber: "010-2342-1342",
     password: '$2b$10$6fPyrhFvBgMUZbjIwnlapOoieg8fSXJem9HldX6mggagG5XDGy0l2',
   });
   userModel.create({
@@ -20,22 +21,22 @@ export const dbTestHandler = async (db) => {
 
   categoryModel.create({
     _id: '63613676b3cd1137208c7e78',
-    name: 'fruit',
+    name: '과일',
     total: 2,
   });
   categoryModel.create({
     _id: '63613687b3cd1137208c7e7a',
-    name: 'vegetable',
+    name: '야채',
     total: 1,
   });
   categoryModel.create({
     _id: '63613692b3cd1137208c7e7c',
-    name: 'nut',
+    name: '견과류',
     total: 1,
   });
   categoryModel.create({
     _id: '63614045b3cd1137208c7ea2',
-    name: 'fungi',
+    name: '버섯류',
     total: 1,
   });
 

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { loginRequired, authRequired } from '../middlewares';
-import { AppError, wrapAsync } from '../utils';
+import { BadRequestError, FrobiddenError, wrapAsync } from '../utils';
 import { userService } from '../services';
 import { body, validationResult } from 'express-validator';
 
@@ -12,16 +12,16 @@ userRouter.post(
   body('fullName').isLength({ min: 3 }),
   body('email').isEmail(),
   body('password').isLength({ min: 8 }),
-  body('passwordConfirmation').custom((value, { req }) => {
-    if (value !== req.body.password) {
-      throw new AppError(400, 'Password confirmation does not match password');
-    }
-    return true;
-  }),
+  // body('passwordConfirmation').custom((value, { req }) => {
+  //   if (value !== req.body.password) {
+  //     throw new BadRequestError('Password confirmation does not match password');
+  //   }
+  //   return true;
+  // }),
   wrapAsync(async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      throw new AppError(400, errors);
+      throw new BadRequestError(errors);
     }
 
     const newUser = await userService.addUser(req.body);
@@ -29,7 +29,6 @@ userRouter.post(
   })
 );
 
-// 로그인 api (아래는 /login 이지만, 실제로는 /api/login로 요청해야 함.)
 userRouter.post(
   '/login',
   body('email').isEmail(),
@@ -37,32 +36,18 @@ userRouter.post(
   wrapAsync(async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      throw new AppError(400, errors);
+      throw new BadRequestError(errors);
     }
 
-    // req (request) 에서 데이터 가져오기
-    const email = req.body.email;
-    const password = req.body.password;
-
-    // 로그인 진행 (로그인 성공 시 jwt 토큰을 프론트에 보내 줌)
     const userToken = await userService.getUserToken(req.body);
-    // jwt 토큰을 프론트에 보냄 (jwt 토큰은, 문자열임)
     res.status(200).json(userToken);
   })
 );
 
-userRouter.get(
-  '/admin/userlist',
-  loginRequired,
-  authRequired,
-  wrapAsync(async (req, res) => {
-    // 전체 사용자 목록을 얻음
-    const users = await userService.getUsers();
-
-    // 사용자 목록(배열)을 JSON 형태로 프론트에 보냄
-    res.status(200).json(users);
-  })
-);
+userRouter.get('/users/userInfo', loginRequired, async (req, res) => {
+  const userInfo = await userService.getUserInfo(req.currentUserId);
+  res.status(200).json(userInfo);
+})
 
 userRouter.patch(
   '/users/:userId',
@@ -82,10 +67,7 @@ userRouter.patch(
 
     // currentPassword 없을 시, 진행 불가
     if (!currentPassword) {
-      throw new AppError(
-        403,
-        '정보를 변경하려면, 현재의 비밀번호가 필요합니다.'
-      );
+      throw new FrobiddenError('정보를 변경하려면, 현재의 비밀번호가 필요합니다.');
     }
 
     const userInfoRequired = { userId, currentPassword };
@@ -108,6 +90,16 @@ userRouter.patch(
 
     // 업데이트 이후의 유저 데이터를 프론트에 보내 줌
     res.status(200).json(updatedUserInfo);
+  })
+);
+
+userRouter.get(
+  '/admin/userlist',
+  loginRequired,
+  authRequired,
+  wrapAsync(async (req, res) => {
+    const users = await userService.getUsers();
+    res.status(200).json(users);
   })
 );
 

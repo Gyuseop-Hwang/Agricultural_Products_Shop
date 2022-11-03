@@ -74,6 +74,10 @@ class UserService {
     return { token };
   }
 
+  async getUserInfo(id) {
+    return await userModel.findById(id);
+  }
+
   // 사용자 목록을 받음.
   async getUsers() {
     const users = await this.userModel.findAll();
