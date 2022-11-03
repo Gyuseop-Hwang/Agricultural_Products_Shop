@@ -12,6 +12,14 @@ h1 {
   font-weight: 700;
 }
 
+.table {
+  margin-top: 60px;
+}
+
+#tableHead {
+  background-color: #e5f5da;
+}
+
 #orderHistory {
   margin: 50px auto;
   width: 800px;
@@ -36,4 +44,8 @@ table {
   text-align: center;
   /* align-items: center;
   justify-content: center; */
+}
+
+#orderReciptId {
+  color: #4f802f;
 }
