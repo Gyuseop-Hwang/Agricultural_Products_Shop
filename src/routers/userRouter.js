@@ -12,14 +12,16 @@ userRouter.post(
   body('fullName').isLength({ min: 3 }),
   body('email').isEmail(),
   body('password').isLength({ min: 8 }),
-  body('passwordConfirmation').custom((value, { req }) => {
-    if (value !== req.body.password) {
-      throw new AppError(400, 'Password confirmation does not match password');
-    }
-    return true;
-  }),
+  // body('passwordConfirmation').custom((value, { req }) => {
+  //   console.log(value, req.body.password);
+  //   if (value !== req.body.password) {
+  //     throw new AppError(400, 'Password confirmation does not match password');
+  //   }
+  //   return true;
+  //   }
   wrapAsync(async (req, res) => {
     const errors = validationResult(req);
+    console.log(errors);
     if (!errors.isEmpty()) {
       throw new AppError(400, errors);
     }

@@ -8,10 +8,12 @@ export class OrderModel {
     return await Order.find({});
   }
 
-  async findByUserId(userId) {
-    const findedOrder = await Order.find({ userId });
+  async find(orderId) {
+    return await Order.findOne({ _id: orderId });
+  }
 
-    return findedOrder.length >= 1 ? findedOrder : null;
+  async findByUserId(userId) {
+    return await Order.find({ userId });
   }
 
   async create(orderInfo) {
