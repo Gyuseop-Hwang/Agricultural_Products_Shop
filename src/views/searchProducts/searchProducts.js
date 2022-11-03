@@ -5,7 +5,7 @@ const productsList = document.getElementById("productsList")
 
 //전체 상품 및 카테고리 조회
 function getAllProducts() {
-	const response = fetch("http://localhost:4000/data");
+	const response = fetch("http://localhost:5500/api/products");
 	return response.then(res => res.json());
 }
 function getProductsByCategory(categoryName) {

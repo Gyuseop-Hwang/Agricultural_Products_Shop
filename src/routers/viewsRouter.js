@@ -9,7 +9,8 @@ const viewsRouter = express.Router();
 viewsRouter.use("/", serveStatic("home"));
 viewsRouter.use("/register", serveStatic("register"));
 viewsRouter.use("/login", serveStatic("login"));
-
+// http://localhost:5000/search 에서는 views/searchProducts/register.html 파일을 화면에 띄움 (오승연)
+viewsRouter.use("/search", serveStatic("searchProducts"));
 // views 폴더의 최상단 파일인 rabbit.png, api.js 등을 쓸 수 있게 함
 viewsRouter.use("/", serveStatic(""));
 
