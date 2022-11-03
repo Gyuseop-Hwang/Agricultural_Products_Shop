@@ -1,5 +1,6 @@
 const cartProductList = document.getElementById("cartProductList");
 const totalPriceTxt = document.getElementById("totalPrice");
+const deleteSelectedButton = document.getElementById("deleteSelectedButton");
 
 let products = [];
 
@@ -24,16 +25,13 @@ function deleteSelectedProduct() {
     for (let i = 0; i < checkBoxes.length; i++) {
       if (
         checkBoxes[i].checked !== true &&
-        checkBoxes[i].dataset.productId === product.id
+        checkBoxes[i].dataset.productId === product._id.$oid
       ) {
         return true;
       }
     }
   });
 
-  if (newProducts.length < 1) {
-    emptyCartMessage.classList.remove("hidden");
-  }
   saveProduct(newProducts);
   sumPrice(newProducts);
 }
@@ -42,15 +40,15 @@ function paintProduct(product) {
   const tr = document.createElement("tr");
   tr.className = "product";
   tr.innerHTML = `<td><input type="checkbox" class="check-box" data-product-id="${
-    product.id
+    product._id.$oid
   }"/></td>
     <td>이미지 추후 삽입</td>
     <td class="product-name has-text-left"><p>${product.name}</p></td>
-    <td class="product-price ${product.id}" data-price="${
+    <td class="product-price ${product._id.$oid}" data-price="${
     product.price
   }">${product.price.toLocaleString()}원</td>
     <td class="product-quantity">${product.quantity}</td>
-    <td class="product-total-price ${product.id}">${(
+    <td class="product-total-price ${product._id.$oid}">${(
     product.price * product.quantity
   ).toLocaleString()}원</td>
   `;
