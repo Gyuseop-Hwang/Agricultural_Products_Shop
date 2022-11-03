@@ -20,6 +20,7 @@ userRouter.post(
   // }),
   wrapAsync(async (req, res) => {
     const errors = validationResult(req);
+    console.log(errors);
     if (!errors.isEmpty()) {
       throw new BadRequestError(errors);
     }
