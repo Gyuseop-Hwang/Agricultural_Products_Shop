@@ -8,6 +8,7 @@ function productValidator(req, res, next) {
     price: Joi.number().required().min(0),
     quantity: Joi.number().required().min(0),
     description: Joi.string().required().min(10).max(50),
+    category: Joi.string().required(),
   });
   const { error } = productSchema.validate(req.body);
   if (error) {
