@@ -1,0 +1,98 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  width: auto;
+  height: 50px;
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+form {
+  margin: 60px auto;
+  width: 400px;
+}
+
+#userInfo {
+  width: 400px;
+  margin-bottom: 30px;
+}
+
+.hidden {
+  display: none;
+}
+
+#editBtn {
+  margin-right: 3px;
+}
+
+hr {
+  margin: 20px auto;
+  width: 800px;
+}
+
+#orderList {
+  margin: 0 auto;
+  width: 800px;
+  height: 300px;
+}
+
+#orderedInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#orderText {
+  height: 130px;
+  padding-top: 80px;
+  text-align: center;
+}
+
+#moreBtn {
+  display: flex;
+  width: 80px;
+  text-align: center;
+}
+
+/* 주문내역 더보기 안에 들어갈 부분
+#orderedProduct {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  width: 700px;
+}
+
+p.title,
+p.subtitle {
+  margin: 0;
+  display: flex;
+}
+
+#productImage {
+  display: flex;
+}
+
+.media-content {
+  width: 600px;
+  margin-top: 10px;
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.productNumber {
+  bottom: 0;
+  display: flex;
+}
+
+#emptyOrderlist {
+  text-align: center;
+} */
