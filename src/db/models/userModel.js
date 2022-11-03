@@ -39,23 +39,4 @@ export class UserModel {
 
 const userModel = new UserModel();
 
-userModel.create({
-  email: 'root@root.com',
-  fullName: 'root',
-  password: '$2b$10$6fPyrhFvBgMUZbjIwnlapOoieg8fSXJem9HldX6mggagG5XDGy0l2',
-});
-
-userModel.create({
-  email: 'admin@admin.com',
-  fullName: 'admin',
-  password: '$2b$10$6fPyrhFvBgMUZbjIwnlapOoieg8fSXJem9HldX6mggagG5XDGy0l2',
-  role: 'administrator',
-});
-
-process.on('SIGINT', async () => {
-  await userModel.delete();
-  console.log('userDB clear!');
-  process.exit();
-});
-
 export { userModel };

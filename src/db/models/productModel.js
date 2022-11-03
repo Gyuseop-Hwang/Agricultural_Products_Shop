@@ -10,7 +10,7 @@ const Category = model('Category', CategorySchema);
 export class ProductModel {
   // user 가능, 모든 상품 조회
   async findAllProducts() {
-    const products = await Product.find({}).populate('category')
+    const products = await Product.find({}).populate('category');
     return products;
     // const categories = [...new Set(products.map(product => product.category.name))]
     // res.json({products, categories})
@@ -42,18 +42,19 @@ export class ProductModel {
     const category = await Category.findOne({ name });
     if (!category) return null;
     product.category = category._id;
-    category.total++;
     await category.save();
     // const newProduct = await Product.create(product);
     const createdProduct = await product.save();
-    return createdProduct
+    return createdProduct;
   }
   // 관리자만 상품 업데이트
   async updateProduct(productId, update) {
     const product = await Product.findById(productId);
     if (!product) return null;
     // throw new AppError(404, '해당 상품이 없습니다.');
-    const newProduct = await Product.findByIdAndUpdate(productId, update, { new: true });
+    const newProduct = await Product.findByIdAndUpdate(productId, update, {
+      new: true,
+    });
 
     return newProduct;
   }
@@ -63,7 +64,6 @@ export class ProductModel {
     if (!product) return null;
     // throw new AppError(404, '해당 상품이 없습니다.')
     const category = await Category.findOne({ name: product.category.name });
-    category.total--;
     await category.save();
     const res = await Product.deleteOne({ category });
 
@@ -86,7 +86,9 @@ export class ProductModel {
     const category = await Category.findOne({ name });
     if (!category) return null;
     // throw new AppError(404, '해당 카테고리가 없습니다.')
-    const newCategory = await Category.findOneAndUpdate({ name }, update, { returnOriginal: false });
+    const newCategory = await Category.findOneAndUpdate({ name }, update, {
+      returnOriginal: false,
+    });
 
     return newCategory;
   }
@@ -98,13 +100,11 @@ export class ProductModel {
     const products = await Product.find({ category });
     if (products.length > 0) return 403;
     // throw new AppError(403, '이미 카테고리가 등록된 상품이 존재하여 현재 대상 카테고리를 삭제할 수 없습니다.')
-    const res = await Category.deleteOne({ name })
+    const res = await Category.deleteOne({ name });
     return res;
   }
-
-};
+}
 
 const productModel = new ProductModel();
 
 export { productModel };
-

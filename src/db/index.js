@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { dbTestHandler } from './dbTestHandler';
 
 const DB_URL =
   process.env.MONGODB_URL ||
@@ -7,13 +8,17 @@ const DB_URL =
 mongoose.connect(DB_URL);
 const db = mongoose.connection;
 
-db.on('connected', () =>
-  console.log('정상적으로 MongoDB 서버에 연결되었습니다.  ' + DB_URL)
-);
+db.on('connected', async () => {
+  console.log('정상적으로 MongoDB 서버에 연결되었습니다.  ' + DB_URL);
+  if (process.env.NODE_ENV === 'dev') {
+    await db.dropDatabase();
+    await dbTestHandler(db);
+  }
+});
 
-// db.on('error', (error) =>
-//   console.error('\nMongoDB 연결에 실패하였습니다...\n' + DB_URL + '\n' + error)
-// );
+db.on('error', (error) =>
+  console.error('\nMongoDB 연결에 실패하였습니다...\n' + DB_URL + '\n' + error)
+);
 
 // user-model.js 에서 export { ~~ } 한 모듈을 그대로 다시 export해 줌
 // 이렇게 하면, 나중에 import 할 때 코드가 짧아짐

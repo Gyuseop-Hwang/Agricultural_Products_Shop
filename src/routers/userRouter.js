@@ -46,14 +46,14 @@ userRouter.post(
 // 로그인 api (아래는 /login 이지만, 실제로는 /api/login로 요청해야 함.)
 userRouter.post(
   '/login',
+  body('email').isEmail(),
+  body('password').isLength({ min: 4 }),
   wrapAsync(async (req, res) => {
-    // application/json 설정을 프론트에서 안 하면, body가 비어 있게 됨.
-    if (is.emptyObject(req.body)) {
-      throw new AppError(
-        400,
-        'headers의 Content-Type을 application/json으로 설정해주세요'
-      );
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      throw new AppError(400, errors);
     }
+
     // req (request) 에서 데이터 가져오기
     const email = req.body.email;
     const password = req.body.password;

@@ -1,13 +1,17 @@
 import { Router } from 'express';
 import { orderService } from '../services';
 import { wrapAsync } from '../utils';
-import { orderValidator, orderUpdateValidator } from '../middlewares';
+import {
+  orderValidator,
+  orderUpdateValidator,
+  authRequired,
+} from '../middlewares';
 
 const orderRouter = Router();
 
 orderRouter.get(
-  '/orders',
-  // 이 부분에서 관리자인지 권한 확인 필요
+  '/admin/orders',
+  authRequired,
   wrapAsync(async (req, res) => {
     const orders = await orderService.findAllOrders({});
 
@@ -44,29 +48,35 @@ orderRouter.post(
 );
 
 orderRouter.put(
+  '/admin/orders/:orderId',
+  orderUpdateValidator,
+  wrapAsync(async (req, res) => {
+    const { orderId } = req.params;
+    const { status } = req.body;
+
+    const updatedOrder = await orderService.updateOrderStatus(orderId, {
+      status,
+    });
+
+    return res.status(200).send(updatedOrder);
+  })
+);
+
+orderRouter.put(
   '/orders/:orderId',
   orderUpdateValidator,
   wrapAsync(async (req, res) => {
     const { orderId } = req.params;
-    const { status, shippingAddress } = req.body;
+    const { shippingAddress } = req.body;
 
-    if (status) {
-      const updatedOrder = await orderService.updateOrderStatus(orderId, {
-        status,
-      });
+    const updatedOrder = await orderService.updateOrderShippingAddress(
+      orderId,
+      {
+        shippingAddress,
+      }
+    );
 
-      return res.status(200).send(updatedOrder);
-    } else if (shippingAddress) {
-      const updatedOrder = await orderService.updateOrderShippingAddress(
-        orderId,
-        {
-          shippingAddress,
-        }
-      );
-      return res.status(200).send(updatedOrder);
-    }
-
-    res.status(200).send(orders);
+    return res.status(200).send(updatedOrder);
   })
 );
 
