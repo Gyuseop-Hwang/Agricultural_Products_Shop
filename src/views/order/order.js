@@ -21,7 +21,7 @@ function submitOrderInfo() {
     phoneNumber: `${firstPhoneNumber.value}-${middlePhoneNumber.value}-${lastPhoneNumber.value}`, // 전화번호
     shippingAddress: `${postcode.value} ${address.value} ${detailAddress.value} ${extraAddress.value}`, // 주소
     products, // 상품
-    //userId: sessionStorage["token"], // user token
+    userId: sessionStorage["token"], // user token
   };
 
   return orderInfo;
@@ -37,6 +37,7 @@ async function createOrder() {
       throw new Error("주문할 상품이 없습니다.");
     }
     await Api.post("/api/orders", orderInfo);
+    localStorage.clear();
     // 주문성공페이지 리다이렉트
     // window.location.href("")
   } catch (err) {
