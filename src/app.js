@@ -12,7 +12,6 @@ import {
   authRequired,
   errorHandler,
   loginRequired,
-  notFound,
 } from './middlewares';
 import morgan from 'morgan';
 import { NotFoundError } from './utils';
@@ -39,7 +38,7 @@ app.use(viewsRouter);
 // /api/login 으로 요청을 해야 하게 됨. 백엔드용 라우팅을 구분하기 위함임.
 app.use('/api', userRouter);
 app.use('/api', productRouter);
-app.use('/api/admin', adminProductRouter);
+app.use('/api/admin', loginRequired, authRequired, adminProductRouter);
 app.use('/api', loginRequired, orderRouter);
 
 // 순서 중요 (errorHandler은 다른 일반 라우팅보다 나중에 있어야 함)

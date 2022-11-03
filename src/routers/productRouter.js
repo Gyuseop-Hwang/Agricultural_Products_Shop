@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { productService } from '../services';
-import { wrapAsync, AppError } from '../utils';
+import { wrapAsync, BadRequestError } from '../utils';
 import { body, validationResult } from 'express-validator';
 
 
@@ -12,10 +12,10 @@ productRouter.get('/products', wrapAsync(async (req, res) => {
   res.status(200).json({ products, categories });
 }))
 
-productRouter.get('/products/search', body('title').isLength({ min: 2 }), async (req, res) => {
+productRouter.get('/products/search', body('title').isLength({ min: 0 }), async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    throw new AppError(400, errors);
+    throw new BadRequestError(errors);
   }
   const { title } = req.body;
   const searchedProducts = await productService.searchProducts(title);

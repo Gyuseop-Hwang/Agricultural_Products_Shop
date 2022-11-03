@@ -1,5 +1,5 @@
 import { productModel } from '../db';
-import { AppError } from '../utils'
+import { BadRequestError } from '../utils'
 
 class AdminProductService {
 
@@ -10,7 +10,7 @@ class AdminProductService {
   async createProduct(id, productInfo) {
     const category = await this.productModel.findCategory(id);
     if (!category) {
-      throw new AppError(400, '존재하지 않는 카테고리입니다.')
+      throw new BadRequestError('존재하지 않는 카테고리입니다.')
     }
     category.total++;
     await category.save();
@@ -21,12 +21,12 @@ class AdminProductService {
   async updateProduct(productId, update) {
     const product = await this.productModel.findOneProduct(productId);
     if (!product) {
-      throw new AppError(400, "존재하지 않는 상품입니다.")
+      throw new BadRequestError("존재하지 않는 상품입니다.")
     }
     const { category } = update;
     const categoryDoc = await this.productModel.findCategory(category)
     if (!categoryDoc) {
-      throw new AppError(400, "존재하지 않는 카테고리입니다.")
+      throw new BadRequestError("존재하지 않는 카테고리입니다.")
     }
     const oldCategory = await this.productModel.findCategory(product.category._id);
     oldCategory.total--;
@@ -41,7 +41,7 @@ class AdminProductService {
   async deleteProduct(productId) {
     const product = await this.productModel.findOneProduct(productId);
     if (!product) {
-      throw new AppError(400, '존재하지 않는 상품입니다.')
+      throw new BadRequestError('존재하지 않는 상품입니다.')
     }
     const category = await this.productModel.findCategory(product.category._id);
     category.total--;
@@ -57,7 +57,7 @@ class AdminProductService {
     const categorieDocs = await this.productModel.findAllCategories()
     const categories = categorieDocs.map(category => category.name)
     if (categories.includes(name)) {
-      throw new AppError(400, "이미 존재하고 있는 카테고리입니다.")
+      throw new BadRequestError("이미 존재하고 있는 카테고리입니다.")
     }
     return await this.productModel.createCategory(name);
   }
@@ -65,13 +65,13 @@ class AdminProductService {
   async updateCategory(id, update) {
     const category = await this.productModel.findCategory(id);
     if (!category) {
-      throw new AppError(400, "존재하지 않는 카테고리입니다.")
+      throw new BadRequestError("존재하지 않는 카테고리입니다.")
     }
     const { name } = update;
     const categorieDocs = await this.productModel.findAllCategories()
     const categories = categorieDocs.map(category => category.name)
     if (categories.includes(name)) {
-      throw new AppError(400, "이미 존재하고 있는 카테고리입니다.")
+      throw new BadRequestError("이미 존재하고 있는 카테고리입니다.")
     }
     return await this.productModel.updateCategory(category.name, update);
   }
@@ -79,11 +79,11 @@ class AdminProductService {
   async deleteCategory(id) {
     const category = await this.productModel.findCategory(id);
     if (!category) {
-      throw new AppError(400, "존재하지 않는 카테고리입니다.")
+      throw new BadRequestError("존재하지 않는 카테고리입니다.")
     }
     const products = await this.productModel.findProducts({ category });
     if (products.length > 0) {
-      throw new AppError(400, '이미 카테고리가 등록된 상품이 존재하여 현재 대상 카테고리를 삭제할 수 없습니다.')
+      throw new BadRequestError('이미 카테고리가 등록된 상품이 존재하여 현재 대상 카테고리를 삭제할 수 없습니다.')
     }
     await this.productModel.deleteCategory(id)
   }
