@@ -31,11 +31,11 @@ function paintOrders(order, index) {
     <p>${phoneNumber}</p>
   </td>
   <td>
-    <select class="select is-small" name="" id="statusSelect${index}">
-      <option value="" selected>주문 완료</option>
-      <option value="">배송준비중</option>
-      <option value="">배송중</option>
-      <option value="">배송완료</option>
+    <select class="select is-small" id="statusSelect${index}">
+      <option value="주문 완료" selected>주문 완료</option>
+      <option value="배송 준비중">배송 준비중</option>
+      <option value="배송중">배송중</option>
+      <option value="배송 완료">배송 완료</option>
     </select>
     <button class="button is-small" id="modifyStatusBtn${index}">수정</button>
   </td>
@@ -53,8 +53,10 @@ function paintOrders(order, index) {
   // 배송 상태 변경
   const modifyStatusBtn = document.getElementById(`modifyStatusBtn${index}`);
   modifyStatusBtn.addEventListener("click", () => {
-    const selectedStatus = document.getElementById(`statusSelect${index}`);
-    updateOrderStatus(_id, { status: selectedStatus.value });
+    const selectBox = document.getElementById(`statusSelect${index}`);
+    const selectedStatus = selectBox.options[selectBox.selectedIndex].text;
+
+    updateOrderStatus(_id, { status: selectedStatus });
   });
 }
 
