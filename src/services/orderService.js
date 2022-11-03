@@ -55,7 +55,7 @@ class OrderService {
   }
 
   async calculateTotalPrice(requestedProducts) {
-    const allProducts = await productModel.findAllProducts();
+    const allProducts = await productModel.findProducts();
     const totalPrice = requestedProducts.reduce(
       (acc, { productId, quantity }) => {
         const pickedProduct = allProducts.find(
