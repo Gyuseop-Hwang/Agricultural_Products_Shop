@@ -1,18 +1,19 @@
+import * as Api from "/api.js";
 const orderList = document.getElementById("orderList");
 
 // 삭제, 상태 수정 코드 추가해야 함
 // 받아온 주문내역 화면에 보여줌, ejs로 추후 수정
-async function paintOrders(order) {
-  const {
-    id,
-    products,
-    phoneNumber,
-    recipient,
-    shippringAddress,
-    status,
-    totalPrice,
-    userId,
-  } = order;
+function paintOrders(order) {
+  // const {
+  //   //id 받아와야됨
+  //   products,
+  //   phoneNumber,
+  //   recipient,
+  //   shippringAddress,
+  //   status,
+  //   totalPrice,
+  //   userId,
+  // } = order;
 
   const tr = document.createElement("tr");
   tr.className = "order";
@@ -43,19 +44,40 @@ async function paintOrders(order) {
   orderList.appendChild(tr);
 }
 
-// 패치 함수
-async function fetchData() {
-  const response = await fetch("http://localhost:3001/data");
-  const result = await response.json();
-
-  return result;
+// 배송 상태 변경
+async function updateOrderStatus(id, status) {
+  try {
+    const result = await Api.put(
+      `http://localhost:5500/api/orders/${id}`,
+      status
+    );
+    console.log(result);
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
 }
 
-// 데이터 받아옴
+// 주문 삭제
+async function deleteOrder(id) {
+  try {
+    const result = await Api.delete("http://localhost:5500/api/orders", id);
+    console.log(result);
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
+}
+
+// 전체 주문 내역 가져오기
 async function getOrders() {
-  const orders = await fetchData();
-  console.log(orders);
-  orders.forEach(paintOrders);
+  try {
+    const result = await Api.get("http://localhost:5500/api/orders");
+    console.log(result);
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
 }
 
 getOrders();
