@@ -10,13 +10,16 @@ const middlePhoneNumber = document.getElementById("middlePhoneNumber");
 const lastPhoneNumber = document.getElementById("lastPhoneNumber");
 const payButton = document.getElementById("payButton");
 
+// 배송 정보 submit
 function submitOrderInfo() {
   let products = JSON.parse(localStorage.getItem("products"));
 
+  // localstorage 비었을 경우 에러 발생
   if (!products) {
     throw new Error("주문할 상품이 없습니다.");
   }
 
+  // 객체 키를 id => product로 바꿔줌
   products = products.map((product) => {
     return { product: product.id, count: product.count };
   });
@@ -30,12 +33,12 @@ function submitOrderInfo() {
       address2: `${detailAddress.value} ${extraAddress.value}`,
     }, // 주소
     products, // 상품
-    //user: sessionStorage["token"], // user token
   };
 
   return orderInfo;
 }
 
+// 유저 정보 받아서 input에 자동 입력해줌
 async function getUserInfo() {
   try {
     const user = await Api.get("/api/users/userInfo");
@@ -44,8 +47,11 @@ async function getUserInfo() {
       return;
     }
 
-    recipient.value = user.fullName;
-    // const {fullName,phoneNumber,shippingAddress} = user;
+    const { fullName, phoneNumber, shippingAddress } = user;
+    //recipient.value = fullName;
+    //postcode.value = shippingAddress.postalCode;
+    //address.value = shippingAddress.address1;
+    //detailAddress.value = shippingAddress.address2;
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
@@ -63,8 +69,8 @@ async function createOrder() {
     }
     await Api.post("/api/orders", orderInfo);
     // 주문성공페이지 리다이렉트
-    window.location.replace("/orderSuccess");
-    localStorage.clear();
+    //window.location.replace("/orderSuccess");
+    //localStorage.clear();
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);

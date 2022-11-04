@@ -5,8 +5,8 @@ const deleteSelectedButton = document.getElementById("deleteSelectedButton");
 const deleteAllButton = document.getElementById("deleteAllButton");
 const totalPriceTxt = document.getElementById("totalPrice");
 
-let products = [];
-const savedProducts = JSON.parse(localStorage.getItem("products"));
+let products = []; // 상품 전체 정보가 담김
+const savedProducts = JSON.parse(localStorage.getItem("products")); // [id, count]
 let TOTAL_PRICE;
 
 // 수량 변경 및 삭제 시 새 배열 만들어서 로컬스토리지 저장
@@ -26,6 +26,7 @@ function saveToLocalStorage(newProducts) {
 function saveProduct(product, count, index) {
   const newProductObj = { product, count };
   for (let i = 0; i < products.length; i++) {
+    // (수량 추가 시) 기존에 있는 상품이면 수량만 추가
     if (products[i].product === newProductObj.product) {
       products[i] = newProductObj;
       const totalPrice = document.getElementById(`totalPrice${index}`);
@@ -34,12 +35,14 @@ function saveProduct(product, count, index) {
       return;
     }
   }
+  // (처음 get 요청 시)
   products.push(newProductObj);
   saveToLocalStorage(products);
   paintProduct(product, count, index);
   sumPrice();
 }
 
+// 선택 항목 삭제
 function deleteSelectedProduct() {
   const checkBoxes = document.querySelectorAll(".check-box");
   // dom에서 선택항목 삭제
@@ -48,17 +51,6 @@ function deleteSelectedProduct() {
       checkBoxes[i].parentElement.parentElement.remove();
     }
   }
-  //localstorage에 선택항목 삭제된 배열 저장
-  const newProducts = savedProducts.filter((product) => {
-    for (let i = 0; i < checkBoxes.length; i++) {
-      if (
-        checkBoxes[i].checked !== true &&
-        checkBoxes[i].dataset.productId === product.id
-      ) {
-        return true;
-      }
-    }
-  });
   // products 배열에 저장
   products = products.filter(({ product }) => {
     for (let i = 0; i < checkBoxes.length; i++) {
@@ -70,10 +62,22 @@ function deleteSelectedProduct() {
       }
     }
   });
+  //localstorage에 선택항목 삭제된 배열 저장
+  const newProducts = savedProducts.filter((product) => {
+    for (let i = 0; i < checkBoxes.length; i++) {
+      if (
+        checkBoxes[i].checked !== true &&
+        checkBoxes[i].dataset.productId === product.id
+      ) {
+        return true;
+      }
+    }
+  });
 
   saveToLocalStorage(newProducts);
   sumPrice();
 
+  // 모든 상품이 삭제됐을 경우 "장바구니가 비었습니다" 메세지 출력
   if (newProducts.length < 1) {
     emptyCartMessage.classList.remove("hidden");
   }
@@ -88,6 +92,7 @@ function deleteAllProduct() {
   const emptyCart = [];
   localStorage.setItem("products", emptyCart);
   products = emptyCart;
+
   sumPrice();
 }
 
@@ -112,7 +117,7 @@ function paintProduct(product, count, index) {
   console.log(product.price * count);
   cartProductList.appendChild(tr);
 
-  // 수량 변경 이벤트 추가
+  // 수량 변경 이벤트
   const changeCountButtons = document.getElementById(
     `changeCountButton${index}`
   );
