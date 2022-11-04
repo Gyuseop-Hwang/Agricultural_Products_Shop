@@ -9,8 +9,40 @@ export const dbTestHandler = async (db) => {
     email: 'root@root.com',
     fullName: 'root',
     phoneNumber: "010-2342-1342",
+    address: {
+      postalCode: "12345",
+      address1: "서울시 행복구 행복동",
+      address2: "광주시 광산구 산정동"
+    },
     password: '$2b$10$6fPyrhFvBgMUZbjIwnlapOoieg8fSXJem9HldX6mggagG5XDGy0l2',
   });
+
+  userModel.create({
+    _id: '63632d4ddfb91201fe8d5ea6',
+    email: 'rbtjq@rbtjq.com',
+    fullName: '황규섭',
+    phoneNumber: "010-1942-5923",
+    address: {
+      postalCode: "52734",
+      address1: "익산시 행복구 행복동",
+      address2: "천안시 동구 불당동"
+    },
+    password: '$2b$10$6fPyrhFvBgMUZbjIwnlapOoieg8fSXJem9HldX6mggagG5XDGy0l2',
+  });
+
+  userModel.create({
+    _id: '63632d4ddfb91201fe8d5ea6',
+    email: 'doyeon@doyeon.com',
+    fullName: '이도연',
+    phoneNumber: "010-1521-3526",
+    address: {
+      postalCode: "52734",
+      address1: "정읍시 수성구 수성동",
+      address2: "광주시 광산구 운남동"
+    },
+    password: '$2b$10$6fPyrhFvBgMUZbjIwnlapOoieg8fSXJem9HldX6mggagG5XDGy0l2',
+  });
+
   userModel.create({
     _id: '63632dd4c8448e8c61c6a82a',
     email: 'admin@admin.com',

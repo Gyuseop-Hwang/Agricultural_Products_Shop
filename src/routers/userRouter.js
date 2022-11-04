@@ -62,6 +62,9 @@ userRouter.patch(
     const address = req.body.address;
     const phoneNumber = req.body.phoneNumber;
     const role = req.body.role;
+    if (role) {
+      throw new BadRequestError('사용자가 role을 수정할 수는 없습니다. 관리자 권한이 필요합니다.');
+    }
 
     // body data로부터, 확인용으로 사용할 현재 비밀번호를 추출함.
     const currentPassword = req.body.currentPassword;
@@ -80,7 +83,6 @@ userRouter.patch(
       ...(password && { password }),
       ...(address && { address }),
       ...(phoneNumber && { phoneNumber }),
-      ...(role && { role }),
     };
 
     // 사용자 정보를 업데이트함.
@@ -103,5 +105,6 @@ userRouter.get(
     res.status(200).json(users);
   })
 );
+
 
 export { userRouter };
