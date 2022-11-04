@@ -19,8 +19,16 @@ const OrderSchema = new Schema(
       required: true,
     },
     shippingAddress: {
-      type: String,
-      required: true,
+      type: new Schema(
+        {
+          postalCode: String,
+          address1: String,
+          address2: String,
+        },
+        {
+          _id: false,
+        }
+      ),
     },
 
     totalPrice: Number,
