@@ -29,7 +29,7 @@ class ProductService {
   }
 
   async searchProducts(title) {
-    const searchedProducts = await this.productModel.findProductsByTitle(title);
+    const searchedProducts = await this.productModel.findProductsByTitle(decodeURI(decodeURIComponent(title)));
     return searchedProducts
   }
 

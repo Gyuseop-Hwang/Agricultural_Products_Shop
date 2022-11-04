@@ -12,7 +12,7 @@ class UserService {
   // 회원가입
   async addUser(userInfo) {
     // 객체 destructuring
-    const { email, fullName, password } = userInfo;
+    const { email, fullName, password, phoneNumber, address } = userInfo;
 
     // 이메일 중복 확인
     const user = await this.userModel.findByEmail(email);
@@ -27,7 +27,7 @@ class UserService {
     // 우선 비밀번호 해쉬화(암호화)
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUserInfo = { fullName, email, password: hashedPassword };
+    const newUserInfo = { fullName, email, password: hashedPassword, phoneNumber, address };
 
     // db에 저장
     const createdNewUser = await this.userModel.create(newUserInfo);
@@ -72,6 +72,10 @@ class UserService {
     const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
 
     return { token };
+  }
+
+  async getUserInfo(id) {
+    return await userModel.findById(id);
   }
 
   // 사용자 목록을 받음.
