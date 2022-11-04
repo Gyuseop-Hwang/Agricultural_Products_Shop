@@ -32,6 +32,9 @@ class OrderService {
   }
 
   async createOrder(orderInfo) {
+    const { userId } = orderInfo;
+    const user = await userModel.findById(userId);
+    orderInfo.user = user;
     const createdOrder = await this.orderModel.create(orderInfo);
 
     if (!createdOrder)
@@ -63,9 +66,8 @@ class OrderService {
 
   async deleteOrder(userId, orderId) {
     const foundOrder = await this.findOrder(orderId);
-    const foundUser = await userModel.findById(String(foundOrder.userId));
 
-    if (String(foundUser._id) !== userId)
+    if (String(foundOrder.user._id) !== userId)
       throw new BadRequestError('다른 사람의 주문입니다. 삭제할 수 없습니다.');
 
     const deletedOrder = await this.orderModel.delete(orderId);
@@ -78,15 +80,12 @@ class OrderService {
 
   async calculateTotalPrice(requestedProducts) {
     const allProducts = await productModel.findProducts();
-    const totalPrice = requestedProducts.reduce(
-      (acc, { productId, quantity }) => {
-        const pickedProduct = allProducts.find(
-          (v) => v._id.toString() === productId
-        );
-        return acc + pickedProduct.price * quantity;
-      },
-      0
-    );
+    const totalPrice = requestedProducts.reduce((acc, { product, count }) => {
+      const pickedProduct = allProducts.find(
+        (v) => v._id.toString() === product
+      );
+      return acc + pickedProduct.price * count;
+    }, 0);
     return totalPrice;
   }
 }
