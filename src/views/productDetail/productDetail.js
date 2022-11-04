@@ -1,3 +1,4 @@
+
 const productImage = document.getElementById("image")
 const titleSpan = document.getElementById("title")
 const priceSpan = document.getElementById("price")
