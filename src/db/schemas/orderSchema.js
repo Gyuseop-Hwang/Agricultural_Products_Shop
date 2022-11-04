@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const {
   Types: { ObjectId },
@@ -19,23 +19,31 @@ const OrderSchema = new Schema(
       required: true,
     },
     shippingAddress: {
-      type: String,
-      required: true,
+      type: new Schema(
+        {
+          postalCode: String,
+          address1: String,
+          address2: String,
+        },
+        {
+          _id: false,
+        }
+      ),
     },
 
     totalPrice: Number,
 
     products: [
       {
-        productId: { type: ObjectId, ref: "Product", required: true },
-        quantity: Number,
+        product: { type: ObjectId, ref: "Product", required: true },
+        count: { type: Number, required: true },
       },
     ],
 
-    userId: {
-      type: Schema.Types.ObjectId,
+    user: {
+      type: ObjectId,
+      ref: "User",
       required: true,
-      ref: "user",
     },
   },
   {

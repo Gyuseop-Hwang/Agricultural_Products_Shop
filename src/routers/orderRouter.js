@@ -2,8 +2,9 @@ import { Router } from 'express';
 import { orderService } from '../services';
 import { wrapAsync } from '../utils';
 import {
-  orderValidator,
-  orderUpdateValidator,
+  orderCreateValidator,
+  orderStatusUpdateValidator,
+  orderShippingAddressUpdateValidator,
   authRequired,
 } from '../middlewares';
 
@@ -23,7 +24,6 @@ orderRouter.get(
   '/orders',
   wrapAsync(async (req, res) => {
     const userId = req.currentUserId;
-    console.log(userId);
 
     const orders = await orderService.findOrdersByUserId(userId);
 
@@ -33,7 +33,7 @@ orderRouter.get(
 
 orderRouter.post(
   '/orders',
-  orderValidator,
+  orderCreateValidator,
   wrapAsync(async (req, res) => {
     const { products } = req.body;
     const userId = req.currentUserId;
@@ -53,7 +53,7 @@ orderRouter.post(
 orderRouter.put(
   '/admin/orders/:orderId',
   authRequired,
-  orderUpdateValidator,
+  orderStatusUpdateValidator,
   wrapAsync(async (req, res) => {
     const { orderId } = req.params;
     const { status } = req.body;
@@ -68,16 +68,14 @@ orderRouter.put(
 
 orderRouter.put(
   '/orders/:orderId',
-  orderUpdateValidator,
+  orderShippingAddressUpdateValidator,
   wrapAsync(async (req, res) => {
     const { orderId } = req.params;
     const { shippingAddress } = req.body;
 
     const updatedOrder = await orderService.updateOrderShippingAddress(
       orderId,
-      {
-        shippingAddress,
-      }
+      { shippingAddress }
     );
 
     return res.status(201).send(updatedOrder);
@@ -99,7 +97,6 @@ orderRouter.delete(
   wrapAsync(async (req, res) => {
     const { orderId } = req.params;
     const userId = req.currentUserId;
-    console.log(userId);
     const deletedOrder = await orderService.deleteOrder(userId, orderId);
 
     res.status(201).send(deletedOrder);
