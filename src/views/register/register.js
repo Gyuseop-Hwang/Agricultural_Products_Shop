@@ -107,26 +107,6 @@ function sample3_execDaumPostcode() {
       } else {
         addr = data.jibunAddress;
       }
-
-
-      // if (data.userSelectedType === 'R') {
-
-      //   if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-      //     extraAddr += data.bname;
-      //   }
-
-      //   if (data.buildingName !== '' && data.apartment === 'Y') {
-      //     extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-      //   }
-
-      //   if (extraAddr !== '') {
-      //     extraAddr = ' (' + extraAddr + ')';
-      //   } document.getElementById("sample3_extraAddress").value = extraAddr;
-
-      // } else {
-      //   document.getElementById("sample3_extraAddress").value = '';
-      // }
-
       postalCodeInput.value = data.zonecode;
       address1Input.value = addr;
       address2Input.focus();
