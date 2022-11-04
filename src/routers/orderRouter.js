@@ -83,7 +83,7 @@ orderRouter.put(
 );
 
 orderRouter.delete(
-  'admin/orders/:orderId',
+  '/admin/orders/:orderId',
   wrapAsync(async (req, res) => {
     const { orderId } = req.params;
     const deletedOrder = await orderService.deleteOrder(orderId);
