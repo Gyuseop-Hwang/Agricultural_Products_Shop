@@ -45,10 +45,10 @@ userRouter.post(
   })
 );
 
-userRouter.get('/users/userInfo', loginRequired, async (req, res) => {
+userRouter.get('/users/userInfo', loginRequired, wrapAsync(async (req, res) => {
   const userInfo = await userService.getUserInfo(req.currentUserId);
   res.status(200).json(userInfo);
-})
+}))
 
 userRouter.patch(
   '/users/userInfo',
@@ -103,11 +103,11 @@ userRouter.get(
   })
 );
 
-userRouter.delete('/admin/withdrawal/:userId', loginRequired, authRequired, async (req, res) => {
+userRouter.delete('/admin/withdrawal/:userId', loginRequired, authRequired, wrapAsync(async (req, res) => {
   const { userId } = req.params;
   const deletedUser = await userService.withdraw(userId);
   res.status(200).json({ result: "success", message: `${deletedUser.fullName} 회원을 삭제하였습니다.` })
-})
+}))
 
 
 export { userRouter };

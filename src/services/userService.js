@@ -109,7 +109,7 @@ class UserService {
     if (!user) {
       throw new BadRequestError('가입 내역이 없습니다. 다시 한 번 확인해 주세요.')
     }
-    await userModel.deleteUser(userId);
+    return await userModel.deleteUser(userId);
   }
 }
 
