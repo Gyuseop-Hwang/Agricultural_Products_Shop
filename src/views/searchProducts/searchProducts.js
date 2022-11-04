@@ -75,7 +75,7 @@ function printProducts(products) {
 
 		<div class="product-contents">
 			<div class="product-title">
-				<a href="/product/">${product.title}</a>
+				<a href="/product/${product._id}">${product.title}</a>
 			</div>
 			<div class="product-price">
 				<span>${product.price.toLocaleString('ko-KR')}원</span>
