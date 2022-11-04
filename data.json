@@ -1,0 +1,15 @@
+{
+  "users": [
+    {
+      "id": "0",
+      "email": "test01132@gmail.com",
+      "fullName": "bunny kim",
+      "phone": "010-1122-3211",
+      "address": {
+        "postalCode": "01139",
+        "address1": "서울시 채소구",
+        "address2": "영양아파트 3동 1009호"
+      }
+    }
+  ]
+}
