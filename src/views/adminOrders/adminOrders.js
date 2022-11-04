@@ -1,9 +1,8 @@
 import * as Api from "/api.js";
 const orderList = document.getElementById("orderList");
 
-// 삭제, 상태 수정 코드 추가해야 함
-// 받아온 주문내역 화면에 보여줌, ejs로 추후 수정
-function paintOrders(order, index) {
+// 받아온 주문내역 화면에 출력, ejs로 수정 예정
+function printOrders(order, index) {
   const {
     _id,
     createdAt,
@@ -16,7 +15,8 @@ function paintOrders(order, index) {
     user,
   } = order;
   const { postalCode, address1, address2 } = shippingAddress;
-  console.log(_id);
+
+  // 표에 행 추가
   const tr = document.createElement("tr");
   tr.className = "order";
   tr.innerHTML = `<td>${createdAt.substring(0, 10)}</td>
@@ -55,13 +55,13 @@ function paintOrders(order, index) {
     }
   }
 
-  // 주문 삭제
+  // 주문 삭제 핸들러
   const deleteOrderBtn = document.getElementById(`deleteOrderBtn${index}`);
   deleteOrderBtn.addEventListener("click", () => {
     deleteOrder(_id);
     tr.remove();
   });
-  // 배송 상태 변경
+  // 배송 상태 업데이트 핸들러
   const modifyStatusBtn = document.getElementById(`modifyStatusBtn${index}`);
   modifyStatusBtn.addEventListener("click", () => {
     const selectBox = document.getElementById(`statusSelect${index}`);
@@ -71,7 +71,7 @@ function paintOrders(order, index) {
   });
 }
 
-// 배송 상태 변경
+// 배송 상태 업데이트
 async function updateOrderStatus(id, status) {
   try {
     await Api.put("/api/admin/orders", id, status);
@@ -84,7 +84,6 @@ async function updateOrderStatus(id, status) {
 // 주문 삭제
 async function deleteOrder(id) {
   try {
-    console.log(id);
     await Api.delete("/api/admin/orders", id);
     alert("삭제되었습니다.");
   } catch (err) {
@@ -97,8 +96,7 @@ async function deleteOrder(id) {
 async function getOrders() {
   try {
     const result = await Api.get("/api/admin/orders");
-    console.log(result);
-    result.forEach((order, index) => paintOrders(order, index));
+    result.forEach((order, index) => printOrders(order, index));
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
