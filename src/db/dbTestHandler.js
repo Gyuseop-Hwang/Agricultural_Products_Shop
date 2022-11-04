@@ -133,7 +133,11 @@ export const dbTestHandler = async (db) => {
         count: 2,
       },
     ],
-    shippingAddress: '도착지',
+    shippingAddress: {
+      postalCode: '처음 postalCode',
+      address1: '처음 address1',
+      address2: '처음 address2',
+    },
     user: '63632d4ddfb91201fe8d5eec',
   });
 

@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { AppError, BadRequestError } from '../utils';
+import { BadRequestError } from '../utils';
 
 function productValidator(req, res, next) {
   const productSchema = Joi.object({
@@ -13,16 +13,20 @@ function productValidator(req, res, next) {
   const { error } = productSchema.validate(req.body);
   if (error) {
     const message = error.details.map((el) => el.message).join(', ');
-    return next(new AppError(400, message));
+    return next(new BadRequestError(message));
   }
   next();
 }
 
-function orderValidator(req, res, next) {
+function orderCreateValidator(req, res, next) {
   const postSchema = Joi.object({
     recipient: Joi.string().required(),
     phoneNumber: Joi.string().required(),
-    shippingAddress: Joi.string().required(),
+    shippingAddress: Joi.object({
+      postalCode: Joi.string().required(),
+      address1: Joi.string().required(),
+      address2: Joi.string().required(),
+    }).required(),
     products: Joi.array().items(
       Joi.object({
         product: Joi.string().required(),
@@ -40,17 +44,37 @@ function orderValidator(req, res, next) {
   next();
 }
 
-function orderUpdateValidator(req, res, next) {
-  const putSchema = Joi.object({
-    status: Joi.string(),
-    shippingAddress: Joi.string(),
-  }).or('status', 'shippingAddress');
-  const { error } = putSchema.validate(req.body);
+function orderStatusUpdateValidator(req, res, next) {
+  const statusSchema = Joi.object({
+    status: Joi.string().required(),
+  });
+  const { error } = statusSchema.validate(req.body);
   if (error) {
     const message = error.details.map((el) => el.message).join(', ');
-    return next(new AppError(400, message));
+    return next(new BadRequestError(message));
   }
   next();
 }
 
-export { productValidator, orderValidator, orderUpdateValidator };
+function orderShippingAddressUpdateValidator(req, res, next) {
+  const shippingAddressSchema = Joi.object({
+    shippingAddress: Joi.object({
+      postalCode: Joi.string().required(),
+      address1: Joi.string().required(),
+      address2: Joi.string().required(),
+    }).required(),
+  });
+  const { error } = shippingAddressSchema.validate(req.body);
+  if (error) {
+    const message = error.details.map((el) => el.message).join(', ');
+    return next(new BadRequestError(message));
+  }
+  next();
+}
+
+export {
+  productValidator,
+  orderCreateValidator,
+  orderStatusUpdateValidator,
+  orderShippingAddressUpdateValidator,
+};
