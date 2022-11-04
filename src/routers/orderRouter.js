@@ -23,7 +23,6 @@ orderRouter.get(
   '/orders',
   wrapAsync(async (req, res) => {
     const userId = req.currentUserId;
-    console.log(userId);
 
     const orders = await orderService.findOrdersByUserId(userId);
 
@@ -99,7 +98,6 @@ orderRouter.delete(
   wrapAsync(async (req, res) => {
     const { orderId } = req.params;
     const userId = req.currentUserId;
-    console.log(userId);
     const deletedOrder = await orderService.deleteOrder(userId, orderId);
 
     res.status(201).send(deletedOrder);

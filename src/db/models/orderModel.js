@@ -5,15 +5,36 @@ const Order = model('Order', OrderSchema);
 
 export class OrderModel {
   async findAll() {
-    return await Order.find({});
+    return await Order.find({})
+      .populate('user')
+      .populate({
+        path: 'products',
+        populate: {
+          path: 'product',
+        },
+      });
   }
 
   async find(orderId) {
-    return await Order.findOne({ _id: orderId });
+    return await Order.findOne({ _id: orderId })
+      .populate('user')
+      .populate({
+        path: 'products',
+        populate: {
+          path: 'product',
+        },
+      });
   }
 
   async findByUserId(userId) {
-    return await Order.find({ userId });
+    return await Order.find({ user: userId })
+      .populate('user')
+      .populate({
+        path: 'products',
+        populate: {
+          path: 'product',
+        },
+      });
   }
 
   async create(orderInfo) {

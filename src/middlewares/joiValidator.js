@@ -25,11 +25,10 @@ function orderValidator(req, res, next) {
     shippingAddress: Joi.string().required(),
     products: Joi.array().items(
       Joi.object({
-        productId: Joi.string().required(),
-        quantity: Joi.number().integer().min(1).required(),
+        product: Joi.string().required(),
+        count: Joi.number().integer().min(1).required(),
       })
     ),
-    userId: Joi.string().required(),
   });
 
   const { error } = postSchema.validate(req.body);
