@@ -13,7 +13,7 @@ function productValidator(req, res, next) {
   const { error } = productSchema.validate(req.body);
   if (error) {
     const message = error.details.map((el) => el.message).join(', ');
-    return next(new AppError(400, message));
+    return next(new BadRequestError(message));
   }
   next();
 }
