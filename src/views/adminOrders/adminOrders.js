@@ -6,28 +6,30 @@ const orderList = document.getElementById("orderList");
 function paintOrders(order, index) {
   const {
     _id,
+    createdAt,
     products,
     phoneNumber,
     recipient,
     shippingAddress,
     status,
     totalPrice,
-    userId,
+    user,
   } = order;
-
+  const { postalCode, address1, address2 } = shippingAddress;
+  console.log(_id);
   const tr = document.createElement("tr");
   tr.className = "order";
-  tr.innerHTML = `<td>2022/10/11</td>
-  <td>${userId}</td>
+  tr.innerHTML = `<td>${createdAt.substring(0, 10)}</td>
+  <td>${user.email}</td>
   <td>
   ${products
-    .map((product) => `<p>${product.productId} * ${product.quantity}</p>`)
+    .map((product) => `<p>${product.product.title} * ${product.count}</p>`)
     .join("")}
   </td>
-  <td>{totalPrice.toLocaleString()}원</td>
+  <td>${totalPrice.toLocaleString()}원</td>
   <td>
     <p>${recipient}</p>
-    <p>${shippingAddress}</p>
+    <p>${`${postalCode} ${address1} ${address2}`}</p>
     <p>${phoneNumber}</p>
   </td>
   <td>
@@ -40,13 +42,22 @@ function paintOrders(order, index) {
     <button class="button is-small" id="modifyStatusBtn${index}">수정</button>
   </td>
   <td>
-    <button class="button is-small" id="cancleOrderBtn${index}">주문삭제</button>
+    <button class="button is-small" id="deleteOrderBtn${index}">주문삭제</button>
   </td>`;
   orderList.appendChild(tr);
 
+  // 배송상태 출력
+  const statusSelect = document.getElementById(`statusSelect${index}`);
+
+  for (let i = 0; i < statusSelect.length; i++) {
+    if (statusSelect.options[i].value === status) {
+      statusSelect.options[i].selected = true;
+    }
+  }
+
   // 주문 삭제
-  const cancleOrderBtn = document.getElementById(`cancleOrderBtn${index}`);
-  cancleOrderBtn.addEventListener("click", () => {
+  const deleteOrderBtn = document.getElementById(`deleteOrderBtn${index}`);
+  deleteOrderBtn.addEventListener("click", () => {
     deleteOrder(_id);
     tr.remove();
   });
@@ -63,18 +74,7 @@ function paintOrders(order, index) {
 // 배송 상태 변경
 async function updateOrderStatus(id, status) {
   try {
-    const bodyData = JSON.stringify(status);
-    const result = await fetch(`/api/admin/orders/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-      },
-      body: bodyData,
-    });
-
-    //Api.patch(`/api/admin/orders`, id, { status: status });
-    console.log(result);
+    await Api.put("/api/admin/orders", id, status);
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
@@ -84,8 +84,9 @@ async function updateOrderStatus(id, status) {
 // 주문 삭제
 async function deleteOrder(id) {
   try {
-    const result = await Api.delete("/api/orders", id);
-    console.log(result);
+    console.log(id);
+    await Api.delete("/api/admin/orders", id);
+    alert("삭제되었습니다.");
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
@@ -96,6 +97,7 @@ async function deleteOrder(id) {
 async function getOrders() {
   try {
     const result = await Api.get("/api/admin/orders");
+    console.log(result);
     result.forEach((order, index) => paintOrders(order, index));
   } catch (err) {
     console.error(err.stack);

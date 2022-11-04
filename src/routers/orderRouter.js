@@ -1,17 +1,17 @@
-import { Router } from 'express';
-import { orderService } from '../services';
-import { wrapAsync } from '../utils';
+import { Router } from "express";
+import { orderService } from "../services";
+import { wrapAsync } from "../utils";
 import {
   orderCreateValidator,
   orderStatusUpdateValidator,
   orderShippingAddressUpdateValidator,
   authRequired,
-} from '../middlewares';
+} from "../middlewares";
 
 const orderRouter = Router();
 
 orderRouter.get(
-  '/admin/orders',
+  "/admin/orders",
   authRequired,
   wrapAsync(async (req, res) => {
     const orders = await orderService.findAllOrders({});
@@ -21,7 +21,7 @@ orderRouter.get(
 );
 
 orderRouter.get(
-  '/orders',
+  "/orders",
   wrapAsync(async (req, res) => {
     const userId = req.currentUserId;
 
@@ -32,7 +32,7 @@ orderRouter.get(
 );
 
 orderRouter.post(
-  '/orders',
+  "/orders",
   orderCreateValidator,
   wrapAsync(async (req, res) => {
     const { products } = req.body;
@@ -51,7 +51,7 @@ orderRouter.post(
 );
 
 orderRouter.put(
-  '/admin/orders/:orderId',
+  "/admin/orders/:orderId",
   authRequired,
   orderStatusUpdateValidator,
   wrapAsync(async (req, res) => {
@@ -67,7 +67,7 @@ orderRouter.put(
 );
 
 orderRouter.put(
-  '/orders/:orderId',
+  "/orders/:orderId",
   orderShippingAddressUpdateValidator,
   wrapAsync(async (req, res) => {
     const { orderId } = req.params;
@@ -83,7 +83,7 @@ orderRouter.put(
 );
 
 orderRouter.delete(
-  'admin/orders/:orderId',
+  "/admin/orders/:orderId",
   wrapAsync(async (req, res) => {
     const { orderId } = req.params;
     const deletedOrder = await orderService.deleteOrder(orderId);
@@ -93,7 +93,7 @@ orderRouter.delete(
 );
 
 orderRouter.delete(
-  '/orders/:orderId',
+  "/orders/:orderId",
   wrapAsync(async (req, res) => {
     const { orderId } = req.params;
     const userId = req.currentUserId;

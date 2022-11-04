@@ -18,15 +18,19 @@ function submitOrderInfo() {
   }
 
   products = products.map((product) => {
-    return { productId: product.id, quantity: product.count };
+    return { product: product.id, count: product.count };
   });
 
   const orderInfo = {
     recipient: recipient.value, //받는 사람
     phoneNumber: `${firstPhoneNumber.value}-${middlePhoneNumber.value}-${lastPhoneNumber.value}`, // 전화번호
-    shippingAddress: `${postcode.value} ${address.value} ${detailAddress.value} ${extraAddress.value}`, // 주소
+    shippingAddress: {
+      postalCode: postcode.value,
+      address1: address.value,
+      address2: `${detailAddress.value} ${extraAddress.value}`,
+    }, // 주소
     products, // 상품
-    userId: sessionStorage["token"], // user token
+    //user: sessionStorage["token"], // user token
   };
 
   return orderInfo;
