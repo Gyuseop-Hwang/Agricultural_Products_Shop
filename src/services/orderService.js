@@ -64,7 +64,16 @@ class OrderService {
     return updatedOrder;
   }
 
-  async deleteOrder(userId, orderId) {
+  async deleteOrderByAdmin(orderId) {
+    const deletedOrder = await this.orderModel.delete(orderId);
+
+    if (!deletedOrder)
+      throw new BadRequestError('삭제 요청을 실행할 수 없습니다.');
+
+    return deletedOrder;
+  }
+
+  async deleteOrderByUser(userId, orderId) {
     const foundOrder = await this.findOrder(orderId);
 
     if (String(foundOrder.user._id) !== userId)
