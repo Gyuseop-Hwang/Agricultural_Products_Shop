@@ -11,6 +11,7 @@ const postalCode = document.getElementById("postalCode");
 const address = document.getElementById("address");
 const detailAddress = document.getElementById("detailAddress");
 
+// 이메일 , 이름, 비밀번호, 전화번호, 주소 등
 const emailText = document.getElementById("emailText");
 const nameText = document.getElementById("nameText");
 const passwordText = document.getElementById("passwordText");
@@ -19,85 +20,23 @@ const postalCodeText = document.getElementById("postalCodeText");
 const addressText = document.getElementById("addressText");
 const detailAddressText = document.getElementById("detailAddressText");
 
-// async function getUserInfo() {
-//   const usersToken = sessionStorage.getItem("token");
-//   try {
-//     const data = await Api.get(`/api/users/${userId}`);
-//     const { userId, email, fullName, password, phoneNumber, address } = data;
-//     emailText.innerHTML = email;
-//     nameText.innerHTML = fullName;
-//     passwordText.innerHTML = password;
-//     phoneText.innerHTML = phoneNumber;
-//     postalCodeText.innerHTML = address.postalCode;
-//     addressText.innerHTML = address.address1;
-//     detailAddressText.innerHTML = address.address2;
+const postalCodeLabel = document.getElementById("postalCodeLabel");
+const addressLabel = document.getElementById("addressLabel");
+const detailAddressLabel = document.getElementById("detailAddressLabel");
 
-//     email.value = email;
-//     fullName.value = fullName;
-//     password.value = password;
-//     phone.value = phoneNumber;
-//     postalCode.value = address.postalCode;
-//     address.value = address.address1;
-//     detailAddress.value = address.address2;
-//   } catch (e) {}
-// }
+// 다음주소 API 주소 폼
+const daumAddressText = document.getElementById("daumAddressText");
+const sample6_postcode = document.getElementById("sample6_postcode");
+const sample6_postcode_btn = document.getElementById("sample6_postcode_btn");
+const sample6_address = document.getElementById("sample6_address");
+const sample6_detailAddress = document.getElementById("sample6_detailAddress");
+const sample6_extraAddress = document.getElementById("sample6_extraAddress");
 
-// getUserInfo();
+// 비밀번호 확인
+const conformPassword = document.getElementById("conformPassword");
+const conformPasswordInput = document.getElementById("conformPasswordInput");
 
-// 토큰 값 가져오기
-
-// let base64Payload = usersToken.split(".")[1];
-// let payload = Buffer.from(base64Payload, "base64");
-// let result = JSON.parse(payload.toString());
-
-//const userid = sessionStorage.getItem("userid");
-//const user = Api.get(`/api/users/${userid}`);
-
-// const decodedToken = jwt.verify(usersToken, process.env.JWT_SECRET_KEY);
-
-// 임시 데이터
-// async function get(endpoint, params = "") {
-//   const apiUrl = `${endpoint}/${params}`;
-//   console.log(`%cGET 요청: ${apiUrl} `, "color: #a25cd1;");
-
-//   const res = await fetch(apiUrl, {
-//     // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
-//     headers: {
-//       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-//     },
-//   })
-//     .then((res) => {
-//       res.json();
-//     })
-//     .then((data) => {
-//       emailText.innerHTML = data.email;
-//       nameText.innerHTML = data.fullName;
-//       phoneText.innerHTML = data.phone;
-//       postalCodeText.innerHTML = data.address.postalCode;
-//       addressText.innerHTML = data.address.address1;
-//       detailAddressText.innerHTML = data.address.address2;
-
-//       email.value = data[0].email;
-//       fullName.value = data[0].fullName;
-//       phone.value = data[0].phone;
-//       postalCode.value = data[0].address.postalCode;
-//       address.value = data[0].address.address1;
-//       detailAddress.value = data[0].address.address2;
-//     });
-
-//   // 응답 코드가 4XX 계열일 때 (400, 403 등)
-//   if (!res.ok) {
-//     const errorContent = await res.json();
-//     const { reason } = errorContent;
-
-//     throw new Error(reason);
-//   }
-
-//   const result = await res.json();
-
-//   return result;
-// }
-
+// 토큰 가져오기
 const usersToken = sessionStorage.getItem("token");
 
 fetch(`http://localhost:5500/api/users/userInfo`, {
@@ -112,6 +51,7 @@ fetch(`http://localhost:5500/api/users/userInfo`, {
     emailText.innerHTML = data.email;
     nameText.innerHTML = data.fullName;
     phoneText.innerHTML = data.phoneNumber;
+    passwordText.innerHTML = "********";
     postalCodeText.innerHTML = data.address.postalCode;
     addressText.innerHTML = data.address.address1;
     detailAddressText.innerHTML = data.address.address2;
@@ -119,9 +59,10 @@ fetch(`http://localhost:5500/api/users/userInfo`, {
     email.value = data.email;
     fullName.value = data.fullName;
     phone.value = data.phoneNumber;
-    postalCode.value = data.address.postalCode;
-    address.value = data.address.address1;
-    detailAddress.value = data.address.address2;
+    password.value = "********";
+    sample6_postcode.value = data.address.postalCode;
+    sample6_address.value = data.address.address1;
+    sample6_detailAddress.value = data.address.address2;
   })
   .catch((err) => console.error("Error : ", err));
 
@@ -133,9 +74,14 @@ async function onClickEditBtn(e) {
     fullName,
     password,
     phone,
-    postalCode,
-    address,
-    detailAddress,
+    sample6_postcode,
+    sample6_postcode_btn,
+    sample6_address,
+    sample6_detailAddress,
+    sample6_extraAddress,
+    daumAddressText,
+    conformPassword,
+    conformPasswordInput,
   ].forEach((item) => {
     item.classList.remove("hidden");
   });
@@ -151,26 +97,34 @@ async function onClickEditBtn(e) {
       postalCodeText,
       addressText,
       detailAddressText,
+      postalCodeLabel,
+      addressLabel,
+      detailAddressLabel,
     ].forEach((item) => {
       item.classList.add("hidden");
     });
   } else if (editBtn.innerText === "완료") {
     editBtn.innerText = "수정";
+
+    let sign = conformPassword.value;
+
     // 완료 되었을 때의 기능을 추가 - 데이터 보내주기
     let data = {
       email: email.value,
       fullName: fullName.value,
+      password: password.value,
       phone: phone.value,
       address: {
         // 스키마 참고해서 그대로..!
-        postalCode: postalCode.value,
-        address1: address.value,
-        address2: detailAddress.value,
+        postalCode: sample6_postcode.value,
+        address1: sample6_address.value,
+        address2: sample6_detailAddress.value,
       },
+      currentPassword: String(sign),
     };
 
     // 끝부분에 식별할 수 있는 id를 넣어줘야 작동함
-    await fetch("http://localhost:5500/users", {
+    await fetch("http://localhost:5500/api/users/userInfo", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -194,7 +148,10 @@ async function onClickDeleteBtn(e) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${usersToken}`,
     },
-  }).catch((err) => console.error(err));
+  })
+    .then(() => sessionStorage.removeItem("token"))
+    .catch((err) => console.error(err));
+  //
 
   // 메인 페이지로 이동
   window.location.href = "/";

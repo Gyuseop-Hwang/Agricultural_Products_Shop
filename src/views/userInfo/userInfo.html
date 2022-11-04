@@ -105,9 +105,9 @@
                 id="password"
                 class="input hidden"
                 type="text"
-                placeholder="********"
+                placeholder="******"
               />
-              <p id="passwordText" class="defaultText">11</p>
+              <p id="passwordText" class="defaultText">******</p>
             </div>
           </div>
   
@@ -125,7 +125,7 @@
           </div>
   
           <div id="postalCodeInput" class="field">
-            <label for="postalCode" class="label">우편주소</label>
+            <label for="postalCode" id="postalCodeLabel" class="label">우편주소</label>
             <div class="control">
               <input
                 id="postalCode"
@@ -133,18 +133,14 @@
                 type="text"
                 placeholder="01122"
               />
-              <!-- <input type="text" id="sample6_postcode" placeholder="우편번호" />
-              <input
-                type="button"
-                onclick="sample6_execDaumPostcode()"
-                value="우편번호 찾기"
-              /><br /> -->
               <p id="postalCodeText" class="defaultText">11</p>
+              
+              
             </div>
           </div>
   
           <div id="addressInput" class="field">
-            <label for="address" class="label">주소</label>
+            <label for="address" id="addressLabel" class="label">주소</label>
             <div class="control">
               <input
                 id="address"
@@ -157,7 +153,7 @@
           </div>
   
           <div id="detailAddressInput" class="field">
-            <label for="detailAddress" class="label">상세주소</label>
+            <label for="detailAddress" id="detailAddressLabel" class="label">상세주소</label>
             <div class="control">
               <input
                 id="detailAddress"
@@ -168,6 +164,28 @@
               <p id="detailAddressText" class="defaultText">11</p>
             </div>
           </div>
+
+          <div id="conformPasswordInput" class="field hidden">
+            <label for="conformPassword" class="label">비밀번호 확인</label>
+            <div class="control">
+              <input
+                id="conformPassword"
+                class="input hidden"
+                type="text"
+                placeholder="수정하시려면 이전 비밀번호를 입력하세요."
+              />
+            </div>
+          </div>
+          
+            <p id="daumAddressText" class="hidden">주소</p>
+            <input class="hidden" type="text" id="sample6_postcode" placeholder="우편번호">
+            <input class="hidden" type="button" id="sample6_postcode_btn" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+            <input class="hidden" type="text" id="sample6_address" placeholder="주소"><br>
+            <input class="hidden" type="text" id="sample6_detailAddress" placeholder="상세주소">
+            <input class="hidden" type="text" id="sample6_extraAddress" placeholder="참고항목">
+          
+          
+
         </div>
         <button id="editBtn" type="submit" class="button is-light">수정</button>
         <button id="deleteBtn" type="submit" class="button is-danger">
@@ -189,4 +207,6 @@
     </div>
     
   <script src="./userInfo.js" type="module"></script>
+  <script src="./sampleAdd.js" ></script>
+  
 </html>
