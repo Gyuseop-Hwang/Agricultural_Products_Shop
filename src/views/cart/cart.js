@@ -23,18 +23,20 @@ function saveToLocalStorage(newProducts) {
 }
 
 // products배열에 저장 => 로컬스토리지 저장(saveProductsToLocalStorage) 및 dom에 추가(paintProduct, sumPrice)
-function saveProduct(product, count) {
+function saveProduct(product, count, index) {
   const newProductObj = { product, count };
   for (let i = 0; i < products.length; i++) {
     if (products[i].product === newProductObj.product) {
       products[i] = newProductObj;
+      const totalPrice = document.getElementById(`totalPrice${index}`);
+      totalPrice.innerText = `${(product.price * count).toLocaleString()}원`;
       saveToLocalStorage(products);
       return;
     }
   }
   products.push(newProductObj);
   saveToLocalStorage(products);
-  paintProduct(product, count);
+  paintProduct(product, count, index);
   sumPrice();
 }
 
@@ -70,11 +72,11 @@ function deleteSelectedProduct() {
   });
 
   saveToLocalStorage(newProducts);
+  sumPrice();
+
   if (newProducts.length < 1) {
     emptyCartMessage.classList.remove("hidden");
   }
-
-  sumPrice(products);
 }
 
 function deleteAllProduct() {
@@ -91,42 +93,34 @@ function deleteAllProduct() {
 
 // dom에 장바구니 항목 추가
 // 상품 링크 추가해야 함
-function paintProduct(product, count) {
+function paintProduct(product, count, index) {
   const tr = document.createElement("tr");
-
   tr.className = "product";
-  tr.innerHTML = `<td><input type="checkbox" class="check-box" data-product-id="${
+  tr.innerHTML = `<td><input type="checkbox" class="check-box"  data-product-id="${
     product._id
   }"/></td>
     <td>이미지 추후 삽입</td>
     <td class="product-name has-text-left"><p>${product.title}</p></td>
-    <td class="product-price ${product._id}" data-price="${
-    product.price
-  }">${product.price.toLocaleString()}원</td>
-    <td class="product-quantity"><input type="number" class="number-input ${
-      product._id
-    }"  value="${count}" min="1"/><button class="change-count-button" data-product-id="${
+    <td class="product-price">${product.price.toLocaleString()}원</td>
+    <td class="product-quantity"><input type="number" class="number-input" id="countInput${index}"  value="${count}" min="1"/><button class="change-count-button" id="changeCountButton${index}" data-product-id="${
     product._id
   }">변경</button></td>
-    <td class="product-total-price ${product._id}">${(
+    <td class="product-total-price" id="totalPrice${index}">${(
     product.price * count
   ).toLocaleString()}원</td>
   `;
-
+  console.log(product.price * count);
   cartProductList.appendChild(tr);
 
   // 수량 변경 이벤트 추가
-  const changeCountButtons = document.querySelectorAll(".change-count-button");
-  const numberInput = document.getElementsByClassName(
-    `number-input ${product._id}`
+  const changeCountButtons = document.getElementById(
+    `changeCountButton${index}`
   );
+  const numberInput = document.getElementById(`countInput${index}`);
 
-  changeCountButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      // 에러 수정해야함
-      saveProduct(product, numberInput[0].value);
-      sumPrice();
-    });
+  changeCountButtons.addEventListener("click", () => {
+    saveProduct(product, numberInput.value, index);
+    sumPrice();
   });
 }
 
@@ -147,12 +141,9 @@ const emptyCartMessage = document.getElementById("emptyCartMessage");
 // localStorage에 저장된 상품이 있을 때
 if (savedProducts) {
   emptyCartMessage.classList.add("hidden");
-  savedProducts.forEach(async (product) => {
-    const result = await Api.get(
-      "http://localhost:5500/api/products",
-      product.id
-    );
-    saveProduct(result, product.count);
+  savedProducts.forEach(async (product, index) => {
+    const result = await Api.get("/api/products", product.id);
+    saveProduct(result, product.count, index);
   });
 }
 

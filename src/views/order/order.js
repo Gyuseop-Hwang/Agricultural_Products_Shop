@@ -12,6 +12,11 @@ const payButton = document.getElementById("payButton");
 
 function submitOrderInfo() {
   let products = JSON.parse(localStorage.getItem("products"));
+
+  if (!products) {
+    throw new Error("주문할 상품이 없습니다.");
+  }
+
   products = products.map((product) => {
     return { productId: product.id, quantity: product.count };
   });
@@ -27,23 +32,40 @@ function submitOrderInfo() {
   return orderInfo;
 }
 
-async function createOrder() {
+async function getUserInfo() {
   try {
-    const orderInfo = submitOrderInfo();
-    console.log(orderInfo.products);
-    if (orderInfo.products.length < 1) {
-      //장바구니 리다이렉트
-      //window.location.href("");
-      throw new Error("주문할 상품이 없습니다.");
+    const user = await Api.get("/api/users/userInfo");
+
+    if (!user) {
+      return;
     }
-    await Api.post("/api/orders", orderInfo);
-    localStorage.clear();
-    // 주문성공페이지 리다이렉트
-    // window.location.href("")
+
+    recipient.value = user.fullName;
+    // const {fullName,phoneNumber,shippingAddress} = user;
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
 
+async function createOrder() {
+  try {
+    const orderInfo = submitOrderInfo();
+    console.log(orderInfo.products);
+    if (orderInfo.products.length < 1) {
+      //장바구니 리다이렉트
+      window.location.replace("/cart");
+      throw new Error("주문할 상품이 없습니다.");
+    }
+    await Api.post("/api/orders", orderInfo);
+    // 주문성공페이지 리다이렉트
+    window.location.replace("/orderSuccess");
+    localStorage.clear();
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
+}
+
+getUserInfo();
 payButton.addEventListener("click", createOrder);

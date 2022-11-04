@@ -23,18 +23,20 @@ function saveToLocalStorage(newProducts) {
 }
 
 // products배열에 저장 => 로컬스토리지 저장(saveProductsToLocalStorage) 및 dom에 추가(paintProduct, sumPrice)
-function saveProduct(product, count) {
+function saveProduct(product, count, index) {
   const newProductObj = { product, count };
   for (let i = 0; i < products.length; i++) {
     if (products[i].product === newProductObj.product) {
       products[i] = newProductObj;
+      const totalPrice = document.getElementById(`totalPrice${index}`);
+      totalPrice.innerText = `${(product.price * count).toLocaleString()}원`;
       saveToLocalStorage(products);
       return;
     }
   }
   products.push(newProductObj);
   saveToLocalStorage(products);
-  paintProduct(product, count);
+  paintProduct(product, count, index);
   sumPrice();
 }
 
@@ -75,7 +77,7 @@ function deleteSelectedProduct() {
 }
 
 // dom에 장바구니 항목 추가
-function paintProduct(product, count) {
+function paintProduct(product, count, index) {
   const tr = document.createElement("tr");
 
   tr.className = "product";
@@ -84,13 +86,9 @@ function paintProduct(product, count) {
   }"/></td>
     <td>이미지 추후 삽입</td>
     <td class="product-name has-text-left">${product.title}</td>
-    <td class="product-price ${product._id}" data-price="${
-    product.price
-  }">${product.price.toLocaleString()}원</td>
-    <td class="product-quantity"><input type="number" class="number-input ${
-      product._id
-    }"  value="${count}" min="1"/></td>
-    <td class="product-total-price ${product._id}">${(
+    <td class="product-price">${product.price.toLocaleString()}원</td>
+    <td class="product-quantity">${count}</td>
+    <td class="product-total-price" id="totalPrice${index}">${(
     product.price * count
   ).toLocaleString()}원</td>
   `;
@@ -112,12 +110,9 @@ function sumPrice() {
 
 // localStorage에 저장된 상품이 있을 때
 if (savedProducts) {
-  savedProducts.forEach(async (product) => {
-    const result = await Api.get(
-      "http://localhost:5500/api/products",
-      product.id
-    );
-    saveProduct(result, product.count);
+  savedProducts.forEach(async (product, index) => {
+    const result = await Api.get("/api/products", product.id);
+    saveProduct(result, product.count, index);
   });
 }
 
