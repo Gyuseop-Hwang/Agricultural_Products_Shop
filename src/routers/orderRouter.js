@@ -20,9 +20,10 @@ orderRouter.get(
 );
 
 orderRouter.get(
-  '/orders/:userId',
+  '/orders',
   wrapAsync(async (req, res) => {
-    const { userId } = req.params;
+    const userId = req.currentUserId;
+    console.log(userId);
 
     const orders = await orderService.findOrdersByUserId(userId);
 
@@ -35,11 +36,13 @@ orderRouter.post(
   orderValidator,
   wrapAsync(async (req, res) => {
     const { products } = req.body;
+    const userId = req.currentUserId;
 
     const totalPrice = await orderService.calculateTotalPrice(products);
 
     const result = await orderService.createOrder({
       ...req.body,
+      userId,
       totalPrice,
     });
 
@@ -49,6 +52,7 @@ orderRouter.post(
 
 orderRouter.put(
   '/admin/orders/:orderId',
+  authRequired,
   orderUpdateValidator,
   wrapAsync(async (req, res) => {
     const { orderId } = req.params;
@@ -58,7 +62,7 @@ orderRouter.put(
       status,
     });
 
-    return res.status(200).send(updatedOrder);
+    return res.status(201).send(updatedOrder);
   })
 );
 
@@ -76,7 +80,17 @@ orderRouter.put(
       }
     );
 
-    return res.status(200).send(updatedOrder);
+    return res.status(201).send(updatedOrder);
+  })
+);
+
+orderRouter.delete(
+  'admin/orders/:orderId',
+  wrapAsync(async (req, res) => {
+    const { orderId } = req.params;
+    const deletedOrder = await orderService.deleteOrder(orderId);
+
+    res.status(201).send(deletedOrder);
   })
 );
 
@@ -84,7 +98,9 @@ orderRouter.delete(
   '/orders/:orderId',
   wrapAsync(async (req, res) => {
     const { orderId } = req.params;
-    const deletedOrder = await orderService.deleteOrder(orderId);
+    const userId = req.currentUserId;
+    console.log(userId);
+    const deletedOrder = await orderService.deleteOrder(userId, orderId);
 
     res.status(201).send(deletedOrder);
   })

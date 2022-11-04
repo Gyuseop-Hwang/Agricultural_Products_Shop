@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { adminProductService } from '../services';
-import { wrapAsync, AppError } from '../utils';
+import { wrapAsync, BadRequestError } from '../utils';
 import { productValidator } from '../middlewares'
 import { body, validationResult } from 'express-validator'
 
@@ -34,7 +34,7 @@ adminProductRouter.delete('/products/:productId', wrapAsync(async (req, res) => 
 adminProductRouter.post('/products/categories', body('name').isLength({ min: 2 }), wrapAsync(async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    throw new AppError(400, errors);
+    throw new BadRequestError(errors);
   }
   const { name } = req.body;
   const createdCategory = await adminProductService.createCategory(name);
@@ -44,7 +44,7 @@ adminProductRouter.post('/products/categories', body('name').isLength({ min: 2 }
 adminProductRouter.put('/products/categories/:categoryId', body('name').isLength({ min: 2 }), wrapAsync(async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    throw new AppError(400, errors);
+    throw new BadRequestError(errors);
   }
   const { categoryId } = req.params;
   const update = req.body;

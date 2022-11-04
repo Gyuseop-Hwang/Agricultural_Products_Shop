@@ -1,4 +1,4 @@
-import { orderModel } from '../db';
+import { orderModel, userModel } from '../db';
 import { productModel } from '../db';
 import { BadRequestError } from '../utils';
 
@@ -8,11 +8,27 @@ class OrderService {
   }
 
   async findAllOrders() {
-    return await this.orderModel.findAll();
+    const allOrders = await this.orderModel.findAll();
+
+    if (allOrders.length < 1) return '주문 내역이 존재하지 않습니다.';
+
+    return allOrders;
+  }
+
+  async findOrder(orderId) {
+    const foundOrder = await this.orderModel.find(orderId);
+
+    if (!foundOrder) throw new BadRequestError('해당 주문을 찾을 수 없습니다.');
+
+    return foundOrder;
   }
 
   async findOrdersByUserId(userId) {
-    return await this.orderModel.findByUserId(userId);
+    const foundOrderArr = await this.orderModel.findByUserId(userId);
+
+    if (foundOrderArr.length < 1) return '주문 내역이 존재하지 않습니다.';
+
+    return foundOrderArr;
   }
 
   async createOrder(orderInfo) {
@@ -45,7 +61,13 @@ class OrderService {
     return updatedOrder;
   }
 
-  async deleteOrder(orderId) {
+  async deleteOrder(userId, orderId) {
+    const foundOrder = await this.findOrder(orderId);
+    const foundUser = await userModel.findById(String(foundOrder.userId));
+
+    if (String(foundUser._id) !== userId)
+      throw new BadRequestError('다른 사람의 주문입니다. 삭제할 수 없습니다.');
+
     const deletedOrder = await this.orderModel.delete(orderId);
 
     if (!deletedOrder)
