@@ -8,15 +8,14 @@ const addCartBtn = document.getElementById("addCartBtn");
 const countInput = document.getElementById("count");
 const totalPriceSpan = document.getElementById("totalPrice");
 //json server에서 목데이터로 item object 가져오기
-function getProduct() {
-	return fetch("http://localhost:4000/item").then(res => res.json());
+function getProduct(productId) {
+	return fetch(`http://localhost:5500/api/products/${productId}`).then(res => res.json());
 }
 
 //상세페이지에 상품 출력
-async function printProduct() {
-	const product = await getProduct();
+async function printProduct(productId) {
+	const product = await getProduct(productId);
 	const { _id, title, imageUrl, price, quantity, description, category } = product;
-	console.log(imageUrl);
 	productImage.src = imageUrl
 	titleSpan.innerText = title
 	priceSpan.innerText = `${price.toLocaleString()}원`
@@ -30,10 +29,11 @@ async function printProduct() {
 	addCartBtn.addEventListener("click", (ev) => {
 		ev.preventDefault();
 		const count = countInput.value;
-		localStorage.setItem("product", JSON.stringify({ ...product, "count": Number(count) }))
+		localStorage.setItem("product", JSON.stringify({ _id, "count": Number(count) }))
 		alert("장바구니에 추가되었습니다.");
 	})
 	totalPriceSpan.innerText = `${price.toLocaleString()}원`
 
 }
-printProduct();
+let productId = '6363578739bd781e3f24e278'
+printProduct(productId);
