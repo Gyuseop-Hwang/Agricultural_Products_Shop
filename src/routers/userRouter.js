@@ -45,18 +45,16 @@ userRouter.post(
   })
 );
 
-userRouter.get('/users/userInfo', loginRequired, async (req, res) => {
+userRouter.get('/users/userInfo', loginRequired, wrapAsync(async (req, res) => {
   const userInfo = await userService.getUserInfo(req.currentUserId);
   res.status(200).json(userInfo);
-})
+}))
 
 userRouter.patch(
-  '/users/:userId',
+  '/users/userInfo',
   loginRequired,
   wrapAsync(async (req, res) => {
-    const userId = req.params.userId;
 
-    // body data 로부터 업데이트할 사용자 정보를 추출함.
     const fullName = req.body.fullName;
     const password = req.body.password;
     const address = req.body.address;
@@ -66,18 +64,14 @@ userRouter.patch(
       throw new BadRequestError('사용자가 role을 수정할 수는 없습니다. 관리자 권한이 필요합니다.');
     }
 
-    // body data로부터, 확인용으로 사용할 현재 비밀번호를 추출함.
     const currentPassword = req.body.currentPassword;
 
-    // currentPassword 없을 시, 진행 불가
     if (!currentPassword) {
       throw new FrobiddenError('정보를 변경하려면, 현재의 비밀번호가 필요합니다.');
     }
 
-    const userInfoRequired = { userId, currentPassword };
+    const userInfoRequired = { userId: req.currentUserId, currentPassword };
 
-    // 위 데이터가 undefined가 아니라면, 즉, 프론트에서 업데이트를 위해
-    // 보내주었다면, 업데이트용 객체에 삽입함.
     const toUpdate = {
       ...(fullName && { fullName }),
       ...(password && { password }),
@@ -85,16 +79,19 @@ userRouter.patch(
       ...(phoneNumber && { phoneNumber }),
     };
 
-    // 사용자 정보를 업데이트함.
     const updatedUserInfo = await userService.setUser(
       userInfoRequired,
       toUpdate
     );
 
-    // 업데이트 이후의 유저 데이터를 프론트에 보내 줌
     res.status(200).json(updatedUserInfo);
   })
 );
+
+userRouter.delete('/users/withdrawal', loginRequired, wrapAsync(async (req, res) => {
+  await userService.withdraw(req.currentUserId);
+  res.status(200).json({ result: "success", message: "회원탈퇴 되셨습니다." })
+}))
 
 userRouter.get(
   '/admin/userlist',
@@ -105,6 +102,12 @@ userRouter.get(
     res.status(200).json(users);
   })
 );
+
+userRouter.delete('/admin/withdrawal/:userId', loginRequired, authRequired, wrapAsync(async (req, res) => {
+  const { userId } = req.params;
+  const deletedUser = await userService.withdraw(userId);
+  res.status(200).json({ result: "success", message: `${deletedUser.fullName} 회원을 삭제하였습니다.` })
+}))
 
 
 export { userRouter };

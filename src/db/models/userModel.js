@@ -32,8 +32,8 @@ export class UserModel {
     return updatedUser;
   }
 
-  async delete() {
-    return await User.deleteMany({});
+  async deleteUser(userId) {
+    return await User.findByIdAndDelete(userId);
   }
 }
 

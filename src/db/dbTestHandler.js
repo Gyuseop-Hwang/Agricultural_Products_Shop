@@ -8,11 +8,11 @@ export const dbTestHandler = async (db) => {
     _id: '63632d4ddfb91201fe8d5eec',
     email: 'root@root.com',
     fullName: 'root',
-    phoneNumber: "010-2342-1342",
+    phoneNumber: '010-2342-1342',
     address: {
-      postalCode: "12345",
-      address1: "서울시 행복구 행복동",
-      address2: "광주시 광산구 산정동"
+      postalCode: '12345',
+      address1: '서울시 행복구 행복동',
+      address2: '광주시 광산구 산정동',
     },
     password: '$2b$10$6fPyrhFvBgMUZbjIwnlapOoieg8fSXJem9HldX6mggagG5XDGy0l2',
   });
@@ -21,11 +21,11 @@ export const dbTestHandler = async (db) => {
     _id: '63632d4ddfb91201fe8d5ea6',
     email: 'rbtjq@rbtjq.com',
     fullName: '황규섭',
-    phoneNumber: "010-1942-5923",
+    phoneNumber: '010-1942-5923',
     address: {
-      postalCode: "52734",
-      address1: "익산시 행복구 행복동",
-      address2: "천안시 동구 불당동"
+      postalCode: '52734',
+      address1: '익산시 행복구 행복동',
+      address2: '천안시 동구 불당동',
     },
     password: '$2b$10$6fPyrhFvBgMUZbjIwnlapOoieg8fSXJem9HldX6mggagG5XDGy0l2',
   });
@@ -34,11 +34,11 @@ export const dbTestHandler = async (db) => {
     _id: '63632d4ddfb91201fe8d5e10',
     email: 'doyeon@doyeon.com',
     fullName: '이도연',
-    phoneNumber: "010-1521-3526",
+    phoneNumber: '010-1521-3526',
     address: {
-      postalCode: "52734",
-      address1: "정읍시 수성구 수성동",
-      address2: "광주시 광산구 운남동"
+      postalCode: '52734',
+      address1: '정읍시 수성구 수성동',
+      address2: '광주시 광산구 운남동',
     },
     password: '$2b$10$6fPyrhFvBgMUZbjIwnlapOoieg8fSXJem9HldX6mggagG5XDGy0l2',
   });
@@ -122,18 +122,23 @@ export const dbTestHandler = async (db) => {
     _id: '6363834966e64222e7cf64db',
     recipient: 'root',
     phoneNumber: '010-0000-0000',
+    totalPrice: 23000,
     products: [
       {
-        productId: '6363569051661eb4f1deba92',
-        quantity: 1,
+        product: '6363578739bd781e3f24e279',
+        count: 1,
       },
       {
-        productId: '6363569051661eb4f1deba90',
-        quantity: 2,
+        product: '6363578739bd781e3f24e278',
+        count: 2,
       },
     ],
-    shippingAddress: '도착지',
-    userId: '63632d4ddfb91201fe8d5eec',
+    shippingAddress: {
+      postalCode: '처음 postalCode',
+      address1: '처음 address1',
+      address2: '처음 address2',
+    },
+    user: '63632d4ddfb91201fe8d5eec',
   });
 
   process.on('SIGINT', async () => {

@@ -1,46 +1,54 @@
-import { Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 const {
-    Types: { ObjectId },
+  Types: { ObjectId },
 } = Schema;
 
 const OrderSchema = new Schema(
-    {
-        status: {
-            type: String,
-            default: '주문 완료',
-        },
-        recipient: {
-            type: String,
-            required: true,
-        },
-        phoneNumber: {
-            type: String,
-            required: true,
-        },
-        shippingAddress: {
-            type: String,
-            required: true,
-        },
-
-        totalPrice: Number,
-
-        products: [
-            {
-                productId: { type: ObjectId, ref: 'Product', required: true },
-                quantity: Number,
-            },
-        ],
-
-        userId: {
-            type: Schema.Types.ObjectId,
-            required: true,
-            ref: 'user',
-        },
+  {
+    status: {
+      type: String,
+      default: '주문 완료',
     },
-    {
-        timestamps: true,
-    }
+    recipient: {
+      type: String,
+      required: true,
+    },
+    phoneNumber: {
+      type: String,
+      required: true,
+    },
+    shippingAddress: {
+      type: new Schema(
+        {
+          postalCode: String,
+          address1: String,
+          address2: String,
+        },
+        {
+          _id: false,
+        }
+      ),
+    },
+
+    totalPrice: Number,
+
+    products: [
+      {
+        product: { type: ObjectId, ref: 'Product', required: true },
+        count: { type: Number, required: true },
+      },
+    ],
+
+    user: {
+      type: ObjectId,
+      ref: 'User',
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
 );
 
 export { OrderSchema };
