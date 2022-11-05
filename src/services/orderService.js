@@ -1,6 +1,6 @@
 import { orderModel, userModel } from '../db';
 import { productModel } from '../db';
-import { BadRequestError } from '../utils';
+import { BadRequestError, NotFoundError } from '../utils';
 
 class OrderService {
   constructor(orderModel) {
@@ -10,7 +10,7 @@ class OrderService {
   async findAllOrders() {
     const allOrders = await this.orderModel.findAll();
 
-    if (allOrders.length < 1) return '주문 내역이 존재하지 않습니다.';
+    if (allOrders.length < 1) return {};
 
     return allOrders;
   }
@@ -18,7 +18,7 @@ class OrderService {
   async findOrder(orderId) {
     const foundOrder = await this.orderModel.find(orderId);
 
-    if (!foundOrder) throw new BadRequestError('해당 주문을 찾을 수 없습니다.');
+    if (!foundOrder) throw new NotFoundError('해당 주문을 찾을 수 없습니다.');
 
     return foundOrder;
   }
@@ -26,49 +26,52 @@ class OrderService {
   async findOrdersByUserId(userId) {
     const foundOrderArr = await this.orderModel.findByUserId(userId);
 
-    if (foundOrderArr.length < 1) return '주문 내역이 존재하지 않습니다.';
+    if (foundOrderArr.length < 1) return {};
 
     return foundOrderArr;
   }
 
   async createOrder(orderInfo) {
-    const { userId } = orderInfo;
-    const user = await userModel.findById(userId);
-    orderInfo.user = user;
     const createdOrder = await this.orderModel.create(orderInfo);
 
-    if (!createdOrder)
-      throw new BadRequestError('등록 요청을 실행할 수 없습니다.');
+    const createdOrderInDB = await this.orderModel.find(createdOrder._id);
+
+    if (!createdOrderInDB) throw new Error('서버에서 처리할 수 없었습니다.');
 
     return createdOrder;
   }
 
   async updateOrderStatus(orderId, orderStatus) {
+    const beforeUpdatedOrder = await this.findOrder(orderId);
     const updatedOrder = await this.orderModel.update(orderId, orderStatus);
 
-    if (!updatedOrder)
-      throw new BadRequestError('배송 상태 수정 요청을 실행할 수 없습니다.');
+    if (!updatedOrder) throw new Error('서버에서 처리할 수 없었습니다.');
+
+    if (beforeUpdatedOrder.status === updatedOrder.status)
+      throw new BadRequestError('변경된 주문 상태 값을 입력해주세요!');
 
     return updatedOrder;
   }
 
   async updateOrderShippingAddress(orderId, orderShippingAddress) {
+    await this.findOrder(orderId);
+
     const updatedOrder = await this.orderModel.update(
       orderId,
       orderShippingAddress
     );
 
-    if (!updatedOrder)
-      throw new BadRequestError('도착지 수정 요청을 실행할 수 없습니다.');
+    if (!updatedOrder) throw new Error('서버에서 처리할 수 없었습니다.');
 
     return updatedOrder;
   }
 
   async deleteOrderByAdmin(orderId) {
+    await this.findOrder(orderId);
+
     const deletedOrder = await this.orderModel.delete(orderId);
 
-    if (!deletedOrder)
-      throw new BadRequestError('삭제 요청을 실행할 수 없습니다.');
+    if (!deletedOrder) throw new Error('서버에서 처리할 수 없었습니다.');
 
     return deletedOrder;
   }
@@ -81,8 +84,7 @@ class OrderService {
 
     const deletedOrder = await this.orderModel.delete(orderId);
 
-    if (!deletedOrder)
-      throw new BadRequestError('삭제 요청을 실행할 수 없습니다.');
+    if (!deletedOrder) throw new Error('서버에서 처리할 수 없었습니다.');
 
     return deletedOrder;
   }
