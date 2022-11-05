@@ -23,8 +23,7 @@
       crossorigin="anonymous"
     ></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="home.css" />
-    <script src="home.js" type="module" defer></script>
+    <link rel="stylesheet" href="orderSuccess.css" />
   </head>
   <body>
     <!-- 헤더 -->
@@ -33,7 +32,7 @@
         <div class="navbar-brand">
           <a class="navbar-item" href="/">
             <img src="/elice-rabbit.png" width="30" height="30" />
-            <span class="has-text-link">쇼핑-n팀</span>
+            <span class="has-text-link">쇼핑-데모</span>
           </a>
 
           <a
@@ -49,30 +48,32 @@
           </a>
         </div>
 
-        <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
-          <ul id="navbar">
-            <li><a href="/login">로그인</a></li>
-            <li><a href="/register">회원가입</a></li>
-            <li>
-              <a href="/cart" aria-current="page">
-                <span class="icon">
-                  <i class="fas fa-cart-shopping"></i>
-                </span>
-                <span>카트</span>
-              </a>
-            </li>
-          </ul>
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
+            <ul id="navbar">
+              <li><a href="/register">회원가입</a></li>
+              <li>
+                <a href="/cart" aria-current="page">
+                  <span class="icon">
+                    <i class="fas fa-cart-shopping"></i>
+                  </span>
+                  <span>카트</span>
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
-
-    <div class="div-container">
-      <div class="landing" id="landingDiv">
-        <h1>랜딩 페이지</h1>
-      </div>
-      <div class="greeting" id="greetingDiv">
-        <h1>안녕하세요!</h1>
-      </div>
+    <!-- 주문 -->
+    <div
+      class="container is-flex is-flex-direction-column is-align-items-center is-justify-content-center order-success"
+    >
+      <p class="title is-4 mb-6">주문이 완료되었습니다.</p>
+      <p>
+        <button class="button mr-4">주문 목록</button
+        ><button class="button">상품 목록</button>
+      </p>
     </div>
   </body>
 </html>

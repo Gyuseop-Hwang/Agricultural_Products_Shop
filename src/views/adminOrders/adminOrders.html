@@ -23,8 +23,8 @@
       crossorigin="anonymous"
     ></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="home.css" />
-    <script src="home.js" type="module" defer></script>
+    <link rel="stylesheet" href="adminOrders.css" />
+    <script src="adminOrders.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -54,7 +54,7 @@
             <li><a href="/login">로그인</a></li>
             <li><a href="/register">회원가입</a></li>
             <li>
-              <a href="/cart" aria-current="page">
+              <a href="#cart" aria-current="page">
                 <span class="icon">
                   <i class="fas fa-cart-shopping"></i>
                 </span>
@@ -66,13 +66,43 @@
       </div>
     </nav>
 
-    <div class="div-container">
-      <div class="landing" id="landingDiv">
-        <h1>랜딩 페이지</h1>
-      </div>
-      <div class="greeting" id="greetingDiv">
-        <h1>안녕하세요!</h1>
-      </div>
-    </div>
+    <section
+      class="container is-flex is-align-items-center is-flex-direction-column"
+    >
+      <h2 class="mb-3">관리자페이지</h2>
+      <h3 class="title is-4">전체 주문내역</h3>
+      <!-- <div class="level">
+        <div class="level-item has-text-centered is-flex-direction-column">
+          <p class="title is-5">총주문수</p>
+          <p class="is-size-5">1</p>
+        </div>
+        <div class="level-item has-text-centered is-flex-direction-column">
+          <p class="title is-5">배송준비중</p>
+          <p class="is-size-5">1</p>
+        </div>
+        <div class="level-item has-text-centered is-flex-direction-column">
+          <p class="title is-5">배송중</p>
+          <p class="is-size-5">1</p>
+        </div>
+        <div class="level-item has-text-centered is-flex-direction-column">
+          <p class="title is-5">배송완료</p>
+          <p class="is-size-5">1</p>
+        </div>
+      </div> -->
+      <table class="table is-bordered is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <th>주문 날짜</th>
+            <th>userID</th>
+            <th>주문 정보</th>
+            <th>총액</th>
+            <th>배송 정보</th>
+            <th>상태</th>
+            <th>삭제</th>
+          </tr>
+        </thead>
+        <tbody id="orderList"></tbody>
+      </table>
+    </section>
   </body>
 </html>

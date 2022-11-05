@@ -23,8 +23,8 @@
       crossorigin="anonymous"
     ></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="home.css" />
-    <script src="home.js" type="module" defer></script>
+    <link rel="stylesheet" href="cart.css" />
+    <script src="cart.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -54,7 +54,7 @@
             <li><a href="/login">로그인</a></li>
             <li><a href="/register">회원가입</a></li>
             <li>
-              <a href="/cart" aria-current="page">
+              <a href="#cart" aria-current="page">
                 <span class="icon">
                   <i class="fas fa-cart-shopping"></i>
                 </span>
@@ -66,12 +66,44 @@
       </div>
     </nav>
 
-    <div class="div-container">
-      <div class="landing" id="landingDiv">
-        <h1>랜딩 페이지</h1>
+    <!-- 장바구니 -->
+    <div class="container">
+      <h2 class="block">장바구니</h2>
+      <div>
+        <table
+          id="cart-item"
+          class="table is-bordered is-hoverable has-text-centered mb-4"
+        >
+          <thead>
+            <tr class="has-text-centered">
+              <th class="check-box"></th>
+              <th>이미지</th>
+              <th class="product-name th">상품정보</th>
+              <th>판매가</th>
+              <th class="product-quantity">수량</th>
+              <th>합계</th>
+            </tr>
+          </thead>
+          <tbody id="cartProductList"></tbody>
+        </table>
+        <div>
+          <p id="emptyCartMessage">장바구니가 비어 있습니다.</p>
+        </div>
       </div>
-      <div class="greeting" id="greetingDiv">
-        <h1>안녕하세요!</h1>
+      <div class="total-price mb-4">
+        <p>총 <span id="totalPrice">0</span>원</p>
+      </div>
+      <div class="delete-button-box mb-4">
+        <button class="button is-light" id="deleteSelectedButton">
+          선택 항목 삭제
+        </button>
+        <button class="button is-light" id="deleteAllButton">전체 삭제</button>
+      </div>
+
+      <div>
+        <a href="/order"
+          ><button class="button is-success is-outlined">주문하기</button></a
+        >
       </div>
     </div>
   </body>
