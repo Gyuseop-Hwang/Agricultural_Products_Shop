@@ -5,11 +5,11 @@ const productTable = document.getElementById("productListTable");
 // 전체 상품 출력
 function printAllProducts(product, index) {
   console.log(product);
-  const { _id: id, category, imageUrl, title, price, quantity } = product;
+  const { _id: id, category, image, title, price, quantity } = product;
   const tr = document.createElement("tr");
   tr.innerHTML = `<tr>
   <td>${category.name}</td>
-  <td>${imageUrl}</td>
+  <td><img class="product-image" src="${image.path}" /></td>
   <td>${title}</td>
   <td>${price}</td>
   <td>${quantity}</td>
