@@ -16,6 +16,7 @@ import {
 import morgan from 'morgan';
 import { NotFoundError } from './utils';
 
+import path from 'path' //승연
 const app = express();
 
 // log 기록
@@ -32,7 +33,11 @@ app.use(express.urlencoded({ extended: false }));
 
 // html, css, js 라우팅
 app.use(viewsRouter);
-
+//ejs 사용
+app.set('view engine', 'ejs');
+app.set('views', './views/')
+app.set("views", path.join(__dirname, 'views'));
+app.engine("html", require("ejs").renderFile);
 // api 라우팅
 // 아래처럼 하면, userRouter 에서 '/login' 으로 만든 것이 실제로는 앞에 /api가 붙어서
 // /api/login 으로 요청을 해야 하게 됨. 백엔드용 라우팅을 구분하기 위함임.

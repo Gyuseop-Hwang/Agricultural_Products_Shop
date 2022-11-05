@@ -3,6 +3,10 @@ import { adminProductService } from '../services';
 import { wrapAsync, BadRequestError } from '../utils';
 import { productValidator } from '../middlewares'
 import { body, validationResult } from 'express-validator'
+import { storage } from '../cloudinary'
+import multer from 'multer';
+
+const upload = multer({ storage });
 
 const adminProductRouter = Router();
 
@@ -11,16 +15,22 @@ adminProductRouter.get('/products/categories', wrapAsync(async (req, res) => {
   res.status(200).json(categories);
 }))
 
-adminProductRouter.post('/products', productValidator, wrapAsync(async (req, res) => {
+adminProductRouter.post('/products', upload.single('image'), productValidator, wrapAsync(async (req, res) => {
   const createInfo = req.body;
+  const { path, filename } = req.file;
+  createInfo.image = { path, filename }
   const { category } = req.body;
   const createdProduct = await adminProductService.createProduct(category, createInfo);
   res.status(201).json(createdProduct);
 }))
 
-adminProductRouter.put('/products/:productId', productValidator, wrapAsync(async (req, res) => {
+adminProductRouter.put('/products/:productId', upload.single('image'), productValidator, wrapAsync(async (req, res) => {
   const { productId } = req.params;
   const updateInfo = req.body;
+  if (req.file.path) {
+    const { path, filename } = req.file;
+    updateInfo.image = { path, filename }
+  }
   const newProduct = await adminProductService.updateProduct(productId, updateInfo)
   res.status(201).json(newProduct);
 }))

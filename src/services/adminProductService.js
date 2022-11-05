@@ -1,5 +1,6 @@
 import { productModel } from '../db';
 import { BadRequestError } from '../utils'
+import { cloudinary } from '../cloudinary';
 
 class AdminProductService {
 
@@ -14,8 +15,7 @@ class AdminProductService {
     }
     category.total++;
     await category.save();
-    const createdProduct = await this.productModel.createProduct(productInfo)
-    return createdProduct
+    return await this.productModel.createProduct(productInfo)
   }
 
   async updateProduct(productId, update) {
@@ -28,20 +28,25 @@ class AdminProductService {
     if (!categoryDoc) {
       throw new BadRequestError("존재하지 않는 카테고리입니다.")
     }
+    if (update.image && product.image.filename) {
+      await cloudinary.uploader.destroy(product.image.filename);
+    }
     const oldCategory = await this.productModel.findCategory(product.category._id);
     oldCategory.total--;
     await oldCategory.save();
     categoryDoc.total++;
     await categoryDoc.save();
     update.category = categoryDoc;
-    const newProduct = await this.productModel.updateProduct(productId, update)
-    return newProduct;
+    return await this.productModel.updateProduct(productId, update)
   }
 
   async deleteProduct(productId) {
     const product = await this.productModel.findOneProduct(productId);
     if (!product) {
       throw new BadRequestError('존재하지 않는 상품입니다.')
+    }
+    if (product.image.filename) {
+      await cloudinary.uploader.destroy(product.image.filename);
     }
     const category = await this.productModel.findCategory(product.category._id);
     category.total--;

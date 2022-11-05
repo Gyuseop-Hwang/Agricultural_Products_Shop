@@ -1,6 +1,8 @@
 import express from "express";
 import path from "path";
+import { app } from '../app';
 
+import { productService } from '../services';
 const viewsRouter = express.Router();
 
 // 페이지별로 html, css, js 파일들을 라우팅함
@@ -9,11 +11,32 @@ const viewsRouter = express.Router();
 viewsRouter.use("/", serveStatic("home"));
 viewsRouter.use("/register", serveStatic("register"));
 viewsRouter.use("/login", serveStatic("login"));
+
+viewsRouter.use("/userInfo", serveStatic("userInfo"));
+
+viewsRouter.use("/cart", serveStatic("cart"));
+viewsRouter.use("/order", serveStatic("order"));
+viewsRouter.use("/orderSuccess", serveStatic("orderSuccess"));
+viewsRouter.use("/adminOrders", serveStatic("adminOrders"));
+
 viewsRouter.use("/adminProducts", serveStatic("adminProducts"));
 viewsRouter.use("/adminProducts/:productId", serveStatic("productsAddUpdate"));
 viewsRouter.use("/adminProducts/add", serveStatic("productsAddUpdate"));
+// http://localhost:5000/search 에서는 views/searchProducts/register.html 파일을 화면에 띄움
+viewsRouter.use("/search", serveStatic("searchProducts"));
 
 // views 폴더의 최상단 파일인 rabbit.png, api.js 등을 쓸 수 있게 함
+viewsRouter.use("/product/:productId", async (req, res, next) => {
+  try {
+    const productId = req.params.productId;
+    const product = await productService.getProduct(productId);
+    console.log(product);
+    res.render("productDetail/productDetail.ejs", { product })
+  } catch (e) {
+    console.log(e);
+    res.redirect('/search');
+  }
+});
 viewsRouter.use("/", serveStatic(""));
 
 // views폴더 내의 ${resource} 폴더 내의 모든 파일을 웹에 띄우며,

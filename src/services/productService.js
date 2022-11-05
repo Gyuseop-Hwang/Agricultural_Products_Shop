@@ -7,8 +7,7 @@ class ProductService {
   }
 
   async getAllProducts() {
-    const products = await this.productModel.findProducts();
-    return products;
+    return await this.productModel.findProducts();
   }
 
   async getProduct(productId) {
@@ -24,13 +23,11 @@ class ProductService {
     if (!category) {
       throw new BadRequestError('존재하지 않는 카테고리입니다.')
     }
-    const productsByCategory = await productModel.findProducts({ category })
-    return productsByCategory;
+    return await this.productModel.findProducts({ category })
   }
 
   async searchProducts(title) {
-    const searchedProducts = await this.productModel.findProductsByTitle(decodeURI(decodeURIComponent(title)));
-    return searchedProducts
+    return await this.productModel.findProductsByTitle(decodeURI(decodeURIComponent(title)));
   }
 
 }
