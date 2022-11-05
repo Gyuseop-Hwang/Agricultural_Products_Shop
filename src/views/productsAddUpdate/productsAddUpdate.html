@@ -68,42 +68,42 @@
       </div>
     </nav>
     <!--상세 페이지-->
-    <div class="box detail-box container">
-      <!--상품 사진, 이름, 가격, 남은 재고, 카테고리, 가격-->
-      <div class="block detail-contents-box is-flex mb-5">
-        <!--이미지-->
-        <div class="product-image mr-6">
-          <input type="file" id="imageInput" />
-          <img id="image" />
-        </div>
-        <!--이름, 가격, 남은 재고, 카테고리-->
-        <div class="detail-contents-left">
-          <div class="detail-contents-left-inner">
-            <div class="mb-3">
-              <span>상품명</span>
-              <input class="input is-small" id="title" />
-            </div>
-            <div class="price-quantity-box">
-              <span>가격</span>
-              <input
-                class="input is-small mb-3"
-                id="price"
-                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-              />
-              <span>수량</span>
-              <input
-                class="input is-small mb-3"
-                id="quantity"
-                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-              />
-            </div>
-            <div class="category-name">
-              <span>카테고리</span>
-              <div class="select is-small mb-3">
-                <select id="categorySelect" name="카테고리"></select>
+    <form enctype="multipart/form-data">
+      <div class="box detail-box container">
+        <!--상품 사진, 이름, 가격, 남은 재고, 카테고리, 가격-->
+        <div class="block detail-contents-box is-flex mb-5">
+          <!--이미지-->
+          <div class="product-image mr-6">
+            <input type="file" id="imageInput" />
+            <img id="image" />
+          </div>
+          <!--이름, 가격, 남은 재고, 카테고리-->
+          <div class="detail-contents-left">
+            <div class="detail-contents-left-inner">
+              <div class="mb-3">
+                <span>상품명</span>
+                <input class="input is-small" id="title" />
               </div>
-            </div>
-            <form class="form">
+              <div class="price-quantity-box">
+                <span>가격</span>
+                <input
+                  class="input is-small mb-3"
+                  id="price"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                />
+                <span>수량</span>
+                <input
+                  class="input is-small mb-3"
+                  id="quantity"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                />
+              </div>
+              <div class="category-name">
+                <span>카테고리</span>
+                <div class="select is-small mb-3">
+                  <select id="categorySelect" name="카테고리"></select>
+                </div>
+              </div>
               <div class="count-price">
                 <!-- <div class="count">
                   <label>수량</label>
@@ -116,17 +116,17 @@
                   삭제
                 </button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
+        <!--상품 discription-->
+        <div>
+          <div id="editor"></div>
+        </div>
+        <div class="has-text-right">
+          <button class="button is-small" id="addOrUpdateButton">등록</button>
+        </div>
       </div>
-      <!--상품 discription-->
-      <div>
-        <div id="editor"></div>
-      </div>
-      <div class="has-text-right">
-        <button class="button is-small" id="addOrUpdateButton">등록</button>
-      </div>
-    </div>
+    </form>
   </body>
 </html>
