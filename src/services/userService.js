@@ -22,8 +22,7 @@ class UserService {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUserInfo = { fullName, email, password: hashedPassword, phoneNumber, address };
-    const createdNewUser = await this.userModel.create(newUserInfo);
-    return createdNewUser;
+    return await this.userModel.create(newUserInfo);
   }
 
 
@@ -57,13 +56,12 @@ class UserService {
   }
 
   async getUserInfo(id) {
-    return await userModel.findById(id);
+    return await this.userModel.findById(id);
   }
 
 
   async getUsers() {
-    const users = await this.userModel.findAll();
-    return users;
+    return await this.userModel.findAll();
   }
 
 
@@ -96,12 +94,8 @@ class UserService {
       toUpdate.password = newPasswordHash;
     }
 
-    user = await this.userModel.update({
-      userId,
-      update: toUpdate,
-    });
+    return await this.userModel.update({ userId, update: toUpdate });
 
-    return user;
   }
 
   async withdraw(userId) {
@@ -109,7 +103,7 @@ class UserService {
     if (!user) {
       throw new BadRequestError('가입 내역이 없습니다. 다시 한 번 확인해 주세요.')
     }
-    return await userModel.deleteUser(userId);
+    return await this.userModel.deleteUser(userId);
   }
 }
 

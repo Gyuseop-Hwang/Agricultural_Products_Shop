@@ -15,8 +15,7 @@ class AdminProductService {
     }
     category.total++;
     await category.save();
-    const createdProduct = await this.productModel.createProduct(productInfo)
-    return createdProduct
+    return await this.productModel.createProduct(productInfo)
   }
 
   async updateProduct(productId, update) {
@@ -38,8 +37,7 @@ class AdminProductService {
     categoryDoc.total++;
     await categoryDoc.save();
     update.category = categoryDoc;
-    const newProduct = await this.productModel.updateProduct(productId, update)
-    return newProduct;
+    return await this.productModel.updateProduct(productId, update)
   }
 
   async deleteProduct(productId) {

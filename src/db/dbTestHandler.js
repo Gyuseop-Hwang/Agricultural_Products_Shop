@@ -97,7 +97,7 @@ export const dbTestHandler = async (db) => {
   productModel.createProduct({
     _id: '6363578739bd781e3f24e277',
     title: '신선한 상추',
-    imageUrl: {
+    image: {
       path: "https://images.unsplash.com/photo-1622205313162-be1d5712a43f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80"
     },
     price: 2000,
@@ -108,7 +108,7 @@ export const dbTestHandler = async (db) => {
   productModel.createProduct({
     _id: '6363578739bd781e3f24e278',
     title: '똑똑한 호두',
-    imageUrl: {
+    image: {
       path: "https://images.unsplash.com/flagged/photo-1579410137922-543ed48d263e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
     },
     price: 10000,
@@ -119,7 +119,7 @@ export const dbTestHandler = async (db) => {
   productModel.createProduct({
     _id: '6363578739bd781e3f24e279',
     title: '영양만점 버섯',
-    imageUrl: {
+    image: {
       path: "https://images.unsplash.com/photo-1571074635691-b910c7a5cdbb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=903&q=80"
     },
     price: 3000,
