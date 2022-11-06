@@ -64,12 +64,13 @@ function eraseProducts() {
 //상품 목록 출력하기
 function printProducts(products) {
 	products.forEach(product => {
+		console.log(product.image.path)
 		const div = document.createElement("div");
 		div.classList.add("list-item", "product-container");
 		div.innerHTML = `
 		<div>
 			<figure class="image is-128x128">
-				<img class="" src="${product.imageUrl}" alt="${product.title} 이미지">
+				<img class="" src="${product.image.path}" alt="${product.title} 이미지">
 				</figure>
 		</div>
 

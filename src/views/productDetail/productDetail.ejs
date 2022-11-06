@@ -95,8 +95,8 @@
 								//수량 변경 시 가격도 변경되는 기능
 								countInput.addEventListener("change", (ev) => {
 									ev.preventDefault();
-									let totalPrice = Number(countInput.value) * <%=product.price%>;
-									totalPriceSpan.innerText = totalPrice.toLocaleString()
+									let totalPrice = Number(countInput.value) * "<%=product.price%>";
+									totalPriceSpan.innerText = `${totalPrice.toLocaleString()}원`
 								})
 								//장바구니 추가 시 localStorage에 저장되는 기능
 								addCartBtn.addEventListener("click", (ev) => {
