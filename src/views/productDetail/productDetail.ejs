@@ -50,35 +50,35 @@
 		</div>
 	</nav>
 	<!--상세 페이지-->
-	<div class="box detail-box">
+	<div class="box column is-four-fifths mx-auto">
 		<!--상품 사진, 이름, 가격, 남은 재고, 카테고리, 가격-->
-		<div class="block detail-contents-box">
+		<div class="column is-full is-flex">
 			<!--이미지-->
-			<div class="product-image">
+			<div class="column is-half">
 				<img id="image" src="<%=product.image.path%>">
 			</div>
 			<!--이름, 가격, 남은 재고, 카테고리-->
-			<div class="detail-contents-left">
-				<div class="detail-contents-left-inner">
-					<div class="title-box">
+			<div class="column is-half">
+				<div class="">
+					<div class="">
 						<span id="title">
 							<%=product.title%>
 						</span>
 					</div>
-					<div class="price-quantity-box">
+					<div class="">
 						<span id="price">
 							<%=product.price%>
 						</span>
 						<span id="quantity">남은 수량: <%=product.quantity%></span>
 					</div>
-					<div class="category-name">
+					<div class="">
 						<span id="categoryName">
 							<%=product.category.name%>
 						</span>
 					</div>
 					<form class="form">
-						<div class="count-price">
-							<div class="count">
+						<div class="">
+							<div class="">
 								<label>수량</label>
 								<input type="number" value=1 id="count" min="1" max="9">
 							</div>
@@ -86,7 +86,7 @@
 								<%=`${product.price.toLocaleString()}원`%>
 							</span>
 						</div>
-						<div class="botton-box">
+						<div class="">
 							<button class="button" id="addCartBtn">장바구니 추가</button>
 							<script>
 								const addCartBtn = document.getElementById("addCartBtn");

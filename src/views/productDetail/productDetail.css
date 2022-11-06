@@ -3,104 +3,11 @@
 	margin : 0;
 	box-sizing : border-box; /*패딩의 영역도 크기에 포함*/
 }
-a{
-	text-decoration: none;
-	color : black;
-}
-label{
-	font-weight: bold;
-	margin: 0 4px;
-}
-/*div 상품 상세 페이지*/
-.detail-box{
-	width: 1280px;
-	margin : 0 auto;
-	margin-top : 10px;
-	display: flex;
-	flex-direction: column;
 
-}
-/*div 상품 상세 상단 (이미지, 상품명, 가격 수량 등)*/
-.detail-contents-box{
-	display: flex;
-	width: 100%;
-	margin : 0 auto;
-}
-/*div 이미지 영역*/
-.product-image {
-	width: 50%;
-	text-align: center;
-	justify-content: center;
-	border: 1px solid #ddd;
-}
 #image{
-	width:100%;
-    height:100%;
-    object-fit:cover;
+	object-fit: contain;
 }
-
-.detail-contents-left{
-	width: 45%;
-	margin: 20px;
-}
-.detail-contents-left-inner{
-	width: 90%;
-	margin: 0 auto;
-}
-.title-box {
-	text-align: end;
-	margin: 10px auto;
-	font: bolder 32px black;
-}
-/*div 가격과 남은수량*/
-.price-quantity-box{
-	display: flex;
-	height: auto;
-	flex-direction: column;
-	align-items: flex-end;
-}
-#price{
-	font-size: 32px;
-	font-weight: bold;
-	color: orange;
-}
-#quantity{
-	font-size: 18px;
-	font-weight: bold;
-}
-/*div 카테고리 이름*/
-.category-name{
-	display: flex;
-	height: auto;
-	flex-direction: column;
-	align-items: flex-end;
-	font : 16px gray;
-}
-/*div 수량*/
-.count-price{
-	display: flex;
-	margin: 10px 0;
-	justify-content:space-between;
-	align-items: center;
-	height: 64px;
-}
-
-.count{
-	display: flex;
-	margin-left: 30px;
-	align-items:center;
-	height: 100%;
-}
-#totalPrice{
-	font-size: 24px;
-	font-weight: bold;
-}
-.row {
-	display: flex;
-	flex-direction: column;
-}
-.botton-box{
-	display: flex;
-	justify-content: end;
-
-}
+.is-50per {
+	height: 128px;
+	width: 50%;
+  }
