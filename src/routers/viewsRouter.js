@@ -1,8 +1,8 @@
 import express from "express";
 import path from "path";
-import { app } from '../app';
+import { app } from "../app";
 
-import { productService } from '../services';
+import { productService } from "../services";
 const viewsRouter = express.Router();
 
 // 페이지별로 html, css, js 파일들을 라우팅함
@@ -13,6 +13,7 @@ viewsRouter.use("/register", serveStatic("register"));
 viewsRouter.use("/login", serveStatic("login"));
 
 viewsRouter.use("/userInfo", serveStatic("userInfo"));
+viewsRouter.use("/orderHistory", serveStatic("orderHistory"));
 
 viewsRouter.use("/cart", serveStatic("cart"));
 viewsRouter.use("/order", serveStatic("order"));
@@ -31,10 +32,10 @@ viewsRouter.use("/product/:productId", async (req, res, next) => {
     const productId = req.params.productId;
     const product = await productService.getProduct(productId);
     console.log(product);
-    res.render("productDetail/productDetail.ejs", { product })
+    res.render("productDetail/productDetail.ejs", { product });
   } catch (e) {
     console.log(e);
-    res.redirect('/search');
+    res.redirect("/search");
   }
 });
 viewsRouter.use("/", serveStatic(""));
