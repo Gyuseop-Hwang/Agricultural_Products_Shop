@@ -122,7 +122,7 @@
 						//0이하의 수가 들어오는 것 방지
 						function preventionOutOfScope(){
 							let count = Number(countInput.value);
-							if (typeof count === "Number") countInput.value = 1;
+							if (!count)countInput.value = 1;
 							if (count <= 0) countInput.value=1;
 							if (count > 99) countInput.value=99;
 						}
