@@ -50,7 +50,7 @@
 		</div>
 	</nav>
 	<!--상세 페이지-->
-	<div class="box column is-four-fifths mx-auto">
+	<div class="box column is-three-quarters mx-auto">
 		<!--상품 사진, 이름, 가격, 남은 재고, 카테고리, 가격-->
 		<div class="column is-full is-flex">
 			<!--이미지-->
@@ -59,71 +59,102 @@
 			</div>
 			<!--이름, 가격, 남은 재고, 카테고리-->
 			<div class="column is-half">
-				<div class="">
-					<div class="">
-						<span id="title">
-							<%=product.title%>
-						</span>
-					</div>
-					<div class="">
-						<span id="price">
-							<%=product.price%>
-						</span>
-						<span id="quantity">남은 수량: <%=product.quantity%></span>
-					</div>
-					<div class="">
-						<span id="categoryName">
-							<%=product.category.name%>
-						</span>
-					</div>
-					<form class="form">
-						<div class="">
-							<div class="">
-								<label>수량</label>
-								<input type="number" value=1 id="count" min="1" max="9">
+				<div class="column mx-6 p-1">
+					<h1 class="title is-2 has-text-right">
+						<%=product.title%>
+					</h1>
+				</div>
+				<div class="column mx-6 p-1 has-text-right ">
+					<p class="is-size-3">
+						<%=product.price.toLocaleString()%>원
+					</p>
+					<p class="is-size-5">
+						남은 수량: <%=product.quantity%>
+					</p>
+				</div>
+				<div class="column mx-6 p-1 has-text-right ">
+					<p id="categoryName">
+						<%=product.category.name%>
+					</p>
+				</div>
+
+				<div class="column is-flex is-justify-content-flex-end mx-6 p-1">
+						<div class="column is-two-fifths is-flex is-align-items-center">
+							<label for="countInput" class="">수량</label>
+							<div class="product-count-subtract">
+								<i id="substractBtn"class="fa fa-chevron-left"></i>
 							</div>
-							<span id="totalPrice">
-								<%=`${product.price.toLocaleString()}원`%>
-							</span>
+							<div>
+								<input type="text" class="input is-rounded" id="countInput" type="number" value="1" min="1" max="99">
+							</div>
+							<div class="product-count-add">
+								<i id="addBtn"class="fa fa-chevron-right"></i>
+							</div>
 						</div>
-						<div class="">
-							<button class="button" id="addCartBtn">장바구니 추가</button>
-							<script>
-								const addCartBtn = document.getElementById("addCartBtn");
-								const countInput = document.getElementById("count");
-								const totalPriceSpan = document.getElementById("totalPrice");
-								//수량 변경 시 가격도 변경되는 기능
-								countInput.addEventListener("change", (ev) => {
-									ev.preventDefault();
-									let totalPrice = Number(countInput.value) * "<%=product.price%>";
-									totalPriceSpan.innerText = `${totalPrice.toLocaleString()}원`
-								})
-								//장바구니 추가 시 localStorage에 저장되는 기능
-								addCartBtn.addEventListener("click", (ev) => {
-									ev.preventDefault();
-									const count = countInput.value;
-									let newProduct = {id : "<%=product._id%>", count: Number(count)};
-									//장바구니에 products 가져오기
-									let localProducts = localStorage.getItem("products");
-									let products;
-									if( localProducts)
-										products= JSON.parse(localProducts);
-									if(!products){
-										console.log("새 리스트 생성");
-										products=[];
-									}
-									if(products.find(product => product.id === newProduct.id)){
-										alert("이미 같은 상품이 장바구니에 존재합니다.");
-										return;
-									}
-									products.push(newProduct);
-									localStorage.setItem("products", JSON.stringify(products))
-									alert("장바구니에 추가되었습니다.");
-								})
-							</script>
-							<button class="button" id="buyBtn">구매</button>
-						</div>
-					</form>
+					<div class="is-align-items-center">
+						<p id="totalPrice">
+							<%=`${product.price.toLocaleString()}원`%>
+						</p>
+					</div>
+				</div>
+				<div class="">
+					<button class="button" id="addCartBtn">장바구니 추가</button>
+					<script>
+						const addCartBtn = document.getElementById("addCartBtn");
+						const countInput = document.getElementById("countInput");
+						const totalPriceSpan = document.getElementById("totalPrice");
+						const addBtn = document.getElementById("addBtn")
+						const subtractBtn = document.getElementById("substractBtn");
+
+						addBtn.addEventListener("click", () => {
+								countInput.value = Number(countInput.value) + 1;
+								preventionOutOfScope(); updateTotalPrice()
+							})
+						substractBtn.addEventListener("click", () => {
+								countInput.value = Number(countInput.value) - 1;
+								preventionOutOfScope(); updateTotalPrice()
+							})
+						//수량 변경 시 가격도 변경되는 기능
+						function updateTotalPrice(){
+							let totalPrice = Number(countInput.value) * "<%=product.price%>";
+							totalPriceSpan.innerText = `${totalPrice.toLocaleString()}원`
+						}
+						//0이하의 수가 들어오는 것 방지
+						function preventionOutOfScope(){
+							let count = Number(countInput.value);
+							if (typeof count === "Number") countInput.value = 1;
+							if (count <= 0) countInput.value=1;
+							if (count > 99) countInput.value=99;
+						}
+						countInput.addEventListener("change", (ev) => {
+							ev.preventDefault();
+							preventionOutOfScope();
+							updateTotalPrice()
+						})
+						//장바구니 추가 시 localStorage에 저장되는 기능
+						addCartBtn.addEventListener("click", (ev) => {
+							ev.preventDefault();
+							const count = countInput.value;
+							let newProduct = { id: "<%=product._id%>", count: Number(count) };
+							//장바구니에 products 가져오기
+							let localProducts = localStorage.getItem("products");
+							let products;
+							if (localProducts)
+								products = JSON.parse(localProducts);
+							if (!products) {
+								console.log("새 리스트 생성");
+								products = [];
+							}
+							if (products.find(product => product.id === newProduct.id)) {
+								alert("이미 같은 상품이 장바구니에 존재합니다.");
+								return;
+							}
+							products.push(newProduct);
+							localStorage.setItem("products", JSON.stringify(products))
+							alert("장바구니에 추가되었습니다.");
+						})
+					</script>
+					<button class="button" id="buyBtn">구매</button>
 				</div>
 			</div>
 		</div>

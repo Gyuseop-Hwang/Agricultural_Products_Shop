@@ -1,13 +1,3 @@
-*{
-	padding : 0;
-	margin : 0;
-	box-sizing : border-box; /*패딩의 영역도 크기에 포함*/
-}
-
 #image{
 	object-fit: contain;
 }
-.is-50per {
-	height: 128px;
-	width: 50%;
-  }
