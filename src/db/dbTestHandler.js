@@ -51,22 +51,22 @@ export const dbTestHandler = async (db) => {
     role: 'administrator',
   });
 
-  categoryModel.create({
+  categoryModel.createCategory({
     _id: '63613676b3cd1137208c7e78',
     name: '과일',
     total: 2,
   });
-  categoryModel.create({
+  categoryModel.createCategory({
     _id: '63613687b3cd1137208c7e7a',
     name: '야채',
     total: 1,
   });
-  categoryModel.create({
+  categoryModel.createCategory({
     _id: '63613692b3cd1137208c7e7c',
     name: '견과류',
     total: 1,
   });
-  categoryModel.create({
+  categoryModel.createCategory({
     _id: '63614045b3cd1137208c7ea2',
     name: '버섯류',
     total: 1,
