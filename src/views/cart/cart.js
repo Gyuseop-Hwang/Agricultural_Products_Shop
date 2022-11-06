@@ -97,15 +97,16 @@ function deleteAllProduct() {
 }
 
 // dom에 장바구니 항목 추가
-// 상품 링크 추가해야 함
 function paintProduct(product, count, index) {
   const tr = document.createElement("tr");
   tr.className = "product";
   tr.innerHTML = `<td><input type="checkbox" class="check-box"  data-product-id="${
     product._id
   }"/></td>
-    <td>이미지 추후 삽입</td>
-    <td class="product-name has-text-left"><p>${product.title}</p></td>
+    <td><img src="${product.image.path}"/></td>
+    <td class="product-name has-text-left"><a href="/product/${product._id}">${
+    product.title
+  }</a></td>
     <td class="product-price">${product.price.toLocaleString()}원</td>
     <td class="product-quantity"><input type="number" class="number-input" id="countInput${index}"  value="${count}" min="1"/><button class="change-count-button" id="changeCountButton${index}" data-product-id="${
     product._id

@@ -42,21 +42,20 @@ function printProduct(result) {
 }
 
 // submit시 입력된 값 받아옴
-function submitProduct() {
-  const newProduct = {
-    title: titleInput.value,
-    imageUrl: "test",
-    price: priceInput.value,
-    quantity: quantityInput.value,
-    description: editor.getData(),
-    category: categorySelect.options[categorySelect.selectedIndex].value,
-  };
-
-  addOrUpdateProduct(
-    newProduct,
-    window.location.pathname.split("/")[2] ?? null
+function submitProduct(e) {
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append("title", titleInput.value);
+  formData.append("image", fileInput.files[0]);
+  formData.append("price", priceInput.value);
+  formData.append("quantity", quantityInput.value);
+  formData.append("description", editor.getData());
+  formData.append(
+    "category",
+    categorySelect.options[categorySelect.selectedIndex].value
   );
-  console.log(newProduct);
+
+  addOrUpdateProduct(formData, window.location.pathname.split("/")[2] ?? null);
 }
 
 // 수정 화면일 경우(url에 id 포함되어 있을 경우) 상품 get요청
@@ -98,8 +97,13 @@ async function addOrUpdateProduct(data, id) {
       window.location.replace("/adminProducts");
       return result;
     }
+
     //등록 요청시
-    await Api.post("/api/admin/products", data);
+    await fetch("/api/admin/products", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${sessionStorage["token"]}` },
+      body: data,
+    });
     window.location.replace("/adminProducts");
   } catch (err) {
     console.error(err.stack);
