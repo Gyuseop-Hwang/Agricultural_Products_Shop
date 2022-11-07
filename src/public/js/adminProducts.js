@@ -1,4 +1,4 @@
-import * as Api from "/api.js";
+import * as Api from "./api.js";
 
 // 삭제 버튼 이벤트 등록
 function clickDeleteButton(product, index) {

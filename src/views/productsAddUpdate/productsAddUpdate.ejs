@@ -38,12 +38,17 @@
         <div class="block detail-contents-box is-flex mb-5">
           <!--이미지-->
           <div class="product-image mr-6">
-            <input type="file" id="imageInput" />
-            <img
-              id="image"
-              src="<%=product.image.path%>"
-              alt="<%=product.title%>"
-            />
+            <div class="image-box">
+              <img
+                id="image"
+                src="<%=product.image.path%>"
+                alt="<%=product.title%>"
+              />
+            </div>
+            <label for="imageInput">
+              <div class="image-input">이미지 업로드</div>
+            </label>
+            <input type="file" name="imageInput" id="imageInput" />
           </div>
           <!--이름, 가격, 남은 재고, 카테고리-->
           <div class="detail-contents-left">
@@ -77,7 +82,7 @@
                 <div class="select is-small mb-3">
                   <select id="categorySelect" name="카테고리">
                     <% for(let i = 0; i < categories.length; i++){ %>
-                    <option value="<%=categories[i].name%>">
+                    <option value="<%=categories[i]._id%>">
                       <%=categories[i].name%>
                     </option>
                     <% } %>

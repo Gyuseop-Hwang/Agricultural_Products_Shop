@@ -66,7 +66,7 @@
           <% for(let i = 0; i<products.length;i++){ %> 
             <tr id="tr<%=i%>">
               <td><%=products[i].category.name%></td>
-              <td class="product-image"><img class="thumbnail" src="<%=products[i].image.path%>" /></td>
+              <td class="product-image"><img class="thumbnail" src="<%=products[i].image.path%>" alt="<%=products[i].title%> "/></td>
               <td class="product-title"><%=products[i].title%></td>
               <td><%=products[i].price%></td>
               <td><%=products[i].quantity%></td>

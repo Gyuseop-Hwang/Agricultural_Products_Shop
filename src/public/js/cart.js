@@ -105,7 +105,9 @@ function paintProduct(product, count, index) {
   }"/></td>
     <td class="product-name has-text-left"><img src="${
       product.image.path
-    }"/><div><a href="/product/${product._id}" class="mb-2">${
+    }" alt="${product.title}"/><div><a href="/product/${
+    product._id
+  }" class="mb-2">${
     product.title
   }</a><p>${product.price.toLocaleString()}원</p></div>
     </td>

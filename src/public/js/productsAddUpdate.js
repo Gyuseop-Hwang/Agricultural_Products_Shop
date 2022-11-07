@@ -1,4 +1,4 @@
-import * as Api from "/api.js";
+import * as Api from "./api.js";
 
 const fileInput = document.getElementById("imageInput");
 const titleInput = document.getElementById("title");
@@ -21,7 +21,6 @@ ClassicEditor.create(document.querySelector("#editor"))
 // 수정 화면일 경우(url에 id 포함되어 있을 경우) 상품 정보 출력
 function printProduct(result) {
   const { category, description } = result;
-
   editor.setData(description);
   deleteButton.classList.remove("hidden");
   for (let i = 0; i < categorySelect.options.length; i++) {
@@ -48,6 +47,8 @@ function submitProduct(e) {
   addOrUpdateProduct(formData, window.location.pathname.split("/")[2] ?? null);
 }
 
+console.log(window.location.pathname.split("/")[2]);
+
 // 수정 화면일 경우(url에 id 포함되어 있을 경우) 상품 get요청
 async function getProduct(productId) {
   try {
@@ -59,23 +60,21 @@ async function getProduct(productId) {
   }
 }
 
-// category get 요청
+// 상품 업데이트 or 추가
 async function addOrUpdateProduct(data, id) {
   try {
     //업데이트 요청시
     if (id !== "add") {
-      const bodyData = JSON.stringify(data);
-      const result = await fetch(`/api/admin/products/${id}`, {
+      await fetch(`/api/admin/products/${id}`, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
-        body: bodyData,
+        body: data,
       });
+      console.log("put요청");
       alert("수정이 완료됐습니다.");
-      window.location.replace("/adminProducts");
-      return result;
+      //window.location.replace("/adminProducts");
     }
 
     //등록 요청시
@@ -84,7 +83,7 @@ async function addOrUpdateProduct(data, id) {
       headers: { Authorization: `Bearer ${sessionStorage["token"]}` },
       body: data,
     });
-    window.location.replace("/adminProducts");
+    //window.location.replace("/adminProducts");
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
@@ -105,10 +104,11 @@ async function deleteProduct() {
   }
 }
 
-// 이미지 등록
-// fileInput.addEventListener("change", () => {
-//   console.log(fileInput.files);
-// });
+// 파일 선택시 img 보여줌
+fileInput.addEventListener("change", () => {
+  const img = document.getElementById("image");
+  img.src = URL.createObjectURL(fileInput.files[0]);
+});
 
 addOrUpdateButton.addEventListener("click", submitProduct);
 deleteButton.addEventListener("click", deleteProduct);
