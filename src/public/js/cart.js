@@ -1,4 +1,4 @@
-import * as Api from "/api.js";
+import * as Api from "./api.js";
 
 const cartProductList = document.getElementById("cartProductList");
 const deleteSelectedButton = document.getElementById("deleteSelectedButton");
@@ -100,15 +100,17 @@ function deleteAllProduct() {
 function paintProduct(product, count, index) {
   const tr = document.createElement("tr");
   tr.className = "product";
-  tr.innerHTML = `<td><input type="checkbox" class="check-box"  data-product-id="${
+  tr.innerHTML = `<td class="check-box-td"><input type="checkbox" class="check-box"  data-product-id="${
     product._id
   }"/></td>
-    <td><img src="${product.image.path}"/></td>
-    <td class="product-name has-text-left"><a href="/product/${product._id}">${
+    <td class="product-name has-text-left"><img src="${
+      product.image.path
+    }"/><div><a href="/product/${product._id}" class="mb-2">${
     product.title
-  }</a></td>
-    <td class="product-price">${product.price.toLocaleString()}원</td>
-    <td class="product-quantity"><input type="number" class="number-input" id="countInput${index}"  value="${count}" min="1"/><button class="change-count-button" id="changeCountButton${index}" data-product-id="${
+  }</a><p>${product.price.toLocaleString()}원</p></div>
+    </td>
+    <td class="product-quantity">
+    <input type="number" class="number-input mb-4" id="countInput${index}"  value="${count}" min="1"/><button class="change-count-button" id="changeCountButton${index}" data-product-id="${
     product._id
   }">변경</button></td>
     <td class="product-total-price" id="totalPrice${index}">${(

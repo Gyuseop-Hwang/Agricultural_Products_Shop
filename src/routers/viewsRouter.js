@@ -19,8 +19,10 @@ viewsRouter.use("/orderHistory", async (req, res, next) => {
 
 viewsRouter.use("/orderHistoryDetail", serveStatic("orderHistoryDetail"));
 
-viewsRouter.use("/cart", serveStatic("cart"));
-viewsRouter.use("/order", serveStatic("order"));
+viewsRouter.use("/cart", async (req, res, next) => res.render("cart/cart.ejs"));
+viewsRouter.use("/order", async (req, res, next) =>
+  res.render("order/order.ejs")
+);
 viewsRouter.use("/orderSuccess", serveStatic("orderSuccess"));
 viewsRouter.use("/adminOrders", serveStatic("adminOrders"));
 
