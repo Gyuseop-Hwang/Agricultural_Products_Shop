@@ -2,6 +2,8 @@ import { Router } from "express";
 import { adminProductService } from '../services';
 import { wrapAsync } from '../utils';
 import { productValidator } from '../middlewares'
+import { body, validationResult } from 'express-validator'
+import { BadRequestError } from "../utils";
 import { storage } from '../cloudinary'
 import multer from 'multer';
 
@@ -49,5 +51,21 @@ adminProductRouter.delete('/products/:productId', wrapAsync(async (req, res) => 
 
   res.status(200).json({ result: 'success', message: `${deletedProduct.title} 상품이 삭제되었습니다.` });
 }))
+
+adminProductRouter.patch(
+  '/products/:productId/toggleSale',
+  body('discountedPrice').isString().withMessage("string으로 들어와야 합니다.").isLength({ min: 2 }).trim().withMessage('상품할인 가격은 2자리 이상이어야 합니다.'),
+  wrapAsync(async (req, res) => {
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      throw new BadRequestError(errors.array())
+    }
+
+    const saleToggledProduct = await adminProductService.toggleSale(req.params.productId, req.body.discountedPrice);
+
+    res.status(201).json(saleToggledProduct);
+  }))
 
 export { adminProductRouter };
