@@ -19,7 +19,9 @@ viewsRouter.use("/orderHistory", async (req, res, next) => {
   res.render("orderHistory/orderHistory.ejs");
 });
 
-viewsRouter.use("/orderHistoryDetail", serveStatic("orderHistoryDetail"));
+viewsRouter.use("/orderHistoryDetail", async (req, res, next) => {
+  res.render("orderHistoryDetail/orderHistoryDetail.ejs");
+});
 
 viewsRouter.use("/cart", serveStatic("cart"));
 viewsRouter.use("/order", serveStatic("order"));

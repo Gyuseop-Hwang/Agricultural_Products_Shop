@@ -54,8 +54,6 @@ table {
 #shippingStatus,
 #quantity {
   text-align: center;
-  /* align-items: center;
-  justify-content: center; */
 }
 
 #orderReciptId {
