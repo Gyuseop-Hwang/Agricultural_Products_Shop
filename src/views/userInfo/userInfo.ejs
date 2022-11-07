@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UserInfo</title>
     <!-- 아이콘 -->
@@ -25,49 +25,14 @@
     ></script>
     <!-- 주소 API 관련 -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <link rel="stylesheet" href="userInfo.css" />
+    <link rel="stylesheet" href="/css/userInfo.css" />
+    <script defer src="/js/userInfo.js" type="module"></script>
+    <script defer src="/js/sampleAdd.js" type="module"></script>
   </head>
+
   <body>
-    <div class="dataSplit">
-      <header>
-        <nav class="navbar" role="navigation" aria-label="main navigation">
-          <div class="container mt-3">
-            <div class="navbar-brand">
-              <a class="navbar-item" href="/">
-                <img src="../elice-rabbit.png" width="30" height="30" />
-                <span class="has-text-link">쇼핑-n팀</span>
-              </a>
-  
-              <a
-                role="button"
-                class="navbar-burger"
-                aria-label="menu"
-                aria-expanded="false"
-                data-target="navbarBasicExample"
-              >
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-              </a>
-            </div>
-  
-            <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
-              <ul id="navbar">
-                <li><a href="/login">로그인</a></li>
-                <li><a href="/register">회원가입</a></li>
-                <li>
-                  <a href="#cart" aria-current="page">
-                    <span class="icon">
-                      <i class="fas fa-cart-shopping"></i>
-                    </span>
-                    <span>카트</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </header>
+    <div class="data-split">
+      <%-include("../common/header")%>
       <form>
         <div id="userInfo">
           <h1>회원정보</h1>
@@ -84,7 +49,7 @@
               <p id="emailText" class="defaultText">11</p>
             </div>
           </div>
-  
+
           <div id="nameInput" class="field">
             <label for="name" class="label">이름</label>
             <div class="control">
@@ -105,12 +70,12 @@
                 id="password"
                 class="input hidden"
                 type="text"
-                placeholder="******"
+                placeholder="새 비밀번호를 입력해주세요"
               />
-              <p id="passwordText" class="defaultText">******</p>
+              <p id="passwordText" class="defaultText"></p>
             </div>
           </div>
-  
+
           <div id="phoneInput" class="field">
             <label for="phone" class="label">전화번호</label>
             <div class="control">
@@ -123,9 +88,11 @@
               <p id="phoneText" class="defaultText">11</p>
             </div>
           </div>
-  
+
           <div id="postalCodeInput" class="field">
-            <label for="postalCode" id="postalCodeLabel" class="label">우편주소</label>
+            <label for="postalCode" id="postalCodeLabel" class="label"
+              >우편주소</label
+            >
             <div class="control">
               <input
                 id="postalCode"
@@ -133,12 +100,10 @@
                 type="text"
                 placeholder="01122"
               />
-              <p id="postalCodeText" class="defaultText">11</p>
-              
-              
+              <p id="postalCodeText" class="default-text">11</p>
             </div>
           </div>
-  
+
           <div id="addressInput" class="field">
             <label for="address" id="addressLabel" class="label">주소</label>
             <div class="control">
@@ -151,9 +116,11 @@
               <p id="addressText" class="defaultText">11</p>
             </div>
           </div>
-  
+
           <div id="detailAddressInput" class="field">
-            <label for="detailAddress" id="detailAddressLabel" class="label">상세주소</label>
+            <label for="detailAddress" id="detailAddressLabel" class="label"
+              >상세주소</label
+            >
             <div class="control">
               <input
                 id="detailAddress"
@@ -176,16 +143,39 @@
               />
             </div>
           </div>
-          
-            <p id="daumAddressText" class="hidden">주소</p>
-            <input class="hidden" type="text" id="sample6_postcode" placeholder="우편번호">
-            <input class="hidden" type="button" id="sample6_postcode_btn" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-            <input class="hidden" type="text" id="sample6_address" placeholder="주소"><br>
-            <input class="hidden" type="text" id="sample6_detailAddress" placeholder="상세주소">
-            <input class="hidden" type="text" id="sample6_extraAddress" placeholder="참고항목">
-          
-          
 
+          <p id="daumAddressText" class="hidden">주소</p>
+          <input
+            class="hidden"
+            type="text"
+            id="sample6_postcode"
+            placeholder="우편번호"
+          />
+          <input
+            class="hidden"
+            type="button"
+            id="sample6_postcode_btn"
+            onclick="sample6_execDaumPostcode()"
+            value="우편번호 찾기"
+          /><br />
+          <input
+            class="hidden"
+            type="text"
+            id="sample6_address"
+            placeholder="주소"
+          /><br />
+          <input
+            class="hidden"
+            type="text"
+            id="sample6_detailAddress"
+            placeholder="상세주소"
+          />
+          <input
+            class="hidden"
+            type="text"
+            id="sample6_extraAddress"
+            placeholder="참고항목"
+          />
         </div>
         <button id="editBtn" type="submit" class="button is-light">수정</button>
         <button id="deleteBtn" type="submit" class="button is-danger">
@@ -201,12 +191,8 @@
             <a id="moreLink" href="/orderHistory">더보기</a>
           </button>
         </div>
-  
       </div>
-    </body>
     </div>
-    
-  <script src="./userInfo.js" type="module"></script>
-  <script src="./sampleAdd.js" ></script>
-  
+    <%-include("../common/footer")%>
+  </body>
 </html>

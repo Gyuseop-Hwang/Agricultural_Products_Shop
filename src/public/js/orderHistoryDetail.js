@@ -18,19 +18,27 @@ fetch("http://localhost:5500/api/orders", {
   .then((res) => res.json())
   .then((data) => {
     data.forEach((item) => {
-      let date = item.createdAt.slice(0, 10);
+      let wholeAddress =
+        item.shippingAddress.postalCode +
+        " " +
+        item.shippingAddress.address1 +
+        " " +
+        item.shippingAddress.address2;
 
       let totalPrice = item.totalPrice.toLocaleString("ko-KR");
 
       let itemData = `
       <tr>
-        <td id="orderDate">${date}</td>
         <td id="orderedProduct">
-          <img src="#" alt="productImage">
-          <span>${item.products.id}</span>
+        <img src="#" alt="productImage">
+        ${item.products}
         </td>
-        <td><span id="shippingStatus">${item.status}</span></td>
-        <td id="totalPrice">${totalPrice}</td>
+        <td id="personalOrderData">
+          
+          <span>${wholeAddress}</span>
+        </td>
+        <td><span id="totalPrice">${totalPrice}</span></td>
+        <td id="shippingStatus">${item.status}</td>
       </tr>
       `;
 
