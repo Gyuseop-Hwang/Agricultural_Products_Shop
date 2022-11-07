@@ -30,6 +30,18 @@ viewsRouter.use("/adminProducts", serveStatic("adminProducts"));
 viewsRouter.use("/adminProducts/:productId", serveStatic("productsAddUpdate"));
 viewsRouter.use("/adminProducts/add", serveStatic("productsAddUpdate"));
 // http://localhost:5000/search 에서는 views/searchProducts/register.html 파일을 화면에 띄움
+
+viewsRouter.use("/search?title", async (req, res, next) => {
+  try {
+    const title = req.query.title;
+    const products = await productService.searchProducts(title);
+    res.render("searchProducts/searchProducts.ejs", { products });
+  } catch (e) {
+    console.log(e);
+    res.redirect("/search");
+  }
+})
+
 viewsRouter.use("/search/:categoryId", async (req, res, next) => {
   try {
     const categoryId = req.params.categoryId;
@@ -42,14 +54,20 @@ viewsRouter.use("/search/:categoryId", async (req, res, next) => {
 })
 viewsRouter.use("/search", async (req, res, next) => {
   try {
-    const products = await productService.getAllProducts();
+    let products;
+    /*검색어 있는 경우*/
+    if (req.query.title) {
+      console.log(req.query.title);
+      products = await productService.searchProducts(req.query.title);
+      res.render("searchProducts/searchProducts.ejs", { products });
+    }
+    products = await productService.getAllProducts();
     res.render("searchProducts/searchProducts.ejs", { products });
   } catch (e) {
     console.log(e);
     res.redirect("/search");
   }
 });
-
 // views 폴더의 최상단 파일인 rabbit.png, api.js 등을 쓸 수 있게 함
 viewsRouter.use("/product/:productId", async (req, res, next) => {
   try {

@@ -8,6 +8,9 @@
 	href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@500;700&family=Poppins:wght@500;700&display=swap"
 	rel="stylesheet">
 
+
+
+
 <nav class="navbar" role="navigation" aria-label="main navigation">
 	<div class="container mt-3">
 		<div class="navbar-brand">
@@ -51,14 +54,19 @@
 </nav>
 <nav class="navbar container">
 	<div class="navbar-menu">
-	<div class="navbar-item has-dropdown is-hoverable ml-4  width-lg">
-		<a class="navbar-link width-lg">
-			전체 카테고리
-		</a>
-		<!--네비게이션 드롭다운-->
-		<div class="navbar-dropdown" id="categoryDropdown">
+		<div class="navbar-item has-dropdown is-hoverable ml-4  width-lg">
+			<a class="navbar-link width-lg" href="/search">
+				전체 카테고리
+			</a>
+			<!--네비게이션 드롭다운-->
+			<div class="navbar-dropdown" id="categoryDropdown">
+			</div>
 		</div>
+		<div class="navbar-end"></div>
 	</div>
-	<div class="navbar-end"></div>
-</div>
 </nav>
+<script>
+	const searchInput = document.getElementById("searchInput");
+	const searchBtn = document.getElementById("searchBtn");
+	searchBtn.addEventListener("click", () => location.href = `/search?title=${searchInput.value.trim()}`)
+</script>
