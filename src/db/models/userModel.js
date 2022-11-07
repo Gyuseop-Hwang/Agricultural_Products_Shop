@@ -5,34 +5,32 @@ const User = model('User', UserSchema);
 
 export class UserModel {
   async findByEmail(email) {
-    const user = await User.findOne({ email });
-    return user;
+
+    return await User.findOne({ email });
   }
 
   async findById(userId) {
-    const user = await User.findOne({ _id: userId });
-    return user;
+
+    return await User.findOne({ _id: userId });
   }
 
   async create(userInfo) {
-    const createdNewUser = await User.create(userInfo);
-    return createdNewUser;
+
+    return await User.create(userInfo);
   }
 
   async findAll() {
-    const users = await User.find({});
-    return users;
+
+    return await User.find({});
   }
 
   async update({ userId, update }) {
-    const filter = { _id: userId };
-    const option = { returnOriginal: false };
 
-    const updatedUser = await User.findOneAndUpdate(filter, update, option);
-    return updatedUser;
+    return await User.findOneAndUpdate({ _id: userId }, update, { returnOriginal: false });
   }
 
   async deleteUser(userId) {
+
     return await User.findByIdAndDelete(userId);
   }
 }

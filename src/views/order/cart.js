@@ -86,7 +86,7 @@ function printProduct(product, count, index) {
   tr.innerHTML = `<td><input type="checkbox" class="check-box" data-product-id="${
     product._id
   }"/></td>
-    <td>이미지 추후 삽입</td>
+    <td><img src="${product.image.path}"/></td>
     <td class="product-name has-text-left">${product.title}</td>
     <td class="product-price">${product.price.toLocaleString()}원</td>
     <td class="product-quantity">${count}</td>
