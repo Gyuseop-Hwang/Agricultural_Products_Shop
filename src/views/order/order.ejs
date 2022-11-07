@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>쇼핑-n팀</title>
+    <!-- 아이콘 -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/elice-rabbit-favicon.png"
+    />
+    <!-- bulma css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 다음 주소 API -->
+    <script
+      src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+      defer
+    ></script>
+    <script src="/js/daumPostApi.js" defer></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="/css/order.css" />
+    <script src="/js/order.js" type="module" defer></script>
+    <script src="/js/orderCart.js" type="module" defer></script>
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <%-include("../common/header")%>
+    <!-- 주문 -->
+    <div class="container">
+      <section class="is-flex is-flex-direction-column is-align-items-center">
+        <h3 class="block is-align-self-flex-start title is-5">
+          주문 상품 정보
+        </h3>
+        <table class="cart has-text-centered table is-bordered">
+          <colgroup>
+            <col width="5%" />
+            <col width="65%" />
+            <col width="15%" />
+            <col width="15%" />
+          </colgroup>
+          <thead>
+            <tr class="has-text-centered">
+              <th class="check-box"></th>
+              <th class="product-name th">상품정보</th>
+              <th class="product-quantity">수량</th>
+              <th>합계</th>
+            </tr>
+          </thead>
+          <tbody id="cartProductList"></tbody>
+        </table>
+        <p class="is-align-self-flex-end count-info">
+          수량 변경은 장바구니에서 가능합니다.
+        </p>
+        <button class="delete-button" id="deleteSelectedButton">
+          선택 항목 삭제
+        </button>
+      </section>
+      <div class="is-flex is-justify-content-space-between">
+        <section class="delivery-info mb-6">
+          <h3 class="title is-5">배송 정보</h3>
+          <table class="table delivery-info-form">
+            <tbody>
+              <tr>
+                <td>
+                  <input
+                    class="input is-small"
+                    id="name"
+                    type="text"
+                    placeholder="수령인"
+                    required
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <form>
+                    <input
+                      class="input is-small"
+                      type="text"
+                      id="sample3_postcode"
+                      placeholder="우편번호"
+                    />
+                    <input
+                      class="button is-small"
+                      type="button"
+                      onclick="sample3_execDaumPostcode()"
+                      value="우편번호 찾기"
+                    /><br />
+                    <input
+                      class="input is-small"
+                      type="text"
+                      id="sample3_address"
+                      placeholder="주소"
+                    /><br />
+                    <input
+                      class="input is-small"
+                      type="text"
+                      id="sample3_detailAddress"
+                      placeholder="상세주소"
+                    />
+                  </form>
+                  <div
+                    id="wrap"
+                    style="
+                      display: none;
+                      border: 1px solid;
+                      width: 500px;
+                      height: 300px;
+                      margin: 5px 0;
+                      position: relative;
+                    "
+                  >
+                    <img
+                      src="//t1.daumcdn.net/postcode/resource/images/close.png"
+                      id="btnFoldWrap"
+                      style="
+                        cursor: pointer;
+                        position: absolute;
+                        right: 0px;
+                        top: -1px;
+                        z-index: 1;
+                      "
+                      onclick="foldDaumPostcode()"
+                      alt="접기 버튼"
+                    />
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="select is-small">
+                    <select id="firstPhoneNumber">
+                      <option value="010">010</option>
+                      <option value="010">011</option>
+                      <option value="010">016</option>
+                      <option value="010">017</option>
+                      <option value="010">018</option>
+                      <option value="010">019</option>
+                    </select>
+                  </div>
+                  -<input
+                    id="middlePhoneNumber"
+                    class="input is-small"
+                    type="text"
+                    maxlength="4"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                  />-<input
+                    id="lastPhoneNumber"
+                    class="input is-small"
+                    type="text"
+                    maxlength="4"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                  />
+                </td>
+              </tr>
+              <!-- <tr>
+              <th scope="row">이메일</th>
+              <td><input type="text" /></td>
+            </tr> -->
+            </tbody>
+          </table>
+        </section>
+        <div class="payment-box">
+          <section class="order-total-price is-align-self-flex-start mb-6">
+            <h3 class="title is-5 mr-4">결제 예정 금액 :</h3>
+            <p class="is-size-5 has-text-weight-bold total-price">
+              <span id="totalPrice">0</span>원
+            </p>
+          </section>
+          <section class="order-payment is-align-self-flex-start mb-6">
+            <h3 class="title is-5">결제 수단</h3>
+            <div>
+              <input
+                type="radio"
+                id="bankPayment"
+                value="bankPayment"
+                checked="true"
+              />
+              <label for="bankPayment">무통장입금</label>
+            </div>
+          </section>
+          <button class="mb-6" id="payButton">결제하기</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
