@@ -13,7 +13,10 @@ viewsRouter.use("/register", serveStatic("register"));
 viewsRouter.use("/login", serveStatic("login"));
 
 viewsRouter.use("/userInfo", serveStatic("userInfo"));
-viewsRouter.use("/orderHistory", serveStatic("orderHistory"));
+viewsRouter.use("/orderHistory", async (req, res, next) => {
+  res.render("orderHistory/orderHistory.ejs");
+});
+
 viewsRouter.use("/orderHistoryDetail", serveStatic("orderHistoryDetail"));
 
 viewsRouter.use("/cart", serveStatic("cart"));
