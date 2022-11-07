@@ -1,40 +1,37 @@
 import { model } from 'mongoose';
 import { CategorySchema } from '../schemas/categorySchema';
 
-class CategoryModel {
-    constructor(Category) {
-        this.Category = Category;
-    }
+const Category = model('Category', CategorySchema);
 
-    async create(catetoryInfo) {
-        const createdCategory = await this.Category.create(catetoryInfo);
-        return createdCategory;
-    }
+export class CategoryModel {
 
-    async findAll() {
-        const categories = await Category.find({});
-        return categories;
-    }
+  async findCategory(id) {
 
-    async update(categoryId, catetoryInfo) {
-        const filter = { _id: categoryId };
-        const option = { ...catetoryInfo };
+    return await Category.findById(id);
+  }
 
-        const updatedCategory = await Category.findOneAndUpdate(
-            filter,
-            option,
-            { new: true }
-        );
-        return updatedCategory;
-    }
+  async findAllCategories() {
 
-    async delete(categoryId) {
-        const filter = { _id: categoryId };
-        const deletedCategory = await Category.findOneAndDelete(filter);
-        return deletedCategory;
-    }
+    return await Category.find({});
+  }
+
+  async createCategory(categoryInfo) {
+
+    return await Category.create({ ...categoryInfo });
+  }
+
+  async updateCategory(name, update) {
+
+    return await Category.findOneAndUpdate({ name }, update, { returnOriginal: false });
+  }
+
+  async deleteCategory(id) {
+
+    return await Category.findByIdAndDelete(id);
+  }
+
 }
 
-const categoryModel = new CategoryModel(model('Category', CategorySchema));
+const categoryModel = new CategoryModel();
 
 export { categoryModel };

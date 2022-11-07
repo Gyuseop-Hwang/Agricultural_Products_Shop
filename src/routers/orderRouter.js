@@ -42,7 +42,7 @@ orderRouter.post(
 
     const result = await orderService.createOrder({
       ...req.body,
-      userId,
+      user: userId,
       totalPrice,
     });
 
@@ -83,10 +83,10 @@ orderRouter.put(
 );
 
 orderRouter.delete(
-  'admin/orders/:orderId',
+  '/admin/orders/:orderId',
   wrapAsync(async (req, res) => {
     const { orderId } = req.params;
-    const deletedOrder = await orderService.deleteOrder(orderId);
+    const deletedOrder = await orderService.deleteOrderByAdmin(orderId);
 
     res.status(201).send(deletedOrder);
   })
@@ -97,7 +97,7 @@ orderRouter.delete(
   wrapAsync(async (req, res) => {
     const { orderId } = req.params;
     const userId = req.currentUserId;
-    const deletedOrder = await orderService.deleteOrder(userId, orderId);
+    const deletedOrder = await orderService.deleteOrderByUser(userId, orderId);
 
     res.status(201).send(deletedOrder);
   })
