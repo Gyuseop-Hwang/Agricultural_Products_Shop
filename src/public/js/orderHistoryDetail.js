@@ -18,42 +18,26 @@ fetch("http://localhost:5500/api/orders", {
   .then((res) => res.json())
   .then((data) => {
     data.forEach((item) => {
-      let wholeAddress =
-        item.shippingAddress.postalCode +
-        " " +
-        item.shippingAddress.address1 +
-        " " +
-        item.shippingAddress.address2;
+      //const totalPrice = item.totalPrice.toLocaleString("ko-KR");
 
-      let totalPrice = item.totalPrice.toLocaleString("ko-KR");
+      item.products.forEach((product) => {
+        const productImage = product.product.image.path;
+        const productQuantity = product.product.quantity;
+        const productTitle = product.product.title;
+        const productPrice = product.product.price;
 
-      let itemData = `
+        let itemData = `
       <tr>
-        <td id="orderedProduct">
-        <img src="#" alt="productImage">
-        ${item.products}
+        <td>
+          <img src="${productImage}" id="productImage" alt="productImage">
+          <span id="productTitle">${productTitle}</span>
         </td>
-        <td id="personalOrderData">
-          
-          <span>${wholeAddress}</span>
-        </td>
-        <td><span id="totalPrice">${totalPrice}</span></td>
-        <td id="shippingStatus">${item.status}</td>
+        <td id="productQuantity">${productQuantity}</td>
+        <td id="productPrice">${productPrice}</td>
       </tr>
       `;
-
-      tableBody.innerHTML += itemData;
+        tableBody.innerHTML += itemData;
+      });
     });
   })
   .catch((err) => console.log("Error : ", err));
-
-/**
-       * <tr>
-        <td id="orderDate">2022-10-10</td>
-        <td id="orderedProduct">
-          <a href="#"><span id="orderReciptId">주문서 id</span></a>
-        </td>
-        <td><span id="shippingStatus">배송 상태</span></td>
-        <td id="quantity">1</td>
-      </tr>
-       */

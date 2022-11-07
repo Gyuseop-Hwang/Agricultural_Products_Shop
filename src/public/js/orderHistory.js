@@ -18,9 +18,9 @@ fetch("http://localhost:5500/api/orders", {
   .then((res) => res.json())
   .then((data) => {
     data.forEach((item) => {
-      let date = item.createdAt.slice(0, 10);
+      const date = item.createdAt.slice(0, 10);
 
-      let totalPrice = item.totalPrice.toLocaleString("ko-KR");
+      const totalPrice = item.totalPrice.toLocaleString("ko-KR");
 
       let itemData = `
       <tr>
