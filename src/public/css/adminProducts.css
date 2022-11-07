@@ -47,7 +47,7 @@ a:hover {
   height: 90px;
 }
 
-table td.product-title {
+.table td.product-title {
   text-align: left;
   text-indent: 15px;
 }

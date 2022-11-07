@@ -3,6 +3,8 @@ import path from "path";
 import { app } from "../app";
 
 import { productService } from "../services";
+import { adminCategoryService } from "../services";
+import { orderService } from "../services";
 const viewsRouter = express.Router();
 
 // 페이지별로 html, css, js 파일들을 라우팅함
@@ -28,23 +30,44 @@ viewsRouter.use("/order", async (req, res, next) =>
   res.render("order/order.ejs")
 );
 viewsRouter.use("/orderSuccess", serveStatic("orderSuccess"));
-viewsRouter.use("/adminOrders", serveStatic("adminOrders"));
-
-viewsRouter.use("/adminProducts/:productId", async (req, res, next) => {
+viewsRouter.use("/adminOrders", async (req, res, next) => {
   try {
-    const productId = req.params.productId;
-    const product = await productService.getProduct(productId);
-    const categories = await adminCategoryService.getAllCategories();
-    res.render("productsAddUpdate/productsAddUpdate.ejs", {
-      product,
-      categories,
-    });
+    const orders = await orderService.findAllOrders();
+    res.render("adminOrders/adminOrders.ejs", { orders });
   } catch (err) {
     console.log(err);
   }
 });
 
-viewsRouter.use("/adminProducts/add", serveStatic("productsAddUpdate"));
+viewsRouter.use("/adminProducts/add", async (req, res, next) => {
+  const product = {
+    title: "",
+    image: { path: "" },
+    price: "",
+    quantity: "",
+    description: "",
+  };
+  const categories = await adminCategoryService.getAllCategories();
+  res.render("productsAddUpdate/productsAddUpdate.ejs", {
+    product,
+    categories,
+  });
+});
+viewsRouter.use("/adminProducts/:productId", async (req, res, next) => {
+  try {
+    const productId = req.params.productId;
+    if (productId !== "add") {
+      const product = await productService.getProduct(productId);
+      const categories = await adminCategoryService.getAllCategories();
+      res.render("productsAddUpdate/productsAddUpdate.ejs", {
+        product,
+        categories,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
 viewsRouter.use("/adminProducts", async (req, res, next) => {
   try {
     const products = await productService.getAllProducts();
@@ -65,7 +88,7 @@ viewsRouter.use("/search?title", async (req, res, next) => {
     console.log(e);
     res.redirect("/search");
   }
-})
+});
 
 viewsRouter.use("/search/:categoryId", async (req, res, next) => {
   try {
@@ -76,7 +99,7 @@ viewsRouter.use("/search/:categoryId", async (req, res, next) => {
     console.log(e);
     res.redirect("/search");
   }
-})
+});
 viewsRouter.use("/search", async (req, res, next) => {
   try {
     let products;
