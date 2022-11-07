@@ -30,14 +30,31 @@ viewsRouter.use("/adminProducts", serveStatic("adminProducts"));
 viewsRouter.use("/adminProducts/:productId", serveStatic("productsAddUpdate"));
 viewsRouter.use("/adminProducts/add", serveStatic("productsAddUpdate"));
 // http://localhost:5000/search 에서는 views/searchProducts/register.html 파일을 화면에 띄움
-viewsRouter.use("/search", serveStatic("searchProducts"));
+viewsRouter.use("/search/:categoryId", async (req, res, next) => {
+  try {
+    const categoryId = req.params.categoryId;
+    const products = await productService.getProductsByCategory(categoryId);
+    res.render("searchProducts/searchProducts.ejs", { products });
+  } catch (e) {
+    console.log(e);
+    res.redirect("/search");
+  }
+})
+viewsRouter.use("/search", async (req, res, next) => {
+  try {
+    const products = await productService.getAllProducts();
+    res.render("searchProducts/searchProducts.ejs", { products });
+  } catch (e) {
+    console.log(e);
+    res.redirect("/search");
+  }
+});
 
 // views 폴더의 최상단 파일인 rabbit.png, api.js 등을 쓸 수 있게 함
 viewsRouter.use("/product/:productId", async (req, res, next) => {
   try {
     const productId = req.params.productId;
     const product = await productService.getProduct(productId);
-    console.log(product);
     res.render("productDetail/productDetail.ejs", { product });
   } catch (e) {
     console.log(e);

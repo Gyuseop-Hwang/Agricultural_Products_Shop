@@ -16,7 +16,7 @@ function getProductsByCategory(categoryID) {
 	const response = fetch(`http://localhost:5500/api/products/categorization/${categoryID}`);
 	return response.then(res => res.json());
 }
-//상품 이름 키워드로 삼풍 조회
+//상품 이름 키워드로 상품 조회
 async function getProductBySearch(keyword) {
 	const encoded = encodeURI(encodeURIComponent(keyword));
 	const response = fetch(`http://localhost:5500/api/products/search?title=${encoded}`);
@@ -26,22 +26,7 @@ async function getProductBySearch(keyword) {
 //화면에 카테고리 버튼과 전체상품 목록 렌더링
 async function renderBtnProducts() {
 	const { categories, products } = await getAllProducts();
-	printCategoryBtn(categories);
 	printProducts(products);
-}
-
-//dom에 카테고리 버튼 생성
-function printCategoryBtn(categories) {
-	categories.forEach(category => {
-		const button = document.createElement("button");
-		const span = document.createElement("span");
-		button.classList.add("button", "is-rounded", "ml-2")
-		button.categoryId = category._id;
-		span.innerText = category.name;
-		button.appendChild(span);
-		button.addEventListener('click', printProductsByCategory);
-		categoryDiv.appendChild(button);
-	});
 }
 
 //이벤트핸들러 :카테고리 버튼 클릭 시 카테고리 별 상품 목록 출력
@@ -87,4 +72,4 @@ function printProducts(products) {
 	})
 }
 
-renderBtnProducts()
+//renderBtnProducts()
