@@ -30,9 +30,30 @@ viewsRouter.use("/order", async (req, res, next) =>
 viewsRouter.use("/orderSuccess", serveStatic("orderSuccess"));
 viewsRouter.use("/adminOrders", serveStatic("adminOrders"));
 
-viewsRouter.use("/adminProducts", serveStatic("adminProducts"));
-viewsRouter.use("/adminProducts/:productId", serveStatic("productsAddUpdate"));
+viewsRouter.use("/adminProducts/:productId", async (req, res, next) => {
+  try {
+    const productId = req.params.productId;
+    const product = await productService.getProduct(productId);
+    const categories = await adminCategoryService.getAllCategories();
+    res.render("productsAddUpdate/productsAddUpdate.ejs", {
+      product,
+      categories,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 viewsRouter.use("/adminProducts/add", serveStatic("productsAddUpdate"));
+viewsRouter.use("/adminProducts", async (req, res, next) => {
+  try {
+    const products = await productService.getAllProducts();
+    res.render("adminProducts/adminProducts.ejs", { products });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 // http://localhost:5000/search 에서는 views/searchProducts/register.html 파일을 화면에 띄움
 viewsRouter.use("/search", serveStatic("searchProducts"));
 

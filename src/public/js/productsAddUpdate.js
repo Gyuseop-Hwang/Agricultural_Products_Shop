@@ -19,26 +19,25 @@ ClassicEditor.create(document.querySelector("#editor"))
   });
 
 // 카테고리 출력
-function printCategory(category) {
-  const option = document.createElement("option");
-  option.innerText = category.name;
-  option.value = category._id;
-  categorySelect.appendChild(option);
-}
+// function printCategory(category) {
+//   const option = document.createElement("option");
+//   option.innerText = category.name;
+//   option.value = category._id;
+//   categorySelect.appendChild(option);
+// }
 
 // 수정 화면일 경우(url에 id 포함되어 있을 경우) 상품 정보 출력
 function printProduct(result) {
   const { title, price, quantity, category, description } = result;
-  titleInput.value = title;
   priceInput.value = price;
   quantityInput.value = quantity;
   editor.setData(description);
   deleteButton.classList.remove("hidden");
-  for (let i = 0; i < categorySelect.options.length; i++) {
-    if (categorySelect.options[i].value === category._id) {
-      categorySelect.options[i].selected = true;
-    }
-  }
+  // for (let i = 0; i < categorySelect.options.length; i++) {
+  //   if (categorySelect.options[i].value === category._id) {
+  //     categorySelect.options[i].selected = true;
+  //   }
+  // }
 }
 
 // submit시 입력된 값 받아옴
@@ -129,7 +128,7 @@ async function deleteProduct() {
 // fileInput.addEventListener("change", () => {
 //   console.log(fileInput.files);
 // });
-getAllCategories();
+//getAllCategories();
 addOrUpdateButton.addEventListener("click", submitProduct);
 deleteButton.addEventListener("click", deleteProduct);
 
