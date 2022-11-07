@@ -12,7 +12,9 @@ viewsRouter.use("/", serveStatic("home"));
 viewsRouter.use("/register", serveStatic("register"));
 viewsRouter.use("/login", serveStatic("login"));
 
-viewsRouter.use("/userInfo", serveStatic("userInfo"));
+viewsRouter.use("/userInfo", async (req, res, next) => {
+  res.render("userInfo/userInfo.ejs");
+});
 viewsRouter.use("/orderHistory", async (req, res, next) => {
   res.render("orderHistory/orderHistory.ejs");
 });
