@@ -81,6 +81,14 @@ export const dbTestHandler = async (db) => {
     price: 5000,
     quantity: 6,
     description: 'test',
+    sale: {
+      onsale: false,
+    },
+    comments: [{
+      content: "comment Test용1",
+      rating: 1,
+      userId: "63632d4ddfb91201fe8d5ea6"
+    }],
     category: '63613676b3cd1137208c7e78',
   });
   productModel.createProduct({
@@ -92,6 +100,14 @@ export const dbTestHandler = async (db) => {
     price: 4000,
     quantity: 6,
     description: 'test',
+    sale: {
+      onsale: false,
+    },
+    comments: [{
+      content: "comment 테스트용2",
+      rating: 2,
+      userId: "63632d4ddfb91201fe8d5ea6"
+    }],
     category: '63613676b3cd1137208c7e78',
   });
   productModel.createProduct({
@@ -103,6 +119,14 @@ export const dbTestHandler = async (db) => {
     price: 2000,
     quantity: 10,
     description: 'test',
+    sale: {
+      onsale: false,
+    },
+    comments: [{
+      content: "comment 테스트용3",
+      rating: 3,
+      userId: "63632d4ddfb91201fe8d5eec"
+    }],
     category: '63613687b3cd1137208c7e7a',
   });
   productModel.createProduct({
@@ -114,6 +138,14 @@ export const dbTestHandler = async (db) => {
     price: 10000,
     quantity: 2,
     description: 'test',
+    sale: {
+      onsale: false,
+    },
+    comments: [{
+      content: "comment 테스트용4",
+      rating: 4,
+      userId: "63632d4ddfb91201fe8d5eec"
+    }],
     category: '63613692b3cd1137208c7e7c',
   });
   productModel.createProduct({
@@ -125,6 +157,14 @@ export const dbTestHandler = async (db) => {
     price: 3000,
     quantity: 7,
     description: 'test',
+    sale: {
+      onsale: false,
+    },
+    comments: [{
+      content: "comment 테스트용5",
+      rating: 5,
+      userId: "63632d4ddfb91201fe8d5e10"
+    }],
     category: '63614045b3cd1137208c7ea2',
   });
 

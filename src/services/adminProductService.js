@@ -71,6 +71,34 @@ class AdminProductService {
     return await this.productModel.deleteProduct(productId);
   }
 
+  async toggleSale(productId, discountedPrice) {
+
+    const product = await this.productModel.findOneProduct(productId);
+
+    if (!product) {
+      throw new BadRequestError('존재하지 않는 상품입니다.')
+    }
+
+    if (!isNaN(discountedPrice)) {
+
+      if (discountedPrice >= product.price) {
+        throw new BadRequestError("할인 가격은 현재 상품의 가격보다 낮아야 합니다.")
+      }
+
+      product.sale.onSale = true;
+      product.sale.discountedPrice = discountedPrice;
+      return await product.save();
+    }
+    if (discountedPrice === 'cancel') {
+
+      product.sale.onSale = false;
+      return await product.save();
+    } else {
+
+      throw new BadRequestError('가격을 올바른 숫자 string이나 "cancel"로 입력해주세요.')
+    }
+  }
+
 }
 
 const adminProductService = new AdminProductService(productModel);
