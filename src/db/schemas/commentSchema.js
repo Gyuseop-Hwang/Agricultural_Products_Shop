@@ -5,7 +5,7 @@ const { Types: { ObjectId } } = Schema;
 const CommentSchema = new Schema({
   content: String,
   rating: Number,
-  userId: {
+  user: {
     type: ObjectId,
     ref: "User"
   }

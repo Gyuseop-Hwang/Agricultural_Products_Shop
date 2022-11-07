@@ -87,7 +87,7 @@ export const dbTestHandler = async (db) => {
     comments: [{
       content: "comment Test용1",
       rating: 1,
-      userId: "63632d4ddfb91201fe8d5ea6"
+      user: "63632d4ddfb91201fe8d5ea6"
     }],
     category: '63613676b3cd1137208c7e78',
   });
@@ -106,7 +106,7 @@ export const dbTestHandler = async (db) => {
     comments: [{
       content: "comment 테스트용2",
       rating: 2,
-      userId: "63632d4ddfb91201fe8d5ea6"
+      user: "63632d4ddfb91201fe8d5ea6"
     }],
     category: '63613676b3cd1137208c7e78',
   });
@@ -125,7 +125,7 @@ export const dbTestHandler = async (db) => {
     comments: [{
       content: "comment 테스트용3",
       rating: 3,
-      userId: "63632d4ddfb91201fe8d5eec"
+      user: "63632d4ddfb91201fe8d5eec"
     }],
     category: '63613687b3cd1137208c7e7a',
   });
@@ -144,7 +144,7 @@ export const dbTestHandler = async (db) => {
     comments: [{
       content: "comment 테스트용4",
       rating: 4,
-      userId: "63632d4ddfb91201fe8d5eec"
+      user: "63632d4ddfb91201fe8d5eec"
     }],
     category: '63613692b3cd1137208c7e7c',
   });
@@ -163,7 +163,7 @@ export const dbTestHandler = async (db) => {
     comments: [{
       content: "comment 테스트용5",
       rating: 5,
-      userId: "63632d4ddfb91201fe8d5e10"
+      user: "63632d4ddfb91201fe8d5e10"
     }],
     category: '63614045b3cd1137208c7ea2',
   });

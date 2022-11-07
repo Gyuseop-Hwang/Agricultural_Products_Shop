@@ -42,7 +42,7 @@ productRouter.post(
   loginRequired,
   body('content').isString().trim().isLength({ min: 5, max: 100 }).withMessage("리뷰는 5글자 이상 100자 이내여야 합니다."),
   body('rating').isInt().withMessage("별점은 1 이상 5 이하 정수여야 합니다."),
-  body('userId').isString().withMessage("userId는 string이어야 합니다."),
+  body('user').isString().withMessage("user는 userId 값으로 string 형태이어야 합니다."),
   wrapAsync(async (req, res) => {
 
     const errors = validationResult(req);
