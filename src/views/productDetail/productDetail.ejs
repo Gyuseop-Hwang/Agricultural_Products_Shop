@@ -106,7 +106,7 @@
 							const count = countInput.value;
 							let newProduct = { id: "<%=product._id%>", count: Number(count) };
 							//장바구니에 products 가져오기
-							let localProducts = localStorage.getItem("products");
+							const localProducts = localStorage.getItem("products");
 							let products;
 							if (localProducts)
 								products = JSON.parse(localProducts);
