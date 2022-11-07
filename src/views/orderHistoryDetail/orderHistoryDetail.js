@@ -26,7 +26,8 @@ fetch("http://localhost:5500/api/orders", {
       <tr>
         <td id="orderDate">${date}</td>
         <td id="orderedProduct">
-          <a href="/orderHistoryDetail"><span id="orderReciptId">${item._id}</span></a>
+          <img src="#" alt="productImage">
+          <span>${item.products.id}</span>
         </td>
         <td><span id="shippingStatus">${item.status}</span></td>
         <td id="totalPrice">${totalPrice}</td>
@@ -37,3 +38,14 @@ fetch("http://localhost:5500/api/orders", {
     });
   })
   .catch((err) => console.log("Error : ", err));
+
+/**
+       * <tr>
+        <td id="orderDate">2022-10-10</td>
+        <td id="orderedProduct">
+          <a href="#"><span id="orderReciptId">주문서 id</span></a>
+        </td>
+        <td><span id="shippingStatus">배송 상태</span></td>
+        <td id="quantity">1</td>
+      </tr>
+       */

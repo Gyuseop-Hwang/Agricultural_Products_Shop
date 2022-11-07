@@ -14,6 +14,7 @@ viewsRouter.use("/login", serveStatic("login"));
 
 viewsRouter.use("/userInfo", serveStatic("userInfo"));
 viewsRouter.use("/orderHistory", serveStatic("orderHistory"));
+viewsRouter.use("/orderHistoryDetail", serveStatic("orderHistoryDetail"));
 
 viewsRouter.use("/cart", serveStatic("cart"));
 viewsRouter.use("/order", serveStatic("order"));
