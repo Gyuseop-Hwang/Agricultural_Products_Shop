@@ -23,10 +23,10 @@
       crossorigin="anonymous"
     ></script>
     <!--css 관련-->
-    <link rel="stylesheet" href="productsAddUpdate.css" />
+    <link rel="stylesheet" href="/css/productsAddUpdate.css" />
     <!-- script-->
     <script src="https://cdn.ckeditor.com/ckeditor5/35.2.1/classic/ckeditor.js"></script>
-    <script src="productsAddUpdate.js" type="module" defer></script>
+    <script src="/js/productsAddUpdate.js" type="module" defer></script>
   </head>
   <body>
     <!--헤더-->
@@ -75,41 +75,50 @@
           <!--이미지-->
           <div class="product-image mr-6">
             <input type="file" id="imageInput" />
-            <img id="image" />
+            <img
+              id="image"
+              src="<%=product.image.path%>"
+              alt="<%=product.title%>"
+            />
           </div>
           <!--이름, 가격, 남은 재고, 카테고리-->
           <div class="detail-contents-left">
             <div class="detail-contents-left-inner">
               <div class="mb-3">
                 <span>상품명</span>
-                <input class="input is-small" id="title" />
+                <input
+                  class="input is-small"
+                  id="title"
+                  value="<%=product.title%>"
+                />
               </div>
               <div class="price-quantity-box">
                 <span>가격</span>
                 <input
                   class="input is-small mb-3"
                   id="price"
+                  value="<%=product.price%>"
                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                 />
                 <span>수량</span>
                 <input
                   class="input is-small mb-3"
                   id="quantity"
+                  value="<%=product.quantity%>"
                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                 />
               </div>
               <div class="category-name">
                 <span>카테고리</span>
                 <div class="select is-small mb-3">
-                  <select id="categorySelect" name="카테고리"></select>
+                  <select id="categorySelect" name="카테고리">
+                    <% for(let i = 0; i < categories.length; i++){ %>
+                    <option value="<%=categories[i].name%>">
+                      <%=categories[i].name%>
+                    </option>
+                    <% } %>
+                  </select>
                 </div>
-              </div>
-              <div class="count-price">
-                <!-- <div class="count">
-                  <label>수량</label>
-                  <input type="number" value="1" id="count" min="1" max="9" />
-                </div>
-                <span id="totalPrice"></span> -->
               </div>
               <div class="botton-box">
                 <button class="button hidden is-small" id="deleteButton">

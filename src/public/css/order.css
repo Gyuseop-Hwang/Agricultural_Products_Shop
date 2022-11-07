@@ -2,6 +2,10 @@ button {
   cursor: pointer;
 }
 
+.order-container {
+  min-height: calc(100vh - 270px);
+}
+
 .cart {
   width: 100%;
   margin-bottom: 0.5rem !important;
