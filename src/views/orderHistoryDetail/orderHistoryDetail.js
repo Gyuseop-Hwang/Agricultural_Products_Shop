@@ -6,20 +6,31 @@ const quantity = document.getElementById("quantity");
 const tableBody = document.getElementById("tableBody");
 const tableHead = document.getElementById("tableHead");
 
-fetch("http://localhost:4000/orders")
+const usersToken = sessionStorage.getItem("token");
+
+fetch("http://localhost:5500/api/orders", {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${usersToken}`,
+  },
+})
   .then((res) => res.json())
   .then((data) => {
     data.forEach((item) => {
-      console.log(item);
+      let date = item.createdAt.slice(0, 10);
+
+      let totalPrice = item.totalPrice.toLocaleString("ko-KR");
 
       let itemData = `
       <tr>
-        <td id="orderDate">${item.timestamps}</td>
+        <td id="orderDate">${date}</td>
         <td id="orderedProduct">
-          <a href="#"><span id="orderReciptId">${item.products[0].productId}</span></a>
+          <img src="#" alt="productImage">
+          <span>${item.products.id}</span>
         </td>
         <td><span id="shippingStatus">${item.status}</span></td>
-        <td id="quantity">${item.products[0].quantity}</td>
+        <td id="totalPrice">${totalPrice}</td>
       </tr>
       `;
 
