@@ -2,7 +2,7 @@
 const categoryDiv = document.getElementById("category")
 const searchInput = document.getElementById("searchInput");
 const searchBtn = document.getElementById("searchBtn");
-
+const categoryDropdown = document.getElementById("categoryDropdown")
 //전체 상품 및 카테고리 조회
 function getAllProducts() {
 	const response = fetch("http://localhost:5500/api/products");
@@ -29,14 +29,13 @@ async function renderBtnProducts() {
 //dom에 카테고리 버튼 생성
 function printCategoryBtn(categories) {
 	categories.forEach(category => {
-		const button = document.createElement("button");
+		const aElement = document.createElement("a");
 		const span = document.createElement("span");
-		button.classList.add("button", "is-rounded", "ml-2")
-		button.addEventListener("click", () => location.href = '/search');
-		button.categoryId = category._id;
-		span.innerText = category.name;
-		button.appendChild(span);
-		categoryDiv.appendChild(button);
+		aElement.classList.add("navbar-item")
+		aElement.addEventListener("click", () => location.href = '/search');
+		aElement.categoryId = category._id;
+		aElement.innerText = category.name;
+		categoryDropdown.appendChild(aElement);
 	});
 }
 renderBtnProducts()
