@@ -102,7 +102,7 @@ describe('test orderService methods', () => {
   });
 
   describe('test calculateTotalPrice', () => {
-    test('calculateTotalPrice를 통해 나온 값이 올바르게 나온다.', async () => {
+    test('sale 적용된 상품이 없을 때, calculateTotalPrice를 통해 나온 값이 올바르게 나온다.', async () => {
       const requestedProducts = [
         {
           product: '1234',
@@ -112,15 +112,17 @@ describe('test orderService methods', () => {
 
       productModel.findProducts.mockReturnValue([
         {
-          product: {
-            _id: '1234',
-            price: 3000,
+          _id: '1234',
+          price: 3000,
+          sale: {
+            onSale: false,
           },
         },
         {
-          product: {
-            _id: '5678',
-            price: 2000,
+          _id: '5678',
+          price: 2000,
+          sale: {
+            onSale: false,
           },
         },
       ]);
@@ -130,6 +132,43 @@ describe('test orderService methods', () => {
       );
 
       expect(totalPrice).toBe(9000);
+    });
+
+    test('sale 적용된 상품이 있을 때, calculateTotalPrice를 통해 나온 값이 올바르게 나온다.', async () => {
+      const requestedProducts = [
+        {
+          product: '1234',
+          count: 3,
+        },
+        {
+          product: '5678',
+          count: 3,
+        },
+      ];
+
+      productModel.findProducts.mockReturnValue([
+        {
+          _id: '1234',
+          price: 3000,
+          sale: {
+            onSale: true,
+            discountedPrice: 2000,
+          },
+        },
+        {
+          _id: '5678',
+          price: 2000,
+          sale: {
+            onSale: false,
+          },
+        },
+      ]);
+
+      const totalPrice = await orderService.calculateTotalPrice(
+        requestedProducts
+      );
+
+      expect(totalPrice).toBe(12000);
     });
   });
 });
