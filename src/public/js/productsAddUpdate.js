@@ -9,6 +9,7 @@ const categorySelect = document.getElementById("categorySelect");
 const deleteButton = document.getElementById("deleteButton");
 const addOrUpdateButton = document.getElementById("addOrUpdateButton");
 const onSaleCheckBox = document.getElementById("onSaleCheckbox");
+const discountInput = document.getElementById("discountInput");
 
 // CK Editor
 
@@ -46,7 +47,20 @@ function submitProduct(e) {
     categorySelect.options[categorySelect.selectedIndex].value
   );
 
-  addOrUpdateProduct(formData, window.location.pathname.split("/")[2] ?? null);
+  // 할인 금액 받아옴
+  let discount = { discountedPrice: false };
+
+  if (onSaleCheckBox.checked === true) {
+    discount.discountedPrice = discountInput.value;
+  } else if (onSaleCheckBox.checked === false) {
+    discount.discountedPrice = false;
+  }
+
+  addOrUpdateProduct(
+    formData,
+    discount,
+    window.location.pathname.split("/")[2] ?? null
+  );
 }
 
 console.log(window.location.pathname.split("/")[2]);
@@ -63,8 +77,14 @@ async function getProduct(productId) {
 }
 
 // 상품 업데이트 or 추가
-async function addOrUpdateProduct(data, id) {
+async function addOrUpdateProduct(data, discount, id) {
   try {
+    // 할인 적용했으나 금액 입력 안 하면 에러
+    if (onSaleCheckBox.checked && discount.discountedPrice === "") {
+      throw new Error("할인 금액을 입력해주세요.");
+    }
+    await Api.patch("/api/admin/products", `${id}/toggleSale`, discount);
+
     //업데이트 요청시
     if (id !== "add") {
       await fetch(`/api/admin/products/${id}`, {
@@ -74,6 +94,7 @@ async function addOrUpdateProduct(data, id) {
         },
         body: data,
       });
+
       console.log("put요청");
       alert("수정이 완료됐습니다.");
       window.location.replace("/adminProducts");
@@ -90,7 +111,6 @@ async function addOrUpdateProduct(data, id) {
     alert("상품이 추가 되었습니다.");
     window.location.replace("/adminProducts");
   } catch (err) {
-    alert(err);
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
@@ -132,6 +152,11 @@ if (window.location.pathname.split("/")[2] !== "add") {
   getProduct(productId);
 }
 
-// onSaleCheckBox.addEventListener("change", () => {
-//   if(onSaleCheckBox.checked === true)
-// });
+onSaleCheckBox.addEventListener("change", () => {
+  if (onSaleCheckBox.checked === true) {
+    discountInput.disabled = false;
+  } else if (onSaleCheckBox.checked === false) {
+    discountInput.disabled = true;
+    discountInput.value = "";
+  }
+});
