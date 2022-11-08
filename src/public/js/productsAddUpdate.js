@@ -114,10 +114,13 @@ fileInput.addEventListener("change", () => {
 });
 
 addOrUpdateButton.addEventListener("click", submitProduct);
+
+// deleteButton 클릭시 모달 생성
 deleteButton.addEventListener("click", (e) => {
   e.preventDefault();
-  showModal("상품 삭제", "해당 상품을 삭제하시겠습니까?");
+  showModal("상품 삭제", "해당 상품을 삭제하시겠습니까?"); // (title, content)
 });
+// 모달 "예" 클릭시 실행할 이벤트를 인자로 전달
 addModalEvent(deleteProduct);
 
 if (window.location.pathname.split("/")[2] !== "add") {

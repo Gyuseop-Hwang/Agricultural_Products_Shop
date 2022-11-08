@@ -31,8 +31,8 @@ a:hover {
   height: 35px;
   border: none;
   border-radius: 40px;
-  background-color: #eafced;
-  color: #11b564;
+  background-color: var(--btn-color);
+  color: var(--main-color);
   font-size: 15px;
   text-align: center;
   line-height: 35px;
@@ -66,8 +66,8 @@ a:hover {
   height: 30px;
   border: none;
   border-radius: 40px;
-  background-color: #eafced;
-  color: #11b564;
+  background-color: var(--btn-color);
+  color: var(--main-color);
   font-size: 13px;
   text-align: center;
   line-height: normal;
