@@ -14,7 +14,9 @@ viewsRouter.use("/home", async (req, res, next) => {
   res.render("home/home.ejs");
 });
 viewsRouter.use("/register", serveStatic("register"));
-viewsRouter.use("/login", serveStatic("login"));
+viewsRouter.use("/login", async (req, res, next) => {
+  res.render("login/login.ejs");
+});
 viewsRouter.use("/admin/category", serveStatic("adminCategory"));
 viewsRouter.use("/userInfo", async (req, res, next) => {
   res.render("userInfo/userInfo.ejs");
