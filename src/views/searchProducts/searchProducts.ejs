@@ -19,19 +19,18 @@
 	<!--헤더-->
 	<%-include("../common/header")%>
 		<!-- 상품 목록-->
-			<div id="productsContainer" class="columns products-container mx-6">
-				<%products.forEach(product => {%>
+		<div id="productsContainer" class="columns products-container mx-6">
+			<%products.forEach(product=> {%>
 				<div class="column is-flex-direction-column m-1">
+					<a class="" href="/product/<%=product._id%>">
 					<div>
-						<figure class="image is-1by1">
-							<img class="" src="<%=product.image.path%>" alt="<%=product.title%> 이미지">
+						<figure class="image is-1by1 product-image">
+							<img src="<%=product.image.path%>" alt="<%=product.title%> 이미지">
 						</figure>
 					</div>
 					<div class="product-contents">
-						<div class="product-title">
-							<a href="/product/<%=product._id%>">
-								<%=product.title%>
-							</a>
+						<div class="">
+							<%=product.title%>
 						</div>
 						<div class="product-price">
 							<span>
@@ -39,12 +38,13 @@
 							</span>
 						</div>
 					</div>
+					</a>
 				</div>
 				<%})%>
-			</div>
+		</div>
 		</div>
 		<!--헤더-->
-	<%-include("../common/footer")%>
+		<%-include("../common/footer")%>
 </body>
 
 </html>
