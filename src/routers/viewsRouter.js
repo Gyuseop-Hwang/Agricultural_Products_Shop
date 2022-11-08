@@ -19,7 +19,9 @@ viewsRouter.use("/register", (req, res, next) => {
 viewsRouter.use("/login", async (req, res, next) => {
   res.render("login/login.ejs");
 });
-viewsRouter.use("/admin/category", serveStatic("adminCategory"));
+viewsRouter.use("/admin/category", (req, res, next) => {
+  res.render("adminCategory/adminCategory.ejs");
+});
 viewsRouter.use("/userInfo", async (req, res, next) => {
   res.render("userInfo/userInfo.ejs");
 });

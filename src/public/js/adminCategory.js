@@ -3,10 +3,10 @@ const categoryBtnDiv = document.getElementById("categoryBtnDiv");
 const categoryInfoDiv = document.getElementById("categoryInfoDiv");
 const createCategoryDiv = document.getElementById("createCategoryDiv"); //카테고리 추가 영역
 const updateCategoryDiv = document.getElementById("updateCategoryDiv"); //카테고리 수정 및 삭제 영역
-
 /*Input */
 const createCategoryInput = document.getElementById("createCategoryInput");
-const updateCategoryInput = document.getElementById("updateCategoryInput")
+const updateCategoryInput = document.getElementById("updateCategoryInput");
+const totalByCategoryInput = document.getElementById("totalByCategoryInput"); // 카테고리 별 상품 개수
 /*Button 카테고리 조작 버튼 */
 const createCategoryButton = document.getElementById("createCategoryButton"); //카테고리 추가버튼
 const updateCategoryButton = document.getElementById("updateCategoryButton"); //카테고리 수정버튼
@@ -61,14 +61,15 @@ deleteCategoryButton.addEventListener("click", async (ev) => {
 
 /*카테고리 수정 영역 닫기 */
 cancleCategoryButton.addEventListener("click", () => {
-	updateCategoryDiv.classList.add("is-hidden")
+	updateCategoryDiv.classList.add("is-invisible")
 })
 
 //get 카테고리 목록
 async function getCategories() {
 	try {
-		const result = await Api.get("/api/admin/products/categories");
+		const result = await Api.get("/api/admin/categories");
 		//http://localhost:5500/api/admin/products/categories
+		console.log(result);
 		return result;
 	} catch (e) { console.log(e) }
 }
@@ -82,13 +83,13 @@ async function printCategoryBtn() {
 	categories.forEach(category => {
 		const button = document.createElement("button");
 		const span = document.createElement("span");
-		button.classList.add("button", "is-rounded", "ml-2")
+		button.classList.add("button", "is-rounded", "ml-2", "btn-main-color", "border")
 		/*카테고리 클릭 시 카테고리 수정 필드 보임*/
 		button.addEventListener("click", () => {
-			updateCategoryDiv.classList.remove("is-hidden"); //수정영역 표시
+			updateCategoryDiv.classList.remove("is-invisible"); //수정영역 표시
 			updateCategoryInput.value = category.name;
-			categorySelected = category;
-			console.log(categorySelected);
+			totalByCategoryInput.value = category.total;
+			categorySelected = category; //카테고리 선택
 		})
 		span.innerText = category.name;
 		button.appendChild(span);
