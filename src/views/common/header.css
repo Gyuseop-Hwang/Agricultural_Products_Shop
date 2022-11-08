@@ -21,3 +21,7 @@
 .width-lg{
 	width: 200px;
 }
+.is-full{
+	height: 100%;
+	width: 100%;
+}

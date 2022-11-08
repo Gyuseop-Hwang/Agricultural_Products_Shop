@@ -23,12 +23,24 @@
 <body>
   <!-- 헤더 -->
   <%-include("../common/header")%>
-    <div class="main-container container is-flex">
+    <div class="main-container container is-flex mb-6">
       <div class="slide box m-4"></div>
       <ul class="right-side is-flex is-flex-direction-column mt-4">
-        <li class="area box"><a href="/cart"><p>장바구니</p></a></li>
-        <li class="area box"><a href="/search"><p>상품목록</p></a></li>
-        <li class="area box"><a href="/"><p>상품목록</p></a></li>
+        <li class="area box"><a href="/cart">
+            <div class="is-full is-flex is-align-items-center">
+              <p class="title is-4 main-color">장바구니</p>
+            </div>
+          </a></li>
+        <li class="area box"><a href="/search">
+            <div class="is-full is-flex is-align-items-center">
+              <p class="title is-4 main-color">상품목록</p>
+            </div>
+          </a></li>
+        <li class="area box"><a href="/home">
+            <div class="is-full is-flex is-align-items-center">
+              <p class="title is-4 main-color">계란후라이</p>
+            </div>
+          </a></li>
       </ul>
     </div>
     <%-include("../common/footer")%>
