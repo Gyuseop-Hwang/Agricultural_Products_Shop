@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- 아이콘 -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../elice-rabbit-favicon.png"
+    />
+    <!-- bulma css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="/css/orderHistoryDetail.css" />
+    <script defer src="/js/orderHistoryDetail.js" type="module"></script>
+  </head>
+  <body>
+    <div class="layer">
+      <%-include("../common/header")%>
+
+      <div id="orderHistoryDetail">
+        <h1>주문별 상세 내역</h1>
+        <div id="wholeTable">
+          <table class="table is-fullwidth">
+            <tbody id="tableBody">
+              <tr id="tableHead">
+                <td>주문 상품</td>
+                <td>주문 갯수</td>
+                <td>상품 금액</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <%-include("../common/footer")%>
+  </body>
+</html>

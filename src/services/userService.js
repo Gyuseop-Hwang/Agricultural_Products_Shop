@@ -14,16 +14,15 @@ class UserService {
     const { email, fullName, password, phoneNumber, address } = userInfo;
 
     const user = await this.userModel.findByEmail(email);
+
     if (user) {
-      throw new BadRequestError(
-        '이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.'
-      );
+      throw new BadRequestError('이 이메일은 현재 사용중입니다. 다른 이메일을 입력해 주세요.');
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUserInfo = { fullName, email, password: hashedPassword, phoneNumber, address };
-    const createdNewUser = await this.userModel.create(newUserInfo);
-    return createdNewUser;
+
+    return await this.userModel.create(newUserInfo);
   }
 
 
@@ -32,22 +31,16 @@ class UserService {
     const { email, password } = loginInfo;
 
     const user = await this.userModel.findByEmail(email);
+
     if (!user) {
-      throw new BadRequestError(
-        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.'
-      );
+      throw new BadRequestError('해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.');
     }
 
     const correctPasswordHash = user.password;
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      correctPasswordHash
-    );
+    const isPasswordCorrect = await bcrypt.compare(password, correctPasswordHash);
 
     if (!isPasswordCorrect) {
-      throw new Error(
-        '비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.'
-      );
+      throw new BadRequestError('비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.');
     }
 
     const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
@@ -56,14 +49,15 @@ class UserService {
     return { token };
   }
 
-  async getUserInfo(id) {
-    return await userModel.findById(id);
+  async getUserInfo(userId) {
+
+    return await this.userModel.findById(userId);
   }
 
 
   async getUsers() {
-    const users = await this.userModel.findAll();
-    return users;
+
+    return await this.userModel.findAll();
   }
 
 
@@ -74,19 +68,14 @@ class UserService {
     let user = await this.userModel.findById(userId);
 
     if (!user) {
-      throw new Error('가입 내역이 없습니다. 다시 한 번 확인해 주세요.');
+      throw new BadRequestError('가입 내역이 없습니다. 다시 한 번 확인해 주세요.');
     }
 
     const correctPasswordHash = user.password;
-    const isPasswordCorrect = await bcrypt.compare(
-      currentPassword,
-      correctPasswordHash
-    );
+    const isPasswordCorrect = await bcrypt.compare(currentPassword, correctPasswordHash);
 
     if (!isPasswordCorrect) {
-      throw new BadRequestError(
-        '현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.'
-      );
+      throw new BadRequestError('현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.');
     }
 
     const { password } = toUpdate;
@@ -96,20 +85,18 @@ class UserService {
       toUpdate.password = newPasswordHash;
     }
 
-    user = await this.userModel.update({
-      userId,
-      update: toUpdate,
-    });
+    return await this.userModel.update({ userId, update: toUpdate });
 
-    return user;
   }
 
   async withdraw(userId) {
     const user = await userModel.findById(userId);
+
     if (!user) {
       throw new BadRequestError('가입 내역이 없습니다. 다시 한 번 확인해 주세요.')
     }
-    return await userModel.deleteUser(userId);
+
+    return await this.userModel.deleteUser(userId);
   }
 }
 
