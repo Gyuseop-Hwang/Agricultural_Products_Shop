@@ -6,12 +6,14 @@ const trs = document.querySelectorAll(".tr");
 
 let PRODUCT_ID;
 
+// 삭제버튼 클릭시 모달 나타남
 deleteButtons.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     PRODUCT_ID = e.currentTarget.dataset.id;
     showModal("상품 삭제", "상품을 삭제하시겠습니까?");
   });
 });
+// 모달 yes 클릭시 발생하는 이벤트
 addModalEvent(() => {
   deleteProduct(PRODUCT_ID);
   trs.forEach((tr) => {
@@ -20,15 +22,25 @@ addModalEvent(() => {
     }
   });
 });
-// 삭제 버튼 이벤트 등록
-function clickDeleteButton(productId) {
-  deleteProduct(productId);
+
+function printDiscountedPrice(products) {
+  const discountedProducts = products.filter((product) => product.sale.onSale);
+  discountedProducts.forEach((product) => {
+    const priceTd = document.getElementById(`price${product._id}`);
+    const priceSpan = document.querySelector(`#price${product._id} span`);
+    priceTd.prepend(`${product.sale.discountedPrice.toLocaleString()}원`);
+    priceSpan.style.textDecoration = "line-through";
+    priceSpan.style.color = "#bbb";
+    priceSpan.style.fontSize = "14px";
+  });
 }
 
 // 전체 상품 get 요청
 async function getAllProducts() {
   try {
-    const { categories, products } = await Api.get("/api/products");
+    const { products } = await Api.get("/api/products");
+
+    printDiscountedPrice(products);
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);

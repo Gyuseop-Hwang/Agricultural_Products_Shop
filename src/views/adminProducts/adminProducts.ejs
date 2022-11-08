@@ -60,7 +60,7 @@
               <td><%=products[i].category.name%></td>
               <td class="product-image"><img class="thumbnail" src="<%=products[i].image.path%>" alt="<%=products[i].title%> "/></td>
               <td class="product-title"><%=products[i].title%></td>
-              <td><%=products[i].price%></td>
+              <td id="price<%=products[i]._id%>"><span><%=products[i].price.toLocaleString()%>원</span></td>
               <td><%=products[i].quantity%></td>
               <td class="button-box"><button class="updateButton"><a href="/admin/products/<%=products[i]._id%>">수정</a></button>
               <button class="deleteButton modal-trigger" data-id="<%=products[i]._id%>">삭제</button></td>
