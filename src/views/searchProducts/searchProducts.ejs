@@ -19,11 +19,11 @@
 	<!--헤더-->
 	<%-include("../common/header")%>
 		<!-- 상품 목록-->
-			<div id="productsList" class="list">
+			<div id="productsContainer" class="columns products-container mx-6">
 				<%products.forEach(product => {%>
-				<div class="list-item product-container">
+				<div class="column is-flex-direction-column m-1">
 					<div>
-						<figure class="image is-128x128">
+						<figure class="image is-1by1">
 							<img class="" src="<%=product.image.path%>" alt="<%=product.title%> 이미지">
 						</figure>
 					</div>

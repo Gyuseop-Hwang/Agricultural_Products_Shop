@@ -22,7 +22,7 @@ userRouter.post(
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      throw new BadRequestError(errors.array());
+      throw new BadRequestError(errors.array().map(error => error.msg).join(", "));
     }
 
     const newUser = await userService.addUser(req.body);
@@ -40,7 +40,7 @@ userRouter.post(
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      throw new BadRequestError(errors.array());
+      throw new BadRequestError(errors.array().map(error => error.msg).join(", "));
     }
 
     const userToken = await userService.getUserToken(req.body);

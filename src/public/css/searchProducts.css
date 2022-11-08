@@ -7,16 +7,10 @@ a{
 	text-decoration: none;
 	color : black;
 }
+.products-container{
+	min-height: 450px;
+}
 
-.product-container{
-	display: flex;
-}
-.product-contents{
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	margin-left: 10px;
-}
 .product-title{
 	font-size: larger;
 	font-weight: 500;
@@ -25,4 +19,7 @@ a{
 	font-size: larger;
 	font-weight: 800;
 	color : orange
+}
+.product-image{
+	object-fit: cover;
 }

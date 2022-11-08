@@ -48,7 +48,7 @@ productRouter.post(
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      throw new BadRequestError(errors.array())
+      throw new BadRequestError(errors.array().map(error => error.msg).join(", "));
     }
 
     const product = await productService.createComment(req.params.productId, req.body);
@@ -66,7 +66,7 @@ productRouter.put(
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      throw new BadRequestError(errors.array())
+      throw new BadRequestError(errors.array().map(error => error.msg).join(", "));
     }
 
     const { productId, commentId } = req.params;
