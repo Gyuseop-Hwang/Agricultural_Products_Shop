@@ -12,9 +12,9 @@
 	<!-- 폰트 어썸: 아이콘 -->
 	<script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
 	<!--css 관련-->
-	<link rel="stylesheet" href="./productDetail.css" />
+	<link rel="stylesheet" href="./searchProducts.css" />
 	<!-- script-->
-	<script src="./productDetail.js" type="module" defer></script>
+	<script src="searchProducts.js" type="module" defer></script>
 </head>
 
 <body>
@@ -51,49 +51,26 @@
 			</div>
 		</div>
 	</nav>
-	<!--상세 페이지-->
-	<div class="box detail-box">
-		<!--상품 사진, 이름, 가격, 남은 재고, 카테고리, 가격-->
-		<div class="block detail-contents-box">
-			<!--이미지-->
-			<div class="product-image">
-				<img id="image">
-			</div>
-			<!--이름, 가격, 남은 재고, 카테고리-->
-			<div class="detail-contents-left">
-				<div class="detail-contents-left-inner">
-					<div class="title-box">
-						<span id="title"><%=product.title%></span>
-					</div>
-					<div class="price-quantity-box">
-						<span id="price"><%=product.price%></span>
-						<span id="quantity"><%=product.quantity%></span>
-					</div>
-					<div class="category-name">
-						<span id="categoryName"><%=product.category.name%></span>
-					</div>
-					<form class="form">
-						<div class="count-price">
-							<div class="count">
-								<label>수량</label>
-								<input type="number" value=1 id="count" min="1" max="9">
-							</div>
-							<span id="totalPrice"></span>
-						</div>
-						<div class="botton-box">
-							<button class="button" id="addCartBtn">장바구니 추가</button>
-							<button class="button" id="buyBtn">구매</button>
-						</div>
-					</form>
+	<div class="box">
+		<!--카테고리 검색-->
+		<div id="category" class="block">
+		</div>
+		<!-- 검색 form기능-->
+		<div class="block">
+			<div class="field has-addons">
+				<div class="control">
+					<input id="searchInput"class="input" type="text">
+				</div>
+				<div class="control">
+					<button id="searchBtn" class="button is-info">검색 </button>
 				</div>
 			</div>
 		</div>
-		<!--상품 discription-->
-		<div>
-			<span id="discription"></span>
+		<!-- 상품 목록-->
+	</div>
+	<div>
+		<div id="productsList" class="list">
 		</div>
 	</div>
-
 </body>
-
 </html>

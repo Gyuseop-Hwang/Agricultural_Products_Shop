@@ -1,31 +1,20 @@
 import Joi from 'joi';
 import { BadRequestError } from '../utils';
-import { cloudinary } from '../cloudinary';
 
-async function productValidator(req, res, next) {
-
+function productValidator(req, res, next) {
   const productSchema = Joi.object({
-    title: Joi.string().required().min(3).max(20),
-    image: [Joi.object().optional(), Joi.allow(null)],
+    title: Joi.string().required().min(5).max(20),
+    imageUrl: Joi.string().required(),
     price: Joi.number().required().min(0),
     quantity: Joi.number().required().min(0),
-    description: Joi.string().required().min(5).max(50),
+    description: Joi.string().required().min(10).max(50),
     category: Joi.string().required(),
   });
-
   const { error } = productSchema.validate(req.body);
-
   if (error) {
-
-    if (req.file) {
-      await cloudinary.uploader.destroy(req.file.filename);
-    }
-
     const message = error.details.map((el) => el.message).join(', ');
-
     return next(new BadRequestError(message));
   }
-
   next();
 }
 

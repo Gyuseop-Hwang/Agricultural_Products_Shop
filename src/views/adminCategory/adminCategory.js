@@ -1,4 +1,4 @@
-import * as Api from "/js/api.js"
+import * as Api from "/api.js"
 const categoryBtnDiv = document.getElementById("categoryBtnDiv");
 const categoryInfoDiv = document.getElementById("categoryInfoDiv");
 const createCategoryDiv = document.getElementById("createCategoryDiv"); //카테고리 추가 영역
@@ -68,17 +68,12 @@ cancleCategoryButton.addEventListener("click", () => {
 async function getCategories() {
 	try {
 		const result = await Api.get("/api/admin/products/categories");
-		//http://localhost:5500/api/admin/products/categories
 		return result;
 	} catch (e) { console.log(e) }
 }
 //카테고리 버튼 출력
 async function printCategoryBtn() {
 	const categories = await getCategories();
-	//카테고리 목록을 못받아온 경우
-	if (!categories) {
-		return;
-	}
 	categories.forEach(category => {
 		const button = document.createElement("button");
 		const span = document.createElement("span");
