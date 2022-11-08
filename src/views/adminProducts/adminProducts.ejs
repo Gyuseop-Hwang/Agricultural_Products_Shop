@@ -64,19 +64,20 @@
         </thead>
         <tbody id="productListTable">
           <% for(let i = 0; i<products.length;i++){ %> 
-            <tr id="tr<%=i%>">
+            <tr class='tr' data-id="<%=products[i]._id%>">
               <td><%=products[i].category.name%></td>
               <td class="product-image"><img class="thumbnail" src="<%=products[i].image.path%>" alt="<%=products[i].title%> "/></td>
               <td class="product-title"><%=products[i].title%></td>
               <td><%=products[i].price%></td>
               <td><%=products[i].quantity%></td>
               <td class="button-box"><button class="updateButton"><a href="/adminProducts/<%=products[i]._id%>">수정</a></button>
-              <button class="deleteButton" id="deleteButton<%=i%>">삭제</button></td>
+              <button class="deleteButton modal-trigger" data-id="<%=products[i]._id%>">삭제</button></td>
             </tr>
           <% } %>  
         </tbody>
       </table>
     </div>
     <%-include("../common/footer")%>
+    <%-include("../common/modal")%>
   </body>
 </html>

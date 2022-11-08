@@ -1,5 +1,25 @@
-import * as Api from "/api.js";
+import * as Api from "./api.js";
+import { showModal, addModalEvent } from "./modal.js";
 const orderList = document.getElementById("orderList");
+
+const deleteOrderButton = document.querySelectorAll(".delete-button");
+const trs = document.querySelectorAll(".tr");
+let ORDER_ID;
+
+deleteOrderButton.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    ORDER_ID = e.currentTarget.dataset.id;
+    showModal("주문 삭제", "해당 주문을 삭제하시겠습니까?");
+  });
+});
+addModalEvent(() => {
+  deleteOrder(ORDER_ID);
+  trs.forEach((tr) => {
+    if (tr.dataset.id === ORDER_ID) {
+      tr.remove();
+    }
+  });
+});
 
 // 받아온 주문내역 중 주문일자, 배송상태 출력 및 삭제, 수정 이벤트 등록
 function printOrders(order, index) {
@@ -16,14 +36,6 @@ function printOrders(order, index) {
       statusSelect.options[i].selected = true;
     }
   }
-
-  // 주문 삭제 핸들러
-  const deleteOrderBtn = document.getElementById(`deleteOrderBtn${index}`);
-  const tr = document.getElementById(`order${index}`);
-  deleteOrderBtn.addEventListener("click", () => {
-    deleteOrder(_id);
-    tr.remove();
-  });
 
   // 배송 상태 업데이트 핸들러
   const modifyStatusBtn = document.getElementById(`modifyStatusBtn${index}`);

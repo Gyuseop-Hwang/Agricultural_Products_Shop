@@ -45,7 +45,7 @@
       </thead>
       <tbody id="orderList">
         <% for(let i=0; i<orders.length; i++) { %>
-        <tr id="order<%=i%>">
+        <tr class="tr" data-id="<%=orders[i]._id%>">
           <td class="order-date createdAt<%=i%>"></td>
           <td class="user-email"><%= orders[i].user.email %> </td>
           <td><% const products = orders[i].products.map((product)=> {%>
@@ -67,13 +67,14 @@
             </select>
             <button id="modifyStatusBtn<%=i%>">수정</button>
           </td>
-          <td><button class="delete-button" id="deleteOrderBtn<%=i%>">주문삭제</button></td>
+          <td><button class="delete-button" data-id="<%=orders[i]._id%>">주문삭제</button></td>
         </tr>
         <% } %>
       </tbody>
     </table>
   </section>
   <%-include("../common/footer")%>
+  <%-include("../common/modal")%>
 </body>
 
 </html>

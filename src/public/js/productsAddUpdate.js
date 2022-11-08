@@ -1,4 +1,5 @@
 import * as Api from "./api.js";
+import { showModal, addModalEvent } from "./modal.js";
 
 const fileInput = document.getElementById("imageInput");
 const titleInput = document.getElementById("title");
@@ -74,7 +75,8 @@ async function addOrUpdateProduct(data, id) {
       });
       console.log("put요청");
       alert("수정이 완료됐습니다.");
-      //window.location.replace("/adminProducts");
+      window.location.replace("/adminProducts");
+      return;
     }
 
     //등록 요청시
@@ -83,7 +85,8 @@ async function addOrUpdateProduct(data, id) {
       headers: { Authorization: `Bearer ${sessionStorage["token"]}` },
       body: data,
     });
-    //window.location.replace("/adminProducts");
+    console.log("post요청");
+    window.location.replace("/adminProducts");
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
@@ -111,7 +114,11 @@ fileInput.addEventListener("change", () => {
 });
 
 addOrUpdateButton.addEventListener("click", submitProduct);
-deleteButton.addEventListener("click", deleteProduct);
+deleteButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  showModal("상품 삭제", "해당 상품을 삭제하시겠습니까?");
+});
+addModalEvent(deleteProduct);
 
 if (window.location.pathname.split("/")[2] !== "add") {
   const productId = window.location.pathname.split("/")[2];
