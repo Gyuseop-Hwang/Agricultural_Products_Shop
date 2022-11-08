@@ -44,8 +44,10 @@
 						</span>
 					</a>
 				</li>
-				<li class="mx-1"><a href="/login" class="button btn-main-color is-rounded">로그인</a></li>
-				<li class="mx-1"><a href="/register" class="button btn-main-color is-rounded">회원가입</a></li>
+				<li class="mx-1" id="loginList"><a href="/login" class="button btn-main-color is-rounded">로그인</a></li>
+				<li class="mx-1" id="registerList"><a href="/register" class="button btn-main-color is-rounded">회원가입</a></li>
+				<li class="mx-1" id="logoutList"><a href="/home" id="logoutBtn" class="button btn-main-color is-rounded">로그아웃</a></li>
+				<li class="mx-1" id="userInfoList"><a href="/userInfo" class="button btn-main-color is-rounded">마이페이지</a></li>
 			</ul>
 		</div>
 	</div>
@@ -66,5 +68,24 @@
 <script>
 	const searchInput = document.getElementById("searchInput");
 	const searchBtn = document.getElementById("searchBtn");
+	const loginList = document.getElementById("loginList");
+	const registerList = document.getElementById("registerList");
+	const logoutList = document.getElementById("logoutList");
+	const userInfoList = document.getElementById("userInfoList");
+	const logoutBtn = document.getElementById("logoutBtn")
 	searchBtn.addEventListener("click", () => location.href = `/search?title=${searchInput.value.trim()}`)
+	const usersToken = sessionStorage.getItem("token");
+	//로그인 상태라면 로그인 버튼과 회원가입 버튼 보이지 않음
+	if(usersToken){
+		loginList.classList.add("is-hidden");
+		registerList.classList.add("is-hidden");
+		logoutList.classList.remove("is-hidden");
+		userInfoList.classList.remove("is-hidden");
+	}else{
+		loginList.classList.remove("is-hidden");
+		registerList.classList.remove("is-hidden");
+		logoutList.classList.add("is-hidden");
+		userInfoList.classList.add("is-hidden");
+	}
+	logoutBtn.addEventListener("click", ()=>sessionStorage.removeItem("token"));
 </script>
