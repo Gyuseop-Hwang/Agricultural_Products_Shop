@@ -34,7 +34,7 @@
           <div class="product-image mr-6">
             <div class="image-box">
               <img
-                id="image"
+                id="thumbnailImage"
                 src="<%=product.image.path%>"
                 alt="<%=product.title%>"
               />
@@ -70,6 +70,7 @@
                   id="discountInput"
                   type="text"
                   placeholder="할인 금액"
+                  value="0"
                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                   disabled
                 />

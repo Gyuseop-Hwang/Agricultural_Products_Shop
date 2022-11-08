@@ -64,7 +64,7 @@ function deleteSelectedProduct() {
     }
   });
   //localstorage에 선택항목 삭제된 배열 저장
-  const newProducts = savedProducts.filter((product) => {
+  const newProducts = JSON.parse(savedProducts).filter((product) => {
     for (let i = 0; i < checkBoxes.length; i++) {
       if (
         checkBoxes[i].checked !== true &&
