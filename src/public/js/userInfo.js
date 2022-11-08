@@ -7,9 +7,9 @@ const email = document.getElementById("email");
 const fullName = document.getElementById("name");
 const password = document.getElementById("password");
 const phone = document.getElementById("phone");
-const postalCode = document.getElementById("postalCode");
-const address = document.getElementById("address");
-const detailAddress = document.getElementById("detailAddress");
+// const postalCode = document.getElementById("postalCode");
+// const address = document.getElementById("address");
+// const detailAddress = document.getElementById("detailAddress");
 
 // 이메일 , 이름, 비밀번호, 전화번호, 주소 등
 const emailText = document.getElementById("emailText");
@@ -59,7 +59,7 @@ fetch(`http://localhost:5500/api/users/userInfo`, {
     email.value = data.email;
     fullName.value = data.fullName;
     phone.value = data.phoneNumber;
-    password.value = "********";
+    password.value = "";
     sample6_postcode.value = data.address.postalCode;
     sample6_address.value = data.address.address1;
     sample6_detailAddress.value = data.address.address2;
@@ -85,6 +85,7 @@ async function onClickEditBtn(e) {
   ].forEach((item) => {
     item.classList.remove("hidden");
   });
+  // 폼이 나타나게 함
 
   if (editBtn.innerText === "수정") {
     editBtn.innerText = "완료";
@@ -103,6 +104,8 @@ async function onClickEditBtn(e) {
     ].forEach((item) => {
       item.classList.add("hidden");
     });
+    // 폼이 나타나게 함 (글씨 숨김)
+    // 첫페이지에선 보여야함.
   } else if (editBtn.innerText === "완료") {
     editBtn.innerText = "수정";
 
@@ -134,12 +137,50 @@ async function onClickEditBtn(e) {
     })
       .then((res) => res.json())
       .catch((err) => console.error(err));
+
+    [
+      emailText,
+      nameText,
+      passwordText,
+      phoneText,
+      postalCodeText,
+      addressText,
+      detailAddressText,
+      postalCodeLabel,
+      addressLabel,
+      detailAddressLabel,
+    ].forEach((item) => {
+      item.classList.remove("hidden");
+    });
+
+    [
+      email,
+      fullName,
+      password,
+      phone,
+      sample6_postcode,
+      sample6_postcode_btn,
+      sample6_address,
+      sample6_detailAddress,
+      sample6_extraAddress,
+      daumAddressText,
+      conformPassword,
+      conformPasswordInput,
+    ].forEach((item) => {
+      item.classList.add("hidden");
+    });
+
+    emailText.innerHTML = email.value;
+    nameText.innerHTML = fullName.value;
+    phoneText.innerHTML = phone.value;
+    postalCodeText.innerHTML = sample6_postcode.value;
+    addressText.innerHTML = sample6_address.value;
+    detailAddressText.innerHTML = sample6_detailAddress.value;
   }
 }
 
 async function onClickDeleteBtn(e) {
   e.preventDefault();
-  //confirm("탈퇴하시겠습니까?");
 
   // 끝부분에 식별할 수 있는 아이디를 넣어줘야 작동함
   await fetch("http://localhost:5500/api/users/withdrawal", {

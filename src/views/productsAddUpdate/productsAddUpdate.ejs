@@ -23,50 +23,14 @@
       crossorigin="anonymous"
     ></script>
     <!--css 관련-->
-    <link rel="stylesheet" href="productsAddUpdate.css" />
+    <link rel="stylesheet" href="/css/productsAddUpdate.css" />
     <!-- script-->
     <script src="https://cdn.ckeditor.com/ckeditor5/35.2.1/classic/ckeditor.js"></script>
-    <script src="productsAddUpdate.js" type="module" defer></script>
+    <script src="/js/productsAddUpdate.js" type="module" defer></script>
   </head>
   <body>
     <!--헤더-->
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="container mt-3">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="/">
-            <img src="../elice-rabbit.png" width="30" height="30" />
-            <span class="has-text-link">쇼핑-n팀</span>
-          </a>
-
-          <a
-            role="button"
-            class="navbar-burger"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarBasicExample"
-          >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
-
-        <div class="navbar-end breadcrumb my-auto" aria-label="breadcrumbs">
-          <ul id="navbar">
-            <li><a href="/login">로그인</a></li>
-            <li><a href="/register">회원가입</a></li>
-            <li>
-              <a href="#cart" aria-current="page">
-                <span class="icon">
-                  <i class="fas fa-cart-shopping"></i>
-                </span>
-                <span>카트</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <%-include("../common/header")%>
     <!--상세 페이지-->
     <form enctype="multipart/form-data">
       <div class="box detail-box container">
@@ -74,42 +38,56 @@
         <div class="block detail-contents-box is-flex mb-5">
           <!--이미지-->
           <div class="product-image mr-6">
-            <input type="file" id="imageInput" />
-            <img id="image" />
+            <div class="image-box">
+              <img
+                id="image"
+                src="<%=product.image.path%>"
+                alt="<%=product.title%>"
+              />
+            </div>
+            <label for="imageInput">
+              <div class="image-input">이미지 업로드</div>
+            </label>
+            <input type="file" name="imageInput" id="imageInput" />
           </div>
           <!--이름, 가격, 남은 재고, 카테고리-->
           <div class="detail-contents-left">
             <div class="detail-contents-left-inner">
               <div class="mb-3">
                 <span>상품명</span>
-                <input class="input is-small" id="title" />
+                <input
+                  class="input is-small"
+                  id="title"
+                  value="<%=product.title%>"
+                />
               </div>
               <div class="price-quantity-box">
                 <span>가격</span>
                 <input
                   class="input is-small mb-3"
                   id="price"
+                  value="<%=product.price%>"
                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                 />
                 <span>수량</span>
                 <input
                   class="input is-small mb-3"
                   id="quantity"
+                  value="<%=product.quantity%>"
                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                 />
               </div>
               <div class="category-name">
                 <span>카테고리</span>
                 <div class="select is-small mb-3">
-                  <select id="categorySelect" name="카테고리"></select>
+                  <select id="categorySelect" name="카테고리">
+                    <% for(let i = 0; i < categories.length; i++){ %>
+                    <option value="<%=categories[i]._id%>">
+                      <%=categories[i].name%>
+                    </option>
+                    <% } %>
+                  </select>
                 </div>
-              </div>
-              <div class="count-price">
-                <!-- <div class="count">
-                  <label>수량</label>
-                  <input type="number" value="1" id="count" min="1" max="9" />
-                </div>
-                <span id="totalPrice"></span> -->
               </div>
               <div class="botton-box">
                 <button class="button hidden is-small" id="deleteButton">
@@ -121,7 +99,7 @@
         </div>
         <!--상품 discription-->
         <div>
-          <div id="editor"></div>
+          <div id="editor"><% %></div>
         </div>
         <div class="has-text-right">
           <button class="button is-small" id="addOrUpdateButton">등록</button>

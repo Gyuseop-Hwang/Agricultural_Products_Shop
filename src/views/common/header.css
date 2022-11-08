@@ -1,0 +1,23 @@
+:root {
+	--main-color : #11B564;
+	--btn-color : #EAFCED
+}
+.brand-font{
+	font-family: 'Jua','Noto Sans KR', sans-serif;
+	font-size: x-large;
+}
+.main-color {
+	color: var(--main-color);
+}
+.search-btn {
+	background-color: var(--main-color);
+	color : white;
+}
+.btn-main-color {
+	background-color: var(--btn-color);
+	color: var(--main-color);
+	border: none;
+}
+.width-lg{
+	width: 200px;
+}

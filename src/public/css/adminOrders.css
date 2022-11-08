@@ -1,0 +1,60 @@
+button {
+  cursor: pointer;
+}
+
+.admin-order-container {
+  min-height: calc(100vh - 270px);
+}
+
+.table.admin-orders th {
+  font-size: 14px;
+  text-align: center;
+  color: rgba(54, 54, 54, 0.6);
+}
+
+.table.admin-orders td {
+  font-size: 15px;
+  padding: 15px 0 15px 0;
+  text-indent: 10px;
+}
+
+.table.admin-orders .order-date,
+.table.admin-orders .total-price,
+.table.admin-orders .user-email {
+  text-align: center;
+  text-indent: 0;
+}
+
+.update-button-box select {
+  display: block;
+  width: 85px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  margin: 0 auto 10px;
+}
+.update-button-box select:focus {
+  border: 1px solid var(--main-color);
+  outline: none;
+}
+.update-button-box button {
+  display: block;
+  margin: auto;
+  width: 90px;
+  height: 30px;
+  border: none;
+  border-radius: 40px;
+  background-color: var(--btn-color);
+  color: var(--main-color);
+  font-size: 13px;
+}
+.delete-button {
+  display: block;
+  margin: auto;
+  width: 90px;
+  height: 30px;
+  border: none;
+  border-radius: 40px;
+  background-color: var(--btn-color);
+  color: var(--main-color);
+  font-size: 13px;
+}

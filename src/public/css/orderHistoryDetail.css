@@ -28,7 +28,7 @@ h1 {
   background-color: #e5f5da;
 }
 
-#orderHistory {
+#orderHistoryDetail {
   margin: 80px auto;
   width: 800px;
   height: 800px;
@@ -36,6 +36,7 @@ h1 {
   border-radius: 30px;
   background-color: white;
   box-shadow: 2px 3px 7px 1px rgba(0, 0, 0, 0.15);
+  overflow-y: scroll;
 }
 
 table {
@@ -49,15 +50,10 @@ table {
   flex-direction: row;
 }
 
-#orderReciptId,
-#orderDate,
-#shippingStatus,
-#quantity {
-  text-align: center;
-  /* align-items: center;
-  justify-content: center; */
-}
-
-#orderReciptId {
-  color: #4f802f;
+#productImage,
+#productTitle,
+#productQuantity,
+#productPrice {
+  width: 100px;
+  height: 100px;
 }
