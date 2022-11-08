@@ -27,8 +27,11 @@ viewsRouter.use("/orderHistoryDetail", async (req, res, next) => {
   res.render("orderHistoryDetail/orderHistoryDetail.ejs");
 });
 
-viewsRouter.use("/errorPage", async (req, res, next) => {
-  res.render("errorPage/errorPage.ejs");
+viewsRouter.use("/errorPage", async (req, res) => {
+  const error = {};
+  error.statusCode = app.locals.statusCode;
+  error.message = app.locals.message;
+  res.render("errorPage/errorPage.ejs", { error });
 });
 
 viewsRouter.use("/cart", async (req, res, next) => res.render("cart/cart.ejs"));
@@ -136,7 +139,6 @@ viewsRouter.use("/product/:productId", async (req, res, next) => {
 
 // views 폴더의 최상단 파일인 rabbit.png, api.js 등을 쓸 수 있게 함
 viewsRouter.use("/", serveStatic(""));
-
 
 // views폴더 내의 ${resource} 폴더 내의 모든 파일을 웹에 띄우며,
 // 이 때 ${resource}.html 을 기본 파일로 설정함.
