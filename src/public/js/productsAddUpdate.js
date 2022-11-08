@@ -1,4 +1,5 @@
-import * as Api from "/api.js";
+import * as Api from "./api.js";
+import { showModal, addModalEvent } from "./modal.js";
 
 const fileInput = document.getElementById("imageInput");
 const titleInput = document.getElementById("title");
@@ -18,26 +19,16 @@ ClassicEditor.create(document.querySelector("#editor"))
     console.error(error);
   });
 
-// 카테고리 출력
-// function printCategory(category) {
-//   const option = document.createElement("option");
-//   option.innerText = category.name;
-//   option.value = category._id;
-//   categorySelect.appendChild(option);
-// }
-
 // 수정 화면일 경우(url에 id 포함되어 있을 경우) 상품 정보 출력
 function printProduct(result) {
-  const { title, price, quantity, category, description } = result;
-  priceInput.value = price;
-  quantityInput.value = quantity;
+  const { category, description } = result;
   editor.setData(description);
   deleteButton.classList.remove("hidden");
-  // for (let i = 0; i < categorySelect.options.length; i++) {
-  //   if (categorySelect.options[i].value === category._id) {
-  //     categorySelect.options[i].selected = true;
-  //   }
-  // }
+  for (let i = 0; i < categorySelect.options.length; i++) {
+    if (categorySelect.options[i].value === category.name) {
+      categorySelect.options[i].selected = true;
+    }
+  }
 }
 
 // submit시 입력된 값 받아옴
@@ -57,6 +48,8 @@ function submitProduct(e) {
   addOrUpdateProduct(formData, window.location.pathname.split("/")[2] ?? null);
 }
 
+console.log(window.location.pathname.split("/")[2]);
+
 // 수정 화면일 경우(url에 id 포함되어 있을 경우) 상품 get요청
 async function getProduct(productId) {
   try {
@@ -68,33 +61,22 @@ async function getProduct(productId) {
   }
 }
 
-// category get 요청
-async function getAllCategories() {
-  try {
-    const result = await Api.get("/api/admin/products/categories");
-    result.forEach(printCategory);
-  } catch (err) {
-    console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
-  }
-}
-
+// 상품 업데이트 or 추가
 async function addOrUpdateProduct(data, id) {
   try {
     //업데이트 요청시
     if (id !== "add") {
-      const bodyData = JSON.stringify(data);
-      const result = await fetch(`/api/admin/products/${id}`, {
+      await fetch(`/api/admin/products/${id}`, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
-        body: bodyData,
+        body: data,
       });
+      console.log("put요청");
       alert("수정이 완료됐습니다.");
       window.location.replace("/adminProducts");
-      return result;
+      return;
     }
 
     //등록 요청시
@@ -103,6 +85,7 @@ async function addOrUpdateProduct(data, id) {
       headers: { Authorization: `Bearer ${sessionStorage["token"]}` },
       body: data,
     });
+    console.log("post요청");
     window.location.replace("/adminProducts");
   } catch (err) {
     console.error(err.stack);
@@ -124,13 +107,21 @@ async function deleteProduct() {
   }
 }
 
-// 이미지 등록
-// fileInput.addEventListener("change", () => {
-//   console.log(fileInput.files);
-// });
-//getAllCategories();
+// 파일 선택시 img 보여줌
+fileInput.addEventListener("change", () => {
+  const img = document.getElementById("image");
+  img.src = URL.createObjectURL(fileInput.files[0]);
+});
+
 addOrUpdateButton.addEventListener("click", submitProduct);
-deleteButton.addEventListener("click", deleteProduct);
+
+// deleteButton 클릭시 모달 생성
+deleteButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  showModal("상품 삭제", "해당 상품을 삭제하시겠습니까?"); // (title, content)
+});
+// 모달 "예" 클릭시 실행할 이벤트를 인자로 전달
+addModalEvent(deleteProduct);
 
 if (window.location.pathname.split("/")[2] !== "add") {
   const productId = window.location.pathname.split("/")[2];

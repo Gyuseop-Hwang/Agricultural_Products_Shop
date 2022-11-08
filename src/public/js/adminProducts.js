@@ -1,21 +1,34 @@
-import * as Api from "/api.js";
+import * as Api from "./api.js";
+import { showModal, addModalEvent } from "./modal.js";
 
-// 삭제 버튼 이벤트 등록
-function clickDeleteButton(product, index) {
-  const deleteButton = document.getElementById(`deleteButton${index}`);
+const deleteButtons = document.querySelectorAll(".deleteButton");
+const trs = document.querySelectorAll(".tr");
 
-  const tr = document.getElementById(`tr${index}`);
-  deleteButton.addEventListener("click", () => {
-    deleteProduct(product._id);
-    tr.remove();
+let PRODUCT_ID;
+
+deleteButtons.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    PRODUCT_ID = e.currentTarget.dataset.id;
+    showModal("상품 삭제", "상품을 삭제하시겠습니까?");
   });
+});
+addModalEvent(() => {
+  deleteProduct(PRODUCT_ID);
+  trs.forEach((tr) => {
+    if (tr.dataset.id === PRODUCT_ID) {
+      tr.remove();
+    }
+  });
+});
+// 삭제 버튼 이벤트 등록
+function clickDeleteButton(productId) {
+  deleteProduct(productId);
 }
 
 // 전체 상품 get 요청
 async function getAllProducts() {
   try {
     const { categories, products } = await Api.get("/api/products");
-    products.forEach((product, index) => clickDeleteButton(product, index));
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);

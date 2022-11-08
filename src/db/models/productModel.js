@@ -1,4 +1,5 @@
 import { model } from 'mongoose';
+import { CommentSchema } from '../schemas/commentSchema';
 import { ProductSchema } from '../schemas/productSchema';
 
 const Product = model('Product', ProductSchema);
@@ -12,7 +13,13 @@ export class ProductModel {
 
   async findOneProduct(productId) {
 
-    return await Product.findById(productId).populate('category');
+    return await Product.findById(productId)
+      .populate('category')
+      .populate({
+        path: "comments",
+        populate:
+          { path: "user", select: "fullName" }
+      });
   }
 
   async findProductsByTitle(title) {

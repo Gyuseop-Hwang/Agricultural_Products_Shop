@@ -32,8 +32,7 @@ function printCategoryBtn(categories) {
 		const aElement = document.createElement("a");
 		const span = document.createElement("span");
 		aElement.classList.add("navbar-item")
-		aElement.addEventListener("click", () => location.href = '/search');
-		aElement.categoryId = category._id;
+		aElement.addEventListener("click", () => location.href = `/search/${category._id}`);
 		aElement.innerText = category.name;
 		categoryDropdown.appendChild(aElement);
 	});

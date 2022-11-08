@@ -1,5 +1,5 @@
-import { string } from 'joi';
 import { Schema } from 'mongoose';
+import { CommentSchema } from './commentSchema'
 
 const { Types: { ObjectId } } = Schema;
 
@@ -13,6 +13,14 @@ const ProductSchema = new Schema(
     price: Number,
     quantity: Number,
     description: String,
+    sale: {
+      onSale: {
+        type: Boolean,
+        default: false
+      },
+      discountedPrice: Number,
+    },
+    comments: [CommentSchema],
     category: {
       type: ObjectId,
       ref: 'Category',

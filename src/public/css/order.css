@@ -77,8 +77,8 @@ button {
   height: 30px;
   border: none;
   border-radius: 40px;
-  background-color: #eafced;
-  color: #11b564;
+  background-color: var(--btn-color);
+  color: var(--main-color);
   margin-bottom: 50px;
 }
 
@@ -132,13 +132,13 @@ button {
 }
 .order-total-price .total-price {
   display: inline-block;
-  color: #11b564;
+  color: var(--main-color);
 }
 
 #payButton {
   width: 325px;
   height: 50px;
-  background-color: #11b564;
+  background-color: var(--main-color);
   color: #fff;
   border: none;
   font-size: 16px;

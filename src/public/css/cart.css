@@ -92,8 +92,8 @@ button {
   height: 30px;
   border: none;
   border-radius: 40px;
-  background-color: #eafced;
-  color: #11b564;
+  background-color: var(--btn-color);
+  color: var(--main-color);
 }
 
 .change-count-button:hover {
@@ -116,8 +116,8 @@ table td.product-total-price {
   height: 30px;
   border: none;
   border-radius: 40px;
-  background-color: #eafced;
-  color: #11b564;
+  background-color: var(--btn-color);
+  color: var(--main-color);
 }
 
 .delete-button-box button:first-child {
@@ -137,7 +137,7 @@ table td.product-total-price {
 .order-button {
   width: 280px;
   height: 48px;
-  background-color: #11b564;
+  background-color: var(--main-color);
   color: #fff;
   border: none;
   border-radius: 40px;

@@ -12,10 +12,34 @@
 
 /*div 이미지 영역*/
 .product-image {
-  width: 50%;
-  height: 300px;
+  width: 500px;
+  height: 500px;
+}
 
+.image-box {
+  width: 500px;
+  height: 450px;
   border: 1px solid #ddd;
+}
+
+#imageInput {
+  display: none;
+}
+
+.image-input {
+  display: inline-block;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 40px;
+  margin-top: 5px;
+  background-color: var(--btn-color);
+  color: var(--main-color);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.product-image img {
+  height: 100%;
 }
 
 .ck-editor__editable {
