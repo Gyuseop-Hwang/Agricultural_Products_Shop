@@ -1,3 +1,8 @@
+:root {
+  --main--color: #11b564;
+  --button-color: #eafced;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -12,20 +17,20 @@ h1 {
   font-weight: 700;
 }
 
-.layer {
+/* .layer {
   background: linear-gradient(180deg, #e5f5da 50%, #ffffff 50%);
-}
-
+} */
+/* 
 .navbar {
   background-color: #e5f5da;
-}
+} */
 
 .table {
   margin-top: 60px;
 }
 
 #tableHead {
-  background-color: #e5f5da;
+  background-color: var(--button-color);
 }
 
 #orderHistoryDetail {
