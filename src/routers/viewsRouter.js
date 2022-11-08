@@ -42,7 +42,9 @@ viewsRouter.use("/cart", async (req, res, next) => res.render("cart/cart.ejs"));
 viewsRouter.use("/order", async (req, res, next) =>
   res.render("order/order.ejs")
 );
-viewsRouter.use("/orderSuccess", serveStatic("orderSuccess"));
+viewsRouter.use("/orderSuccess", async (req, res, next) =>
+  res.render("orderSuccess/orderSuccess.ejs")
+);
 viewsRouter.use("/adminOrders", async (req, res, next) => {
   try {
     const orders = await orderService.findAllOrders();

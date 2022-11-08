@@ -87,8 +87,10 @@ async function addOrUpdateProduct(data, id) {
       body: data,
     });
     console.log("post요청");
+    alert("상품이 추가 되었습니다.");
     window.location.replace("/adminProducts");
   } catch (err) {
+    alert(err);
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }

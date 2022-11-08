@@ -121,6 +121,12 @@ button {
   font-size: 14px;
   border-radius: 0px;
 }
+#middlePhoneNumber {
+  width: 100px;
+}
+#lastPhoneNumber {
+  width: 100px;
+}
 
 /* 결제 정보 */
 .payment-box {

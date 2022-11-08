@@ -81,6 +81,7 @@ function deleteSelectedProduct() {
   // 모든 상품이 삭제됐을 경우 "장바구니가 비었습니다" 메세지 출력
   if (newProducts.length < 1) {
     emptyCartMessage.classList.remove("hidden");
+    localStorage.removeItem("products");
   }
 }
 
@@ -160,7 +161,7 @@ if (savedProducts) {
 }
 
 // 장바구니 비어있을 때
-if (!savedProducts || savedProducts.length < 1) {
+if (!savedProducts) {
   emptyCartMessage.classList.remove("hidden");
 }
 
@@ -168,7 +169,7 @@ deleteSelectedButton.addEventListener("click", deleteSelectedProduct);
 deleteAllButton.addEventListener("click", deleteAllProduct);
 
 orderButton.addEventListener("click", () => {
-  if (savedProducts.length < 1) {
+  if (!savedProducts) {
     alert("장바구니가 비어있습니다.");
     return;
   }
