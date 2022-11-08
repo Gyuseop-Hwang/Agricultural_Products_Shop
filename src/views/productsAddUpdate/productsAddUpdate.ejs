@@ -62,12 +62,20 @@
                 />
               </div>
               <div class="price-quantity-box">
-                <span>가격</span>
+                <span>가격(원가)</span>
                 <input
                   class="input is-small mb-3"
                   id="price"
                   value="<%=product.price%>"
                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                />
+                <span>할인 적용</span>
+                <input type="checkbox" name="onSale" id="onSaleCheckbox" />
+                <input
+                  class="input is-small mb-3"
+                  id="discountInput"
+                  type="text"
+                  disabled
                 />
                 <span>수량</span>
                 <input

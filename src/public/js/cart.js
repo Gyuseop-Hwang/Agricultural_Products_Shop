@@ -4,9 +4,10 @@ const cartProductList = document.getElementById("cartProductList");
 const deleteSelectedButton = document.getElementById("deleteSelectedButton");
 const deleteAllButton = document.getElementById("deleteAllButton");
 const totalPriceTxt = document.getElementById("totalPrice");
+const orderButton = document.getElementById("orderButton");
 
 let products = []; // 상품 전체 정보가 담김
-const savedProducts = JSON.parse(localStorage.getItem("products")); // [id, count]
+const savedProducts = localStorage.getItem("products"); // [id, count]
 let TOTAL_PRICE;
 
 // 수량 변경 및 삭제 시 새 배열 만들어서 로컬스토리지 저장
@@ -150,17 +151,30 @@ const emptyCartMessage = document.getElementById("emptyCartMessage");
 
 // localStorage에 저장된 상품이 있을 때
 if (savedProducts) {
+  const parsedProducts = JSON.parse(savedProducts);
   emptyCartMessage.classList.add("hidden");
-  savedProducts.forEach(async (product, index) => {
+  parsedProducts.forEach(async (product, index) => {
     const result = await Api.get("/api/products", product.id);
     saveProduct(result, product.count, index);
   });
 }
 
 // 장바구니 비어있을 때
-if (savedProducts.length < 1) {
+if (!savedProducts || savedProducts.length < 1) {
   emptyCartMessage.classList.remove("hidden");
 }
 
 deleteSelectedButton.addEventListener("click", deleteSelectedProduct);
 deleteAllButton.addEventListener("click", deleteAllProduct);
+
+orderButton.addEventListener("click", () => {
+  if (savedProducts.length < 1) {
+    alert("장바구니가 비어있습니다.");
+    return;
+  }
+  if (!sessionStorage["token"]) {
+    window.location.href = "/login";
+    return;
+  }
+  window.location.href = "/order";
+});

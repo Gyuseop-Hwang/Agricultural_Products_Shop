@@ -8,6 +8,7 @@ const quantityInput = document.getElementById("quantity");
 const categorySelect = document.getElementById("categorySelect");
 const deleteButton = document.getElementById("deleteButton");
 const addOrUpdateButton = document.getElementById("addOrUpdateButton");
+const onSaleCheckBox = document.getElementById("onSaleCheckbox");
 
 // CK Editor
 
@@ -128,3 +129,7 @@ if (window.location.pathname.split("/")[2] !== "add") {
   addOrUpdateButton.innerText = "수정하기";
   getProduct(productId);
 }
+
+// onSaleCheckBox.addEventListener("change", () => {
+//   if(onSaleCheckBox.checked === true)
+// });
