@@ -1,12 +1,13 @@
 require('dotenv').config();
 const { orderService } = require('./orderService');
+
 jest.mock('../db/models/orderModel');
 const { orderModel } = require('../db/models/orderModel');
+
 jest.mock('../db/models/productModel');
 const { productModel } = require('../db/models/productModel');
-const { NotFoundError } = require('../utils');
 
-afterAll(() => {});
+const { NotFoundError } = require('../utils');
 
 describe('test orderService methods', () => {
   describe('test findAllOrders', () => {
