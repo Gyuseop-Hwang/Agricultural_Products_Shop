@@ -1,6 +1,6 @@
-import { orderModel, userModel } from '../db';
-import { productModel } from '../db';
-import { BadRequestError, NotFoundError } from '../utils';
+import { orderModel, userModel } from "../db";
+import { productModel } from "../db";
+import { BadRequestError, NotFoundError } from "../utils";
 
 class OrderService {
   constructor(orderModel) {
@@ -18,7 +18,7 @@ class OrderService {
   async findOrder(orderId) {
     const foundOrder = await this.orderModel.find(orderId);
 
-    if (!foundOrder) throw new NotFoundError('해당 주문을 찾을 수 없습니다.');
+    if (!foundOrder) throw new NotFoundError("해당 주문을 찾을 수 없습니다.");
 
     return foundOrder;
   }
@@ -36,7 +36,7 @@ class OrderService {
 
     const createdOrderInDB = await this.orderModel.find(createdOrder._id);
 
-    if (!createdOrderInDB) throw new Error('서버에서 처리할 수 없었습니다.');
+    if (!createdOrderInDB) throw new Error("서버에서 처리할 수 없었습니다.");
 
     return createdOrder;
   }
@@ -45,10 +45,10 @@ class OrderService {
     const beforeUpdatedOrder = await this.findOrder(orderId);
     const updatedOrder = await this.orderModel.update(orderId, orderStatus);
 
-    if (!updatedOrder) throw new Error('서버에서 처리할 수 없었습니다.');
+    if (!updatedOrder) throw new Error("서버에서 처리할 수 없었습니다.");
 
     if (beforeUpdatedOrder.status === updatedOrder.status)
-      throw new BadRequestError('변경된 주문 상태 값을 입력해주세요!');
+      throw new BadRequestError("변경된 주문 상태 값을 입력해주세요!");
 
     return updatedOrder;
   }
@@ -61,7 +61,7 @@ class OrderService {
       orderShippingAddress
     );
 
-    if (!updatedOrder) throw new Error('서버에서 처리할 수 없었습니다.');
+    if (!updatedOrder) throw new Error("서버에서 처리할 수 없었습니다.");
 
     return updatedOrder;
   }
@@ -71,7 +71,7 @@ class OrderService {
 
     const deletedOrder = await this.orderModel.delete(orderId);
 
-    if (!deletedOrder) throw new Error('서버에서 처리할 수 없었습니다.');
+    if (!deletedOrder) throw new Error("서버에서 처리할 수 없었습니다.");
 
     return deletedOrder;
   }
@@ -80,11 +80,11 @@ class OrderService {
     const foundOrder = await this.findOrder(orderId);
 
     if (String(foundOrder.user._id) !== userId)
-      throw new BadRequestError('다른 사람의 주문입니다. 삭제할 수 없습니다.');
+      throw new BadRequestError("다른 사람의 주문입니다. 삭제할 수 없습니다.");
 
     const deletedOrder = await this.orderModel.delete(orderId);
 
-    if (!deletedOrder) throw new Error('서버에서 처리할 수 없었습니다.');
+    if (!deletedOrder) throw new Error("서버에서 처리할 수 없었습니다.");
 
     return deletedOrder;
   }
