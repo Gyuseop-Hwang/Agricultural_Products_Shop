@@ -60,7 +60,7 @@ adminProductRouter.patch(
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      throw new BadRequestError(errors.array())
+      throw new BadRequestError(errors.array().map(error => error.msg).join(", "));
     }
 
     const saleToggledProduct = await adminProductService.toggleSale(req.params.productId, req.body.discountedPrice);
