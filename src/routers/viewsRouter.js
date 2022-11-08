@@ -13,7 +13,7 @@ const viewsRouter = express.Router();
 viewsRouter.use("/", serveStatic("home"));
 viewsRouter.use("/register", serveStatic("register"));
 viewsRouter.use("/login", serveStatic("login"));
-
+viewsRouter.use("/admin/category", serveStatic("adminCategory"));
 viewsRouter.use("/userInfo", async (req, res, next) => {
   res.render("userInfo/userInfo.ejs");
 });
@@ -116,7 +116,7 @@ viewsRouter.use("/search", async (req, res, next) => {
     res.redirect("/search");
   }
 });
-// views 폴더의 최상단 파일인 rabbit.png, api.js 등을 쓸 수 있게 함
+/*상품 상세 페이지 라우팅 */
 viewsRouter.use("/product/:productId", async (req, res, next) => {
   try {
     const productId = req.params.productId;
@@ -127,6 +127,8 @@ viewsRouter.use("/product/:productId", async (req, res, next) => {
     res.redirect("/search");
   }
 });
+
+// views 폴더의 최상단 파일인 rabbit.png, api.js 등을 쓸 수 있게 함
 viewsRouter.use("/", serveStatic(""));
 
 // views폴더 내의 ${resource} 폴더 내의 모든 파일을 웹에 띄우며,
