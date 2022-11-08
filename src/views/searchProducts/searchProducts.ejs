@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>상품 검색 페이지</title>
+	<!-- 아이콘 -->
+	<link rel="icon" type="image/png" sizes="16x16" href="/elice-rabbit-favicon.png" />
+	<!-- bulma css -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+	<!-- 폰트 어썸: 아이콘 -->
+	<script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
+	<!--css 관련-->
+	<link rel="stylesheet" href="/css/searchProducts.css" />
+</head>
+
+<body>
+	<!--헤더-->
+	<%-include("../common/header")%>
+		<!-- 상품 목록-->
+			<div id="productsContainer" class="columns products-container mx-6">
+				<%products.forEach(product => {%>
+				<div class="column is-flex-direction-column m-1">
+					<div>
+						<figure class="image is-1by1">
+							<img class="" src="<%=product.image.path%>" alt="<%=product.title%> 이미지">
+						</figure>
+					</div>
+					<div class="product-contents">
+						<div class="product-title">
+							<a href="/product/<%=product._id%>">
+								<%=product.title%>
+							</a>
+						</div>
+						<div class="product-price">
+							<span>
+								<%=product.price.toLocaleString('ko-KR')%>원
+							</span>
+						</div>
+					</div>
+				</div>
+				<%})%>
+			</div>
+		</div>
+		<!--헤더-->
+	<%-include("../common/footer")%>
+</body>
+
+</html>

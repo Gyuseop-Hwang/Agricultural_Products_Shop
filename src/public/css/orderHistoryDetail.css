@@ -1,0 +1,84 @@
+:root {
+  --main--color: #11b564;
+  --button-color: #eafced;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin: 15px auto 30px auto;
+  width: 300px;
+  text-align: center;
+  align-items: center;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+/* .layer {
+  background: linear-gradient(180deg, #e5f5da 50%, #ffffff 50%);
+} */
+/* 
+.navbar {
+  background-color: #e5f5da;
+} */
+
+#tableHead {
+  background-color: var(--button-color);
+}
+
+#orderHistoryDetail {
+  margin: 80px auto;
+  width: 800px;
+  height: 800px;
+  padding: 40px;
+  border-radius: 30px;
+  background-color: white;
+  box-shadow: 2px 3px 7px 1px rgba(0, 0, 0, 0.15);
+  /* overflow-y: scroll; */
+}
+
+table {
+  margin: 0 auto;
+  text-align: center;
+  align-items: center;
+}
+
+#orderedProduct {
+  display: flex;
+  flex-direction: row;
+}
+
+#tableData {
+  width: 100px;
+}
+
+#productImage {
+  margin-right: 15px;
+}
+
+#productTitle {
+  margin-bottom: 30px;
+}
+
+#quantity,
+#price {
+  width: 80px;
+  height: 80px;
+  margin: 10px auto;
+}
+
+#productImage,
+#productTitle,
+#productPrice,
+#productQuantity {
+  width: 100px;
+  height: 100px;
+}
+
+#wholeTable {
+  height: 600px;
+  overflow-y: scroll;
+}

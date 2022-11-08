@@ -1,0 +1,25 @@
+*{
+	padding : 0;
+	margin : 0;
+	box-sizing : border-box; /*패딩의 영역도 크기에 포함*/
+}
+a{
+	text-decoration: none;
+	color : black;
+}
+.products-container{
+	min-height: 450px;
+}
+
+.product-title{
+	font-size: larger;
+	font-weight: 500;
+}
+.product-price{
+	font-size: larger;
+	font-weight: 800;
+	color : orange
+}
+.product-image{
+	object-fit: cover;
+}
