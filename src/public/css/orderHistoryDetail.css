@@ -36,7 +36,7 @@ h1 {
   border-radius: 30px;
   background-color: white;
   box-shadow: 2px 3px 7px 1px rgba(0, 0, 0, 0.15);
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 table {
@@ -56,4 +56,9 @@ table {
 #productPrice {
   width: 100px;
   height: 100px;
+}
+
+#wholeTable {
+  height: 600px;
+  overflow-y: scroll;
 }

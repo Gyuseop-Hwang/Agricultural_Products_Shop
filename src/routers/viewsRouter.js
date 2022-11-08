@@ -23,6 +23,10 @@ viewsRouter.use("/orderHistoryDetail", async (req, res, next) => {
   res.render("orderHistoryDetail/orderHistoryDetail.ejs");
 });
 
+viewsRouter.use("/errorPage", async (req, res, next) => {
+  res.render("errorPage/errorPage.ejs");
+});
+
 viewsRouter.use("/cart", async (req, res, next) => res.render("cart/cart.ejs"));
 viewsRouter.use("/order", async (req, res, next) =>
   res.render("order/order.ejs")

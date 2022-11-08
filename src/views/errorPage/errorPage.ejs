@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- bulma css 관련 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/css/errorPage.css" />
+    <script defer src="/js/errorPage.js" type="module"></script>
+    <title>errorPage</title>
+  </head>
+  <body>
+    <div id="containerLeft">
+      <h1 id="errorTitle"><%=statusCode%></h1>
+      <p id="errorSubtitle">Page Not Found !</p>
+      <p id="errorDescription">
+        죄송합니다. 현재 해당 페이지를 찾을 수 없습니다.<br />
+        존재하지 않는 주소를 입력하셨거나, <br />요청하신 페이지 주소가 변경,
+        삭제되어 찾을 수 없습니다.
+      </p>
+    </div>
+    <div id="containerRight">
+      <img id="errorImage" src="/img/errorImage.png" alt="errorImage" />
+    </div>
+  </body>
+</html>
