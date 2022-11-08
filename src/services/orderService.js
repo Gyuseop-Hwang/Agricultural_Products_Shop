@@ -93,6 +93,7 @@ class OrderService {
     const allProducts = await productModel.findProducts();
     const totalPrice = requestedProducts.reduce((acc, { product, count }) => {
       const pickedProduct = allProducts.find((v) => String(v._id) === product);
+
       return acc + pickedProduct.price * count;
     }, 0);
     return totalPrice;
