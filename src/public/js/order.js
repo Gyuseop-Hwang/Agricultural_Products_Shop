@@ -1,4 +1,4 @@
-import * as Api from "../../views/api.js";
+import * as Api from "./api.js";
 
 const recipient = document.getElementById("name");
 const postcode = document.getElementById("sample3_postcode");
