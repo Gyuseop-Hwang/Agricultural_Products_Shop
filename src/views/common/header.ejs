@@ -5,13 +5,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
-  href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@500;700&family=Poppins:wght@500;700&display=swap"
-  rel="stylesheet"
-/>
+	href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@500;700&family=Poppins:wght@500;700&display=swap"
+	rel="stylesheet" />
 
-<nav class="navbar" role="navigation" aria-label="main navigation">
-
-	<div class="container mt-3">
+<nav class="navbar my-4" role="navigation" aria-label="main navigation">
+	<div class="container my-3">
 		<div class="navbar-brand">
 			<a class="navbar-item mr-6" href="/home">
 				<img src="../elice-rabbit.png" width="30" height="30" />
@@ -45,24 +43,31 @@
 					</a>
 				</li>
 				<li class="mx-1" id="loginList"><a href="/login" class="button btn-main-color is-rounded">로그인</a></li>
-				<li class="mx-1" id="registerList"><a href="/register" class="button btn-main-color is-rounded">회원가입</a></li>
-				<li class="mx-1" id="logoutList"><a href="/home" id="logoutBtn" class="button btn-main-color is-rounded">로그아웃</a></li>
-				<li class="mx-1" id="userInfoList"><a href="/userInfo" class="button btn-main-color is-rounded">마이페이지</a></li>
+				<li class="mx-1" id="registerList"><a href="/register" class="button btn-main-color is-rounded">회원가입</a>
+				</li>
+				<li class="mx-1" id="logoutList"><a href="/home" id="logoutBtn"
+						class="button btn-main-color is-rounded">로그아웃</a></li>
+				<li class="mx-1" id="userInfoList"><a href="/userInfo"
+						class="button btn-main-color is-rounded">마이페이지</a></li>
 			</ul>
 		</div>
 	</div>
 </nav>
-<nav class="navbar container mb-4">
-	<div class="navbar-menu">
-		<div class="navbar-item has-dropdown is-hoverable ml-4  width-lg">
-			<a class="navbar-link width-lg" href="/search">
-				<p class="main-color">전체 카테고리</p>
-			</a>
-			<!--네비게이션 드롭다운-->
-			<div class="navbar-dropdown" id="categoryDropdown">
+<nav class="navbar mb-4 second-nav">
+	<div class="container">
+		<div class="navbar-menu">
+			<div class="navbar-item has-dropdown is-hoverable">
+				<a class="navbar-link" href="/search">
+					<div class="px-3">
+						<i class="fa-solid fa-lg fa-bars main-color"></i>
+					</div>
+					<p class="title is-5">전체 카테고리</p>
+				</a>
+				<!--네비게이션 드롭다운-->
+				<div class="navbar-dropdown" id="categoryDropdown">
+				</div>
 			</div>
 		</div>
-		<div class="navbar-end"></div>
 	</div>
 </nav>
 <script>
@@ -76,16 +81,16 @@
 	searchBtn.addEventListener("click", () => location.href = `/search?title=${searchInput.value.trim()}`)
 	const usersToken = sessionStorage.getItem("token");
 	//로그인 상태라면 로그인 버튼과 회원가입 버튼 보이지 않음
-	if(usersToken){
+	if (usersToken) {
 		loginList.classList.add("is-hidden");
 		registerList.classList.add("is-hidden");
 		logoutList.classList.remove("is-hidden");
 		userInfoList.classList.remove("is-hidden");
-	}else{
+	} else {
 		loginList.classList.remove("is-hidden");
 		registerList.classList.remove("is-hidden");
 		logoutList.classList.add("is-hidden");
 		userInfoList.classList.add("is-hidden");
 	}
-	logoutBtn.addEventListener("click", ()=>sessionStorage.removeItem("token"));
+	logoutBtn.addEventListener("click", () => sessionStorage.removeItem("token"));
 </script>

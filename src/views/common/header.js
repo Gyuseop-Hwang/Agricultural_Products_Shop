@@ -30,10 +30,9 @@ async function renderBtnProducts() {
 function printCategoryBtn(categories) {
 	categories.forEach(category => {
 		const aElement = document.createElement("a");
-		const span = document.createElement("span");
-		aElement.classList.add("navbar-item")
+		aElement.classList.add("navbar-item", "pl-6")
 		aElement.addEventListener("click", () => location.href = `/search/${category._id}`);
-		aElement.innerText = category.name;
+		aElement.innerHTML = `<strong>${category.name}</strong>`;
 		categoryDropdown.appendChild(aElement);
 	});
 }
