@@ -20,7 +20,7 @@
 	<%-include("../common/header")%>
 		<!-- 상품 목록-->
 			<div id="productsContainer"
-				class="columns products-container mx-5 is-flex is-flex-wrap-wrap is-justify-content-flex-start">
+				class="container products-container is-flex is-flex-wrap-wrap is-justify-content-flex-start">
 				<%products.forEach(product=> {%>
 					<div class="column is-flex-direction-column m-1 product-list">
 						<a href="/product/<%=product._id%>">
