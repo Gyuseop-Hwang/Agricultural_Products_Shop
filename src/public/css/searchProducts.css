@@ -11,15 +11,14 @@ a{
 	min-height: 450px;
 }
 
-.product-title{
-	font-size: larger;
-	font-weight: 500;
-}
-.product-price{
-	font-size: larger;
-	font-weight: 800;
-	color : orange
-}
 .product-image{
-	object-fit: cover;
+    border-radius: 0.75rem;
+	overflow: hidden;
 }
+.product-list{
+	width: 258px;
+	min-width: 258px;
+	max-width: 258px;
+	height: 360px;
+}
+
