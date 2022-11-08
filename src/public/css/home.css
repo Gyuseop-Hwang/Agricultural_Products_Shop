@@ -4,18 +4,15 @@
   margin: 0 auto;
 }
 .slide{
-  background-color: var(--main-color);
   width: 70%;
   height: 100%;
 }
 .right-side{
-  background-color: bisque;
   width: 30%;
   height: 100%;
 }
 
 .area{
-  background-color:cadetblue;
   width: auto;
-  height: 200px;
+  height: 33%;
 }
