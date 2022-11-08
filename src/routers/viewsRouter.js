@@ -13,7 +13,9 @@ const viewsRouter = express.Router();
 viewsRouter.use("/home", async (req, res, next) => {
   res.render("home/home.ejs");
 });
-viewsRouter.use("/register", serveStatic("register"));
+viewsRouter.use("/register", async (req, res, next) => {
+  res.render("register/register.ejs");
+});
 viewsRouter.use("/login", async (req, res, next) => {
   res.render("login/login.ejs");
 });
