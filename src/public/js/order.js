@@ -8,6 +8,7 @@ const firstPhoneNumber = document.getElementById("firstPhoneNumber");
 const middlePhoneNumber = document.getElementById("middlePhoneNumber");
 const lastPhoneNumber = document.getElementById("lastPhoneNumber");
 const payButton = document.getElementById("payButton");
+const inputs = document.querySelectorAll("table input");
 
 // 배송 정보 submit
 function submitOrderInfo() {
@@ -46,17 +47,21 @@ async function getUserInfo() {
       return;
     }
 
-    const { fullName, phoneNumber, address } = user;
-    recipient.value = fullName;
-    postcode.value = address.postalCode;
-    address.value = address.address1;
-    detailAddress.value = address.address2;
-    middlePhoneNumber.value = phoneNumber.split("-")[1];
-    lastPhoneNumber.value = phoneNumber.split("-")[2];
+    const { fullName, phoneNumber, address, role } = user;
+    if (role === "administrator") {
+      recipient.value = fullName;
+    } else {
+      recipient.value = fullName;
+      postcode.value = address.postalCode;
+      address.value = address.address1;
+      detailAddress.value = address.address2;
+      middlePhoneNumber.value = phoneNumber.split("-")[1];
+      lastPhoneNumber.value = phoneNumber.split("-")[2];
 
-    for (let i = 0; i < firstPhoneNumber.length; i++) {
-      if (firstPhoneNumber.options[i].value === phoneNumber.split("-")[0]) {
-        firstPhoneNumber.options[i].selected = true;
+      for (let i = 0; i < firstPhoneNumber.length; i++) {
+        if (firstPhoneNumber.options[i].value === phoneNumber.split("-")[0]) {
+          firstPhoneNumber.options[i].selected = true;
+        }
       }
     }
   } catch (err) {
@@ -65,19 +70,29 @@ async function getUserInfo() {
   }
 }
 
-async function createOrder() {
+async function createOrder(e) {
+  e.preventDefault();
   try {
     const orderInfo = submitOrderInfo();
-    console.log(orderInfo.products);
+
+    inputs.forEach((input) => {
+      if (input.value === "") {
+        throw new Error("배송 정보를 모두 채워주세요.");
+      }
+    });
+
+    console.log(orderInfo);
+
     if (orderInfo.products.length < 1) {
       //장바구니 리다이렉트
       window.location.replace("/cart");
       throw new Error("주문할 상품이 없습니다.");
     }
+
     await Api.post("/api/orders", orderInfo);
     //주문성공페이지 리다이렉트
     window.location.replace("/orderSuccess");
-    localStorage.clear();
+    localStorage.removeItem("products");
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
