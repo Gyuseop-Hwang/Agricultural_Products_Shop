@@ -25,10 +25,6 @@ h1 {
   background-color: #e5f5da;
 } */
 
-.table {
-  margin-top: 60px;
-}
-
 #tableHead {
   background-color: var(--button-color);
 }
@@ -45,7 +41,7 @@ h1 {
 }
 
 table {
-  margin: 20px auto;
+  margin: 0 auto;
   text-align: center;
   align-items: center;
 }
@@ -55,10 +51,29 @@ table {
   flex-direction: row;
 }
 
+#tableData {
+  width: 100px;
+}
+
+#productImage {
+  margin-right: 15px;
+}
+
+#productTitle {
+  margin-bottom: 30px;
+}
+
+#quantity,
+#price {
+  width: 80px;
+  height: 80px;
+  margin: 10px auto;
+}
+
 #productImage,
 #productTitle,
-#productQuantity,
-#productPrice {
+#productPrice,
+#productQuantity {
   width: 100px;
   height: 100px;
 }

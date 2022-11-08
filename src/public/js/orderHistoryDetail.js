@@ -24,16 +24,16 @@ fetch("http://localhost:5500/api/orders", {
         const productImage = product.product.image.path;
         const productQuantity = product.product.quantity;
         const productTitle = product.product.title;
-        const productPrice = product.product.price;
+        const productPrice = product.product.price.toLocaleString("ko-KR");
 
         let itemData = `
       <tr>
-        <td>
+        <td id="tableData">
           <img src="${productImage}" id="productImage" alt="productImage">
           <span id="productTitle">${productTitle}</span>
         </td>
-        <td id="productQuantity">${productQuantity}</td>
-        <td id="productPrice">${productPrice}</td>
+        <td id="productQuantity"><span id="quantity">${productQuantity}</span></td>
+        <td id="productPrice"><span id="price">${productPrice} ₩</span></td>
       </tr>
       `;
         tableBody.innerHTML += itemData;
