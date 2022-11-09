@@ -4,129 +4,78 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>상품 검색 페이지</title>
+	<title>상품 상세 페이지</title>
 	<!-- 아이콘 -->
-	<link rel="icon" type="image/png" sizes="16x16" href="/elice-rabbit-favicon.png" />
+	<link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
 	<!-- bulma css -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
 	<!-- 폰트 어썸: 아이콘 -->
 	<script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
 	<!--css 관련-->
-	<link rel="stylesheet" href="/productDetail/productDetail.css" />
+	<link rel="stylesheet" href="/css/productDetail.css" />
 </head>
 
 <body>
 	<!--헤더-->
 	<%-include("../common/header")%>
 	<!--상세 페이지-->
-	<div class="box column is-three-quarters mx-auto">
+	<div class="box container is-three-quarters mx-auto">
 		<!--상품 사진, 이름, 가격, 남은 재고, 카테고리, 가격-->
-		<div class="column is-full is-flex">
+		<div class="container columns is-full is-flex">
 			<!--이미지-->
 			<div class="column is-half">
 				<img id="image" src="<%=product.image.path%>">
 			</div>
 			<!--이름, 가격, 남은 재고, 카테고리-->
-			<div class="column is-half">
-				<div class="column mx-6 p-1">
-					<h1 class="title is-2 has-text-right">
+			<div class="column container">
+				<div class="mx-6 p-1">
+					<h1 class="is-size-2 has-text-weight-bold has-text-right">
 						<%=product.title%>
 					</h1>
 				</div>
-				<div class="column mx-6 p-1 has-text-right ">
-					<p class="is-size-3">
+				<div class="mx-6 p-1 has-text-right ">
+					<p class="is-size-3 has-text-weight-bold main-color">
+						<%if(product.sale.onSale){%>
+							할인가 <%=product.sale.discountedPrice.toLocaleString()%>원
+						<%}else{%>
 						<%=product.price.toLocaleString()%>원
+						<%}%>
 					</p>
-					<p class="is-size-5">
+					<p class="is-size-5 has-text-weight-bold">
 						남은 수량: <%=product.quantity%>
 					</p>
 				</div>
-				<div class="column mx-6 p-1 has-text-right ">
-					<p id="categoryName">
-						<%=product.category.name%>
+				<div class="mx-6 p-1 has-text-right ">
+					<p class="is-size-6 has-text-weight-bold">
+						카테고리 : <%=product.category.name%>
 					</p>
 				</div>
-
-				<div class="column is-flex is-justify-content-flex-end mx-6 p-1">
-						<div class="column is-two-fifths is-flex is-align-items-center">
-							<label for="countInput" class="">수량</label>
-							<div class="product-count-subtract">
-								<i id="substractBtn"class="fa fa-chevron-left"></i>
-							</div>
-							<div>
-								<input type="text" class="input is-rounded" id="countInput" type="number" value="1" min="1" max="99">
-							</div>
-							<div class="product-count-add">
-								<i id="addBtn"class="fa fa-chevron-right"></i>
-							</div>
+				<div class="columns is-flex is-align-items-center m-4 p-1 ">
+					<div class="column is-three-fifths is-flex is-align-items-center is-justify-content-end">
+						<p class="is-size-5 has-text-weight-bold width-100 has-text-right mx-2">구매 수량</p>
+						<div class="product-count-subtract">
+							<i id="substractBtn" class="fa fa-chevron-left"></i>
 						</div>
-					<div class="is-align-items-center">
-						<p id="totalPrice">
+						<div>
+							<input type="text" class="input is-rounded width-64 has-text-right" id="countInput" type="number" value="1" min="1" max="99">
+						</div>
+						<div class="product-count-add">
+							<i id="addBtn" class="fa fa-chevron-right"></i>
+						</div>
+					</div>
+					<div class="column mr-4 has-text-right main-color">
+						<p id="totalPrice" class="is-size-4 has-text-weight-bold">
 							<%=`${product.price.toLocaleString()}원`%>
 						</p>
 					</div>
 				</div>
-				<div class="">
-					<button class="button" id="addCartBtn">장바구니 추가</button>
-					<script>
-						const addCartBtn = document.getElementById("addCartBtn");
-						const countInput = document.getElementById("countInput");
-						const totalPriceSpan = document.getElementById("totalPrice");
-						const addBtn = document.getElementById("addBtn")
-						const subtractBtn = document.getElementById("substractBtn");
-
-						addBtn.addEventListener("click", () => {
-								countInput.value = Number(countInput.value) + 1;
-								preventionOutOfScope(); updateTotalPrice()
-							})
-						substractBtn.addEventListener("click", () => {
-								countInput.value = Number(countInput.value) - 1;
-								preventionOutOfScope(); updateTotalPrice()
-							})
-						//수량 변경 시 가격도 변경되는 기능
-						function updateTotalPrice(){
-							let totalPrice = Number(countInput.value) * "<%=product.price%>";
-							totalPriceSpan.innerText = `${totalPrice.toLocaleString()}원`
-						}
-						//0이하의 수가 들어오는 것 방지
-						function preventionOutOfScope(){
-							let count = Number(countInput.value);
-							if (!count)countInput.value = 1;
-							if (count <= 0) countInput.value=1;
-							if (count > 99) countInput.value=99;
-						}
-						countInput.addEventListener("change", (ev) => {
-							ev.preventDefault();
-							preventionOutOfScope();
-							updateTotalPrice()
-						})
-						//장바구니 추가 시 localStorage에 저장되는 기능
-						addCartBtn.addEventListener("click", (ev) => {
-							ev.preventDefault();
-							const count = countInput.value;
-							let newProduct = { id: "<%=product._id%>", count: Number(count) };
-							//장바구니에 products 가져오기
-							const localProducts = localStorage.getItem("products");
-							let products;
-							if (localProducts)
-								products = JSON.parse(localProducts);
-							if (!products) {
-								console.log("새 리스트 생성");
-								products = [];
-							}
-							if (products.find(product => product.id === newProduct.id)) {
-								alert("이미 같은 상품이 장바구니에 존재합니다.");
-								return;
-							}
-							products.push(newProduct);
-							localStorage.setItem("products", JSON.stringify(products))
-							alert("장바구니에 추가되었습니다.");
-						})
-					</script>
-					<button class="button" id="buyBtn">구매</button>
+				<!--버튼 영역-->
+				<div class="container is-flex is-justify-content-right  m-4 p-1">
+					<button class="button mr-1 width-200 btn-main-color" id="addCartBtn">장바구니 추가</button>
+					<button class="button mr-5 width-200 btn-main-color" id="buyBtn">구매</button>
 				</div>
 			</div>
-		</div>
+		</div>ㅞ
 		<!--상품 discription-->
 		<div>
 			<span id="description">
@@ -134,7 +83,73 @@
 			</span>
 		</div>
 	</div>
+	<%-include("../common/footer")%>
+	<script>
 
+		const countInput = document.getElementById("countInput");
+		const totalPriceSpan = document.getElementById("totalPrice");
+		//버튼
+		const addBtn = document.getElementById("addBtn")
+		const subtractBtn = document.getElementById("substractBtn");
+		const addCartBtn = document.getElementById("addCartBtn");
+		const buyBtn = document.getElementById("buyBtn");
+
+		addBtn.addEventListener("click", () => {
+				countInput.value = Number(countInput.value) + 1;
+				preventionOutOfScope(); updateTotalPrice()
+			})
+		substractBtn.addEventListener("click", () => {
+				countInput.value = Number(countInput.value) - 1;
+				preventionOutOfScope(); updateTotalPrice()
+			})
+		//수량 변경 시 가격도 변경되는 기능
+		function updateTotalPrice(){
+			let totalPrice = Number(countInput.value) * "<%=product.price%>";
+			totalPriceSpan.innerText = `${totalPrice.toLocaleString()}원`
+		}
+		//0이하의 수가 들어오는 것 방지
+		function preventionOutOfScope(){
+			let count = Number(countInput.value);
+			if (!count)countInput.value = 1;
+			if (count <= 0) countInput.value=1;
+			if (count > 99) countInput.value=99;
+		}
+		countInput.addEventListener("change", (ev) => {
+			ev.preventDefault();
+			preventionOutOfScope();
+			updateTotalPrice()
+		})
+		//장바구니 추가 시 localStorage에 저장되는 기능
+		addCartBtn.addEventListener("click", (ev) => {
+			const count = countInput.value;
+			let newProduct = { id: "<%=product._id%>", count: Number(count) };
+			//장바구니에 products 가져오기
+			const localProducts = localStorage.getItem("products");
+			let products;
+			if (localProducts)
+				products = JSON.parse(localProducts);
+			if (!products) {
+				console.log("새 리스트 생성");
+				products = [];
+			}
+			if (products.find(product => product.id === newProduct.id)) {
+				alert("이미 같은 상품이 장바구니에 존재합니다.");
+				return;
+			}
+			products.push(newProduct);
+			localStorage.setItem("products", JSON.stringify(products))
+			alert("장바구니에 추가되었습니다.");
+		})
+		buyBtn.addEventListener("click", ()=>{
+			const token = sessionStorage.getItem("token");
+			if (!token){
+				alert("로그인이 필요한 서비스입니다.");
+				location.href="/login";
+				return;
+			}
+			location.href="/order";
+		});
+	</script>
 </body>
 
 </html>

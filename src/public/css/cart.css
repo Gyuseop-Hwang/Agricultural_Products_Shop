@@ -10,15 +10,15 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: calc(100vh - 270px);
+  min-height: calc(100vh - 330px);
 }
 
 /* 장바구니 table */
-.table {
+.cart-item.table {
   width: 100%;
 }
 
-.table thead th {
+.cart-item.table thead th {
   font-size: 14px;
   text-align: center;
   color: rgba(54, 54, 54, 0.6);
@@ -26,30 +26,30 @@ button {
   border-left: none;
 }
 
-.table th.product-name {
+.cart-item.table th.product-name {
   white-space: nowrap;
   border-left: none;
   border-right: none;
 }
 
-.table td {
+.cart-item.table td {
   padding: 20px 0 20px 0;
   height: 130px;
   color: #363636;
 }
 
-.table td.check-box-td {
+.cart-item.table td.check-box-td {
   border-left: none;
   border-right: none;
 }
 
-.table td.product-name {
+.cart-item.table td.product-name {
   border-left: none;
   border-right: none;
   display: flex;
 }
 
-.table td.product-name img {
+.cart-item.table td.product-name img {
   width: 90px;
   height: 90px;
   margin-right: 20px;
@@ -64,8 +64,8 @@ button {
   text-overflow: ellipsis;
 }
 
-.table td.product-quantity input,
-.table td.product-quantity button {
+.cart-item.table td.product-quantity input,
+.cart-item.table td.product-quantity button {
   display: block;
   margin: auto;
 }
@@ -128,7 +128,7 @@ table td.product-total-price {
   background-color: #c9e6ce;
 }
 
-.total-price {
+.cart-container .total-price {
   font-size: 24px;
   margin-top: 80px;
   margin-bottom: 65px;

@@ -13,7 +13,6 @@ const onSaleCheckBox = document.getElementById("onSaleCheckbox");
 const discountInput = document.getElementById("discountInput");
 
 // CK Editor
-
 let editor;
 
 ClassicEditor.create(document.querySelector("#editor"))
@@ -25,7 +24,6 @@ ClassicEditor.create(document.querySelector("#editor"))
 // submit시 입력된 값 받아옴
 function submitProduct(e) {
   e.preventDefault();
-
   // 할인 금액 받아옴
   let discount = {};
 
@@ -34,7 +32,6 @@ function submitProduct(e) {
   } else if (onSaleCheckBox.checked === false) {
     discount.discountedPrice = "cancel";
   }
-
   // 상품 정보(할인 금액 제외한) 받아옴
   const formData = new FormData();
   formData.append("title", titleInput.value);
@@ -54,21 +51,25 @@ function submitProduct(e) {
   );
 }
 
-// 수정 화면일 경우(url에 id 포함되어 있을 경우) 상품 정보(category, description, onSale) 출력
+// 수정 화면일 경우(url에 id 포함되어 있을 경우) 삭제버튼, 상품 정보(category, description, onSale) 출력
 function printProduct(result) {
   const { category, description, sale } = result;
+
   editor.setData(description);
-  deleteButton.classList.remove("hidden");
+
   for (let i = 0; i < categorySelect.options.length; i++) {
     if (categorySelect.options[i].value === category._id) {
       categorySelect.options[i].selected = true;
     }
   }
+
   if (sale.onSale === true) {
     onSaleCheckBox.checked = true;
     discountInput.value = sale.discountedPrice;
   }
   onSaleCheckBox.checked = false;
+
+  deleteButton.classList.remove("hidden");
 }
 
 // 수정 화면일 경우(url에 id 포함되어 있을 경우) 상품 get요청
@@ -91,7 +92,6 @@ async function addOrUpdateProduct(data, discount, id) {
         data.get(key) === "" ||
         (data.get("image") === "undefined" && !thumbnailImage.src)
       ) {
-        console.log(false);
         throw new Error("모든 정보를 입력해주세요.");
       }
     }
@@ -101,7 +101,8 @@ async function addOrUpdateProduct(data, discount, id) {
     if (discount.discountedPrice < 100) {
       throw new Error("상품할인 가격은 2자리 이상이어야 합니다.");
     }
-    //업데이트 요청시
+
+    //업데이트 요청시 put 요청
     if (id !== "add") {
       await fetch(`/api/admin/products/${id}`, {
         method: "PUT",
@@ -110,7 +111,7 @@ async function addOrUpdateProduct(data, discount, id) {
         },
         body: data,
       });
-
+      // 할인 정보 patch
       await Api.patch("/api/admin/products", `${id}/toggleSale`, discount);
 
       alert("수정이 완료됐습니다.");
@@ -118,21 +119,20 @@ async function addOrUpdateProduct(data, discount, id) {
       return;
     }
 
-    //등록 요청시
+    //등록 요청시 post 요청
     const response = await fetch("/api/admin/products", {
       method: "POST",
       headers: { Authorization: `Bearer ${sessionStorage["token"]}` },
       body: data,
     });
     const result = await response.json();
-
+    // 할인 정보 patch
     await Api.patch(
       "/api/admin/products",
       `${result._id}/toggleSale`,
       discount
     );
 
-    console.log("post요청");
     alert("상품이 추가 되었습니다.");
     window.location.replace("/admin/products");
   } catch (err) {
@@ -157,7 +157,6 @@ async function deleteProduct() {
 
 // 파일 선택시 img 보여줌
 fileInput.addEventListener("change", () => {
-  console.log(fileInput);
   thumbnailImage.src = URL.createObjectURL(fileInput.files[0]);
 });
 

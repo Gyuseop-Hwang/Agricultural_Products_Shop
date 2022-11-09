@@ -48,7 +48,10 @@ viewsRouter.use("/adminPage", async (req, res, next) => {
   res.render("adminPage/adminPage.ejs");
 });
 
-viewsRouter.use("/cart", async (req, res, next) => res.render("cart/cart.ejs"));
+viewsRouter.use("/cart", async (req, res, next) =>
+  res.render("cart/cartPage.ejs")
+);
+
 viewsRouter.use("/order", async (req, res, next) =>
   res.render("order/order.ejs")
 );
