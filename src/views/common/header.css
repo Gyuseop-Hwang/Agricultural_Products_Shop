@@ -30,3 +30,18 @@
 	border-top: solid 1px var(--light-gray);
 	border-bottom: solid 1px var(--light-gray);
 }
+
+.navbar-link:not(.is-arrowless)::after {
+    border-color: var(--main-color);
+}
+#searchDiv{
+	display: flex;
+}
+@media screen and (max-width: 1023px) {
+	.navbar>.container {
+		display: flex;
+	}
+	#searchDiv{
+		display: none;
+	}
+}
