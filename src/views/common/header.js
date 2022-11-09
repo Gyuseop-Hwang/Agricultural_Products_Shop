@@ -8,26 +8,26 @@ const userInfoList = document.getElementById("userInfoList");
 const adminInfoList = document.getElementById("adminInfoList");
 
 const usersToken = sessionStorage.getItem("token");
-
-fetch(`http://localhost:5500/api/users/userInfo`, {
-  method: "GET",
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${usersToken}`,
-  },
-})
-  .then((res) => res.json())
-  .then((data) => {
-    if (data.role === "administrator") {
-      userInfoList.classList.add("is-hidden");
-      adminInfoList.classList.remove("is-hidden");
-    } else {
-      adminInfoList.classList.add("is-hidden");
-      userInfoList.classList.remove("is-hidden");
-    }
+if (usersToken) {
+  fetch(`http://localhost:5500/api/users/userInfo`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${usersToken}`,
+    },
   })
-  .catch((err) => console.error("Error : ", err));
-
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.role === "administrator") {
+        userInfoList.classList.add("is-hidden");
+        adminInfoList.classList.remove("is-hidden");
+      } else {
+        adminInfoList.classList.add("is-hidden");
+        userInfoList.classList.remove("is-hidden");
+      }
+    })
+    .catch((err) => console.error("Error : ", err));
+}
 //전체 상품 및 카테고리 조회
 function getAllProducts() {
   const response = fetch("http://localhost:5500/api/products");
