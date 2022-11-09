@@ -74,3 +74,34 @@ hr {
   width: 80px;
   text-align: center;
 }
+
+#daumAddressText {
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+#sample6_postcode,
+#sample6_address,
+#sample6_detailAddress,
+#sample6_extraAddress {
+  width: 180px;
+  height: 35px;
+  margin-bottom: 8px;
+  border: 0.5px solid #a9a9a9;
+  border-radius: 3px;
+  padding: 7px;
+}
+
+#sample6_postcode,
+#sample6_detailAddress {
+  margin-right: 2px;
+}
+
+#sample6_postcode_btn {
+  width: 100px;
+  height: 35px;
+  margin-bottom: 8px;
+  border: 0.5px solid #a9a9a9;
+  border-radius: 3px;
+  padding-left: 2px;
+}

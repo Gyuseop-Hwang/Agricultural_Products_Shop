@@ -17,6 +17,7 @@ fetch("http://localhost:5500/api/orders", {
 })
   .then((res) => res.json())
   .then((data) => {
+    if (JSON.stringify(data) === "{}") return;
     data.forEach((item) => {
       const date = item.createdAt.slice(0, 10);
 
@@ -36,4 +37,4 @@ fetch("http://localhost:5500/api/orders", {
       tableBody.innerHTML += itemData;
     });
   })
-  .catch((err) => console.log("Error : ", err));
+  .catch((err) => console.log(err));

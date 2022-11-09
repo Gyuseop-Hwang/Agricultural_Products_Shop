@@ -1,5 +1,6 @@
 const productBtn = document.getElementById("productBtn");
 const categoryBtn = document.getElementById("categoryBtn");
+const orderBtn = document.getElementById("orderBtn");
 
 const greeting = document.getElementById("greeting");
 
@@ -28,5 +29,10 @@ function onClickCategoryBtn() {
   location.href = "/admin/category";
 }
 
+function onClickOrderBtn() {
+  location.href = "/admin/orders";
+}
+
 productBtn.addEventListener("click", onClickProductBtn);
 categoryBtn.addEventListener("click", onClickCategoryBtn);
+orderBtn.addEventListener("click", onClickOrderBtn);

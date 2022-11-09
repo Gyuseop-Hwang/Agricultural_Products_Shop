@@ -50,4 +50,16 @@
   box-shadow: var(--box--shadow);
   width: 350px;
   height: 150px;
+  margin-right: 50px;
+}
+
+#orderBtn {
+  color: var(--main--color);
+  font-size: var(--button--font--size);
+  background-color: #fff;
+  border: none;
+  border-radius: var(--boder--radius);
+  box-shadow: var(--box--shadow);
+  width: 350px;
+  height: 150px;
 }
