@@ -149,3 +149,12 @@ button {
   border: none;
   font-size: 16px;
 }
+
+@media screen and (max-width: 769px) {
+  .order-container {
+    padding: 0 15px;
+  }
+  .order-bottom-box {
+    flex-direction: column;
+  }
+}

@@ -48,14 +48,14 @@
         <tr class="tr" data-id="<%=orders[i]._id%>">
           <td class="order-date createdAt<%=i%>"></td>
           <td class="user-email"><%= orders[i].user.email %> </td>
-          <td><% const products = orders[i].products.map((product)=> {%>
+          <td class="order-products"><% const products = orders[i].products.map((product)=> {%>
             <p><%=product.product.title%> * <%=product.count%></p>
             <%})%>
           </td>
           <td class="total-price"><%= orders[i].totalPrice.toLocaleString() %>원</td>
-          <td>
+          <td class="order-address">
             <p><%=orders[i].recipient%></p>
-            <p><%=orders[i].shippingAddress.postalCode%> <%=orders[i].shippingAddress.address1 %> <%=orders[i].shippingAddress.address2 %></p>
+            <p ><%=orders[i].shippingAddress.postalCode%> <%=orders[i].shippingAddress.address1 %> <%=orders[i].shippingAddress.address2 %></p>
             <p><%=orders[i].phoneNumber%></p>
           </td>
           <td class="update-button-box">

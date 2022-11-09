@@ -14,6 +14,7 @@
 .product-image {
   width: 500px;
   height: 500px;
+  margin-right: 3rem;
 }
 
 .image-box {
@@ -45,4 +46,31 @@
 .ck-editor__editable {
   height: 500px;
   margin-bottom: 1.5rem;
+}
+
+#addOrUpdateButton,
+#deleteButton {
+  width: 80px;
+  border: none;
+  border-radius: 40px;
+  margin-top: 5px;
+  background-color: var(--btn-color);
+  color: var(--main-color);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 769px) {
+  .product-image {
+    width: 60%;
+    margin-right: 10%;
+  }
+
+  .image-box {
+    width: 100%;
+  }
+
+  .detail-contents-left {
+    width: 30%;
+  }
 }

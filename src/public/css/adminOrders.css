@@ -7,15 +7,20 @@ button {
 }
 
 .table.admin-orders th {
-  font-size: 14px;
+  font-size: 13px;
   text-align: center;
   color: rgba(54, 54, 54, 0.6);
+  word-break: keep-all;
 }
 
 .table.admin-orders td {
-  font-size: 15px;
-  padding: 15px 0 15px 0;
-  text-indent: 10px;
+  font-size: 14px;
+  padding: 15px 0;
+}
+
+.table.admin-orders .order-products,
+.table.admin-orders .order-address {
+  padding-left: 10px;
 }
 
 .table.admin-orders .order-date,
@@ -57,4 +62,17 @@ button {
   background-color: var(--btn-color);
   color: var(--main-color);
   font-size: 13px;
+}
+
+@media screen and (max-width: 769px) {
+  .admin-order-container {
+    padding: 0 10px;
+  }
+  .table.admin-orders th {
+    font-size: 12px;
+  }
+  .table.admin-orders td {
+    font-size: 13px;
+    padding: 5px;
+  }
 }
