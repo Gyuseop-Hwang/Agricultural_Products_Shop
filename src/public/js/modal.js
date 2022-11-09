@@ -1,13 +1,10 @@
-const modalTrigger = document.querySelector(".modal-trigger");
 const modal = document.getElementById("modal");
 const noButton = document.getElementById("noButton");
 const yesButton = document.getElementById("yesButton");
 
 function showModal(title, message) {
-  const modalTitle = document.getElementById("modalTitle");
-  const modalMessage = document.getElementById("modalMessage");
-  modalTitle.innerText = title;
-  modalMessage.innerText = message;
+  document.getElementById("modalTitle").innerText = title;
+  document.getElementById("modalMessage").innerText = message;
 
   modal.style.display = "flex";
 }

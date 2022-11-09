@@ -31,8 +31,8 @@ a:hover {
   height: 35px;
   border: none;
   border-radius: 40px;
-  background-color: var(--btn-color);
-  color: var(--main-color);
+  background-color: var(--main-color);
+  color: white;
   font-size: 15px;
   text-align: center;
   line-height: 35px;
@@ -50,6 +50,13 @@ a:hover {
 .table td.product-title {
   text-align: left;
   text-indent: 15px;
+}
+
+.discount-price {
+  text-decoration: line-through;
+  color: #bbb;
+  font-size: 14px;
+  word-break: keep-all;
 }
 
 .button-box {

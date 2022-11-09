@@ -3,7 +3,7 @@ button {
 }
 
 .admin-order-container {
-  min-height: calc(100vh - 270px);
+  min-height: calc(100vh - 325px);
 }
 
 .table.admin-orders th {

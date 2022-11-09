@@ -6,6 +6,17 @@ const trs = document.querySelectorAll(".tr");
 
 let PRODUCT_ID;
 
+// 할인 금액 print
+function printDiscountedPrice(products) {
+  const discountedProducts = products.filter((product) => product.sale.onSale);
+  discountedProducts.forEach((product) => {
+    const priceTd = document.getElementById(`price${product._id}`);
+    const priceSpan = document.querySelector(`#price${product._id} span`);
+    priceTd.prepend(`${product.sale.discountedPrice.toLocaleString()}원`);
+    priceSpan.className = "discount-price";
+  });
+}
+
 // 삭제버튼 클릭시 모달 나타남
 deleteButtons.forEach((btn) => {
   btn.addEventListener("click", (e) => {
@@ -23,23 +34,10 @@ addModalEvent(() => {
   });
 });
 
-function printDiscountedPrice(products) {
-  const discountedProducts = products.filter((product) => product.sale.onSale);
-  discountedProducts.forEach((product) => {
-    const priceTd = document.getElementById(`price${product._id}`);
-    const priceSpan = document.querySelector(`#price${product._id} span`);
-    priceTd.prepend(`${product.sale.discountedPrice.toLocaleString()}원`);
-    priceSpan.style.textDecoration = "line-through";
-    priceSpan.style.color = "#bbb";
-    priceSpan.style.fontSize = "14px";
-  });
-}
-
 // 전체 상품 get 요청
 async function getAllProducts() {
   try {
     const { products } = await Api.get("/api/products");
-
     printDiscountedPrice(products);
   } catch (err) {
     console.error(err.stack);

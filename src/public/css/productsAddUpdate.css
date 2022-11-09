@@ -60,6 +60,12 @@
   cursor: pointer;
 }
 
+#addOrUpdateButton {
+  width: 100px;
+  background-color: var(--main-color);
+  color: white;
+}
+
 @media screen and (max-width: 769px) {
   .product-image {
     width: 60%;

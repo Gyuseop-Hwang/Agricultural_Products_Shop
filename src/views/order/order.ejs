@@ -30,8 +30,9 @@
     <script src="/js/daumPostApi.js" defer></script>
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="/css/order.css" />
+    <link rel="stylesheet" href="/css/cart.css" />
     <script src="/js/order.js" type="module" defer></script>
-    <script src="/js/orderCart.js" type="module" defer></script>
+    <script src="/js/cart.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -43,27 +44,11 @@
           <h3 class="block is-align-self-flex-start title is-5">
             주문 상품 정보
           </h3>
-          <table class="cart has-text-centered table is-bordered">
-            <colgroup>
-              <col width="5%" />
-              <col width="65%" />
-              <col width="15%" />
-              <col width="15%" />
-            </colgroup>
-            <thead>
-              <tr class="has-text-centered">
-                <th class="check-box"></th>
-                <th class="product-name th">상품정보</th>
-                <th class="product-quantity">수량</th>
-                <th>합계</th>
-              </tr>
-            </thead>
-            <tbody id="cartProductList"></tbody>
-          </table>
+          <%-include("../cart/cart.ejs")%>
           <p class="is-align-self-flex-end count-info">
             수량 변경은 장바구니에서 가능합니다.
           </p>
-          <button class="delete-button" id="deleteSelectedButton">
+          <button class="delete-button" id="deleteSelectedButton" type="button">
             선택 항목 삭제
           </button>
         </section>
