@@ -79,27 +79,33 @@ function deleteSelectedProduct() {
 
 // dom에 장바구니 항목 추가
 function printProduct(product, count, index) {
+  const { _id, image, title, price, sale } = product;
+
   const tr = document.createElement("tr");
 
   tr.className = "product";
-  tr.innerHTML = `<td class="check-box-td"><input type="checkbox" class="check-box" data-product-id="${
-    product._id
-  }"/></td>
+  tr.innerHTML = `<td class="check-box-td"><input type="checkbox" class="check-box" data-product-id="${_id}"/></td>
   <td class="product-name has-text-left"><img src="${
-    product.image.path
-  }" alt="${product.title}"/><div><a href="/product/${
-    product._id
-  }" class="mb-2">${
-    product.title
-  }</a><p>${product.price.toLocaleString()}원</p></div>
+    image.path
+  }" alt="${title}"/><div><a href="/product/${_id}" class="mb-2">${title}</a><p id="price${index}"><span>${price.toLocaleString()}원</span></p></div>
   </td>
     <td class="product-quantity">${count}</td>
-    <td class="product-total-price" id="totalPrice${index}">${(
-    product.price * count
-  ).toLocaleString()}원</td>
+    <td class="product-total-price" id="totalPrice${index}">${
+    sale.onSale
+      ? (sale.discountedPrice * count).toLocaleString()
+      : (price * count).toLocaleString()
+  }원</td>
   `;
 
   cartProductList.appendChild(tr);
+  const priceArea = document.getElementById(`price${index}`);
+  const priceSpan = document.querySelector(`#price${index} span`);
+  if (sale.onSale === true) {
+    priceArea.prepend(`${sale.discountedPrice.toLocaleString()}원`);
+    priceSpan.style.textDecoration = "line-through";
+    priceSpan.style.color = "#bbb";
+    priceSpan.style.fontSize = "14px";
+  }
 }
 
 // 상품 금액 총 합계
@@ -108,7 +114,11 @@ function sumPrice() {
     TOTAL_PRICE = 0;
   }
   TOTAL_PRICE = products
-    .map(({ product, count }) => product.price * count)
+    .map(({ product, count }) =>
+      product.sale.onSale
+        ? product.sale.discountedPrice * count
+        : product.price * count
+    )
     .reduce((acc, cur) => acc + cur, 0)
     .toLocaleString();
   totalPriceTxt.innerText = TOTAL_PRICE;

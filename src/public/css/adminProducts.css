@@ -83,3 +83,44 @@ a:hover {
   height: 100%;
   line-height: 30px;
 }
+
+@media screen and (max-width: 769px) {
+  .admin-products-container {
+    padding: 0 10px;
+  }
+
+  .table.admin-products th {
+    font-size: 12px;
+  }
+
+  .admin-products td {
+    font-size: 13px;
+    height: 90px;
+    padding: 10px 0 5px 0;
+    line-height: 1;
+  }
+
+  .admin-products td.button-box {
+    padding: 0;
+  }
+
+  .updateButton,
+  .deleteButton {
+    width: 80px;
+    font-size: 12px;
+  }
+
+  .thumbnail {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .admin-products th.product-image-th {
+    display: none;
+  }
+  .admin-products td.product-image {
+    display: none;
+  }
+}

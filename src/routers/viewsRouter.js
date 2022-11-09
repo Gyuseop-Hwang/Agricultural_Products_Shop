@@ -37,11 +37,11 @@ viewsRouter.use("/errorPage", async (req, res) => {
   // const error = {};
   // error.statusCode = app.locals.statusCode;
   // error.message = app.locals.message;
-  const { statusCode, message } = app.locals;
+  const { statusCode = 500, message = "서버에 문제가 발생했습니다." } =
+    app.locals;
   res
     .status(statusCode)
     .render("errorPage/errorPage.ejs", { statusCode, message });
-});
 
 viewsRouter.use("/adminPage", async (req, res, next) => {
   res.render("adminPage/adminPage.ejs");
@@ -54,7 +54,7 @@ viewsRouter.use("/order", async (req, res, next) =>
 viewsRouter.use("/orderSuccess", async (req, res, next) =>
   res.render("orderSuccess/orderSuccess.ejs")
 );
-viewsRouter.use("/adminOrders", async (req, res, next) => {
+viewsRouter.use("/admin/orders", async (req, res, next) => {
   try {
     const orders = await orderService.findAllOrders();
     res.render("adminOrders/adminOrders.ejs", { orders });
@@ -63,7 +63,7 @@ viewsRouter.use("/adminOrders", async (req, res, next) => {
   }
 });
 
-viewsRouter.use("/adminProducts/add", async (req, res, next) => {
+viewsRouter.use("/admin/products/add", async (req, res, next) => {
   const product = {
     title: "",
     image: { path: "" },
@@ -77,7 +77,7 @@ viewsRouter.use("/adminProducts/add", async (req, res, next) => {
     categories,
   });
 });
-viewsRouter.use("/adminProducts/:productId", async (req, res, next) => {
+viewsRouter.use("/admin/products/:productId", async (req, res, next) => {
   try {
     const productId = req.params.productId;
     if (productId !== "add") {
@@ -92,7 +92,7 @@ viewsRouter.use("/adminProducts/:productId", async (req, res, next) => {
     console.log(err);
   }
 });
-viewsRouter.use("/adminProducts", async (req, res, next) => {
+viewsRouter.use("/admin/products", async (req, res, next) => {
   try {
     const products = await productService.getAllProducts();
     res.render("adminProducts/adminProducts.ejs", { products });

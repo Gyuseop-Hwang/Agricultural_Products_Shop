@@ -2,6 +2,7 @@ import * as Api from "./api.js";
 import { showModal, addModalEvent } from "./modal.js";
 
 const fileInput = document.getElementById("imageInput");
+const thumbnailImage = document.getElementById("thumbnailImage");
 const titleInput = document.getElementById("title");
 const priceInput = document.getElementById("price");
 const quantityInput = document.getElementById("quantity");
@@ -9,6 +10,7 @@ const categorySelect = document.getElementById("categorySelect");
 const deleteButton = document.getElementById("deleteButton");
 const addOrUpdateButton = document.getElementById("addOrUpdateButton");
 const onSaleCheckBox = document.getElementById("onSaleCheckbox");
+const discountInput = document.getElementById("discountInput");
 
 // CK Editor
 
@@ -20,21 +22,20 @@ ClassicEditor.create(document.querySelector("#editor"))
     console.error(error);
   });
 
-// 수정 화면일 경우(url에 id 포함되어 있을 경우) 상품 정보 출력
-function printProduct(result) {
-  const { category, description } = result;
-  editor.setData(description);
-  deleteButton.classList.remove("hidden");
-  for (let i = 0; i < categorySelect.options.length; i++) {
-    if (categorySelect.options[i].value === category.name) {
-      categorySelect.options[i].selected = true;
-    }
-  }
-}
-
 // submit시 입력된 값 받아옴
 function submitProduct(e) {
   e.preventDefault();
+
+  // 할인 금액 받아옴
+  let discount = {};
+
+  if (onSaleCheckBox.checked === true) {
+    discount.discountedPrice = discountInput.value;
+  } else if (onSaleCheckBox.checked === false) {
+    discount.discountedPrice = "cancel";
+  }
+
+  // 상품 정보(할인 금액 제외한) 받아옴
   const formData = new FormData();
   formData.append("title", titleInput.value);
   formData.append("image", fileInput.files[0]);
@@ -46,10 +47,29 @@ function submitProduct(e) {
     categorySelect.options[categorySelect.selectedIndex].value
   );
 
-  addOrUpdateProduct(formData, window.location.pathname.split("/")[2] ?? null);
+  addOrUpdateProduct(
+    formData,
+    discount,
+    window.location.pathname.split("/")[3] ?? null
+  );
 }
 
-console.log(window.location.pathname.split("/")[2]);
+// 수정 화면일 경우(url에 id 포함되어 있을 경우) 상품 정보(category, description, onSale) 출력
+function printProduct(result) {
+  const { category, description, sale } = result;
+  editor.setData(description);
+  deleteButton.classList.remove("hidden");
+  for (let i = 0; i < categorySelect.options.length; i++) {
+    if (categorySelect.options[i].value === category._id) {
+      categorySelect.options[i].selected = true;
+    }
+  }
+  if (sale.onSale === true) {
+    onSaleCheckBox.checked = true;
+    discountInput.value = sale.discountedPrice;
+  }
+  onSaleCheckBox.checked = false;
+}
 
 // 수정 화면일 경우(url에 id 포함되어 있을 경우) 상품 get요청
 async function getProduct(productId) {
@@ -63,8 +83,24 @@ async function getProduct(productId) {
 }
 
 // 상품 업데이트 or 추가
-async function addOrUpdateProduct(data, id) {
+async function addOrUpdateProduct(data, discount, id) {
   try {
+    // 빈 데이터 값이 있으면 에러
+    for (let key of data.keys()) {
+      if (
+        data.get(key) === "" ||
+        (data.get("image") === "undefined" && !thumbnailImage.src)
+      ) {
+        console.log(false);
+        throw new Error("모든 정보를 입력해주세요.");
+      }
+    }
+    if (onSaleCheckBox.checked && discount.discountedPrice === "0") {
+      throw new Error("할인 금액을 입력해주세요.");
+    }
+    if (discount.discountedPrice < 100) {
+      throw new Error("상품할인 가격은 2자리 이상이어야 합니다.");
+    }
     //업데이트 요청시
     if (id !== "add") {
       await fetch(`/api/admin/products/${id}`, {
@@ -74,23 +110,32 @@ async function addOrUpdateProduct(data, id) {
         },
         body: data,
       });
-      console.log("put요청");
+
+      await Api.patch("/api/admin/products", `${id}/toggleSale`, discount);
+
       alert("수정이 완료됐습니다.");
-      window.location.replace("/adminProducts");
+      window.location.replace("/admin/products");
       return;
     }
 
     //등록 요청시
-    await fetch("/api/admin/products", {
+    const response = await fetch("/api/admin/products", {
       method: "POST",
       headers: { Authorization: `Bearer ${sessionStorage["token"]}` },
       body: data,
     });
+    const result = await response.json();
+
+    await Api.patch(
+      "/api/admin/products",
+      `${result._id}/toggleSale`,
+      discount
+    );
+
     console.log("post요청");
     alert("상품이 추가 되었습니다.");
-    window.location.replace("/adminProducts");
+    window.location.replace("/admin/products");
   } catch (err) {
-    alert(err);
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
@@ -99,7 +144,7 @@ async function addOrUpdateProduct(data, id) {
 // 상품 삭제
 async function deleteProduct() {
   try {
-    const id = window.location.pathname.split("/")[2];
+    const id = window.location.pathname.split("/")[3];
     if (id !== "add") {
       await Api.delete("/api/admin/products", id);
       window.location.replace("/adminProducts");
@@ -112,8 +157,8 @@ async function deleteProduct() {
 
 // 파일 선택시 img 보여줌
 fileInput.addEventListener("change", () => {
-  const img = document.getElementById("image");
-  img.src = URL.createObjectURL(fileInput.files[0]);
+  console.log(fileInput);
+  thumbnailImage.src = URL.createObjectURL(fileInput.files[0]);
 });
 
 addOrUpdateButton.addEventListener("click", submitProduct);
@@ -126,12 +171,26 @@ deleteButton.addEventListener("click", (e) => {
 // 모달 "예" 클릭시 실행할 이벤트를 인자로 전달
 addModalEvent(deleteProduct);
 
-if (window.location.pathname.split("/")[2] !== "add") {
-  const productId = window.location.pathname.split("/")[2];
+// 체크박스 toggle => check true면 input 입력 가능
+onSaleCheckBox.addEventListener("change", () => {
+  if (onSaleCheckBox.checked === true) {
+    discountInput.disabled = false;
+  } else if (onSaleCheckBox.checked === false) {
+    discountInput.disabled = true;
+    discountInput.value = "";
+  }
+});
+
+// 수정페이지면 상품 정보 받아옴
+if (window.location.pathname.split("/")[3] !== "add") {
+  const productId = window.location.pathname.split("/")[3];
   addOrUpdateButton.innerText = "수정하기";
   getProduct(productId);
 }
 
-// onSaleCheckBox.addEventListener("change", () => {
-//   if(onSaleCheckBox.checked === true)
-// });
+// form submit 막기
+document.addEventListener("keydown", function (event) {
+  if (event.code === "Enter") {
+    event.preventDefault();
+  }
+});

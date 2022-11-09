@@ -20,7 +20,7 @@ adminCategoryRouter.post(
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      throw new BadRequestError(errors.array());
+      throw new BadRequestError(errors.array().map(error => error.msg).join(", "));
     }
 
     const createdCategory = await adminCategoryService.createCategory(req.body.name);
@@ -36,7 +36,7 @@ adminCategoryRouter.put(
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      throw new BadRequestError(errors.array());
+      throw new BadRequestError(errors.array().map(error => error.msg).join(", "));
     }
 
     const newCategory = await adminCategoryService.updateCategory(req.params.categoryId, req.body);

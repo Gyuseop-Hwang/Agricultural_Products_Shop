@@ -31,10 +31,10 @@
         <!--상품 사진, 이름, 가격, 남은 재고, 카테고리, 가격-->
         <div class="block detail-contents-box is-flex mb-5">
           <!--이미지-->
-          <div class="product-image mr-6">
+          <div class="product-image">
             <div class="image-box">
               <img
-                id="image"
+                id="thumbnailImage"
                 src="<%=product.image.path%>"
                 alt="<%=product.title%>"
               />
@@ -69,6 +69,9 @@
                   class="input is-small mb-3"
                   id="discountInput"
                   type="text"
+                  placeholder="할인 금액"
+                  value="0"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                   disabled
                 />
                 <span>수량</span>

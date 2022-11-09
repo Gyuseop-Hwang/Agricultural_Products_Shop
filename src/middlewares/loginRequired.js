@@ -2,13 +2,12 @@ import jwt from 'jsonwebtoken';
 import { UnauthorizedError } from '../utils';
 
 function loginRequired(req, res, next) {
-
   const userToken = req.headers['authorization']?.split(' ')[1];
-  // const userToken = req.get('authorization')?.split(' ')[1];
 
   if (!userToken) {
-
-    return next(new UnauthorizedError('로그인한 유저만 사용할 수 있는 서비스입니다.'));
+    return next(
+      new UnauthorizedError('로그인한 유저만 사용할 수 있는 서비스입니다.')
+    );
   }
 
   try {
@@ -18,7 +17,6 @@ function loginRequired(req, res, next) {
 
     next();
   } catch (error) {
-
     return next(new UnauthorizedError('정상적인 토큰이 아닙니다.'));
   }
 }
