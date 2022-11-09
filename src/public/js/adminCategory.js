@@ -100,20 +100,20 @@ async function printCategoryBtn() {
 /*<---API--- */
 /*post 요청 : 카테고리 추가  */
 async function createCategory(categoryName) {
-	const result = await Api.post("/api/admin/products/categories", {
+	const result = await Api.post("/api/admin/categories", {
 		name: categoryName
 	})
 	return result;
 }
 /*put 요청 : 카테고리 수정*/
 async function updateCategory(categoryId, newCategoryName) {
-	const result = await Api.put("/api/admin/products/categories", categoryId, {
+	const result = await Api.put("/api/admin/categories", categoryId, {
 		name: newCategoryName
 	})
 	return result;
 }
 async function deleteCategory(categoryId) {
-	const result = await Api.delete("/api/admin/products/categories", categoryId)
+	const result = await Api.delete("/api/admin/categories", categoryId)
 	return result;
 }
 printCategoryBtn();
