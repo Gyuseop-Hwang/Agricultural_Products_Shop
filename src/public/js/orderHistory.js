@@ -29,7 +29,7 @@ fetch("http://localhost:5500/api/orders", {
           <a href="/orderHistoryDetail"><span id="orderReciptId">${item._id}</span></a>
         </td>
         <td><span id="shippingStatus">${item.status}</span></td>
-        <td id="totalPrice">${totalPrice}</td>
+        <td id="totalPrice">${totalPrice} 원</td>
       </tr>
       `;
 

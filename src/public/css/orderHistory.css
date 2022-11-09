@@ -1,6 +1,7 @@
 :root {
   --main--color: #11b564;
   --button-color: #eafced;
+  --background-color: #fff;
 }
 
 body {
@@ -17,29 +18,25 @@ h1 {
   font-weight: 700;
 }
 
-/* .layer {
-  background: linear-gradient(180deg, #e5f5da 50%, #ffffff 50%);
-}
-
-.navbar {
-  background-color: #e5f5da;
-} */
-
 .table {
   margin-top: 60px;
 }
 
 #tableHead {
   background-color: var(--button-color);
+  top: 100px;
+  width: 720px;
+  text-align: center;
 }
 
 #orderHistory {
+  position: relative;
   margin: 80px auto;
   width: 800px;
   height: 800px;
   padding: 40px;
   border-radius: 30px;
-  background-color: white;
+  background-color: var(--background-color);
   box-shadow: 2px 3px 7px 1px rgba(0, 0, 0, 0.15);
 }
 
@@ -62,5 +59,14 @@ table {
 }
 
 #orderReciptId {
-  color: #4f802f;
+  color: var(--main--color);
+}
+
+#wholeTable {
+  height: 600px;
+  overflow-y: scroll;
+}
+
+#wholeTable::-webkit-scrollbar {
+  display: none;
 }

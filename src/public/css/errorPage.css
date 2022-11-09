@@ -21,6 +21,7 @@
 }
 
 #errorTitle {
+  margin-bottom: 10px;
   font-size: 100px;
   height: 125px;
   color: var(--main--color);
@@ -34,7 +35,7 @@
 
 #errorDescription {
   color: var(--desc--color);
-  font-size: 18px;
+  font-size: 20px;
   width: 400px;
 }
 

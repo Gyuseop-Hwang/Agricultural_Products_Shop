@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/elice-rabbit-favicon.png" />
+    <!-- bulma css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/adminPage.css" />
+    <script defer src="/js/adminPage.js" type="module" ></script>
+    <title>adminPage</title>
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <%-include("../common/header")%>
+    <div id="title">
+      <h1 id="greeting">관리자님 안녕하세요!</h1>
+    </div>
+    
+    <div id="layer">
+      <div id="leftSide">
+        <button id="productBtn" href="../adminProducts/adminProducts.ejs">제품 관리</button>
+      </div>
+      <div id="rightSide">
+        <button id="categoryBtn" href="../adminCategory/adminCategory.html">카테고리 관리</button>
+      </div>
+      <%-include("../common/footer")%>
+  </body>
+</html>

@@ -32,10 +32,17 @@ viewsRouter.use("/orderHistoryDetail", async (req, res, next) => {
 });
 
 viewsRouter.use("/errorPage", async (req, res) => {
-  const error = {};
-  error.statusCode = app.locals.statusCode;
-  error.message = app.locals.message;
-  res.render("errorPage/errorPage.ejs", { error });
+  // const error = {};
+  // error.statusCode = app.locals.statusCode;
+  // error.message = app.locals.message;
+  const { statusCode, message } = app.locals;
+  res
+    .status(statusCode)
+    .render("errorPage/errorPage.ejs", { statusCode, message });
+});
+
+viewsRouter.use("/adminPage", async (req, res, next) => {
+  res.render("adminPage/adminPage.ejs");
 });
 
 viewsRouter.use("/cart", async (req, res, next) => res.render("cart/cart.ejs"));
