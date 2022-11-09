@@ -41,7 +41,9 @@ viewsRouter.use("/errorPage", async (req, res) => {
     .render("errorPage/errorPage.ejs", { statusCode, message });
 });
 
-viewsRouter.use("/cart", async (req, res, next) => res.render("cart/cart.ejs"));
+viewsRouter.use("/cart", async (req, res, next) =>
+  res.render("cart/cartPage.ejs")
+);
 viewsRouter.use("/order", async (req, res, next) =>
   res.render("order/order.ejs")
 );

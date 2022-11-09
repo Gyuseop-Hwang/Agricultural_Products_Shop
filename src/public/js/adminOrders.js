@@ -1,17 +1,18 @@
 import * as Api from "./api.js";
 import { showModal, addModalEvent } from "./modal.js";
-const orderList = document.getElementById("orderList");
 
 const deleteOrderButton = document.querySelectorAll(".delete-button");
 const trs = document.querySelectorAll(".tr");
 let ORDER_ID;
 
+// 주문 삭제 클릭시 모달 나타남
 deleteOrderButton.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     ORDER_ID = e.currentTarget.dataset.id;
     showModal("주문 삭제", "해당 주문을 삭제하시겠습니까?");
   });
 });
+// 모달 이벤트
 addModalEvent(() => {
   deleteOrder(ORDER_ID);
   trs.forEach((tr) => {

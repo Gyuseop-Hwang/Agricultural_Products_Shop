@@ -19,20 +19,21 @@ function submitOrderInfo() {
     throw new Error("주문할 상품이 없습니다.");
   }
 
-  // 객체 키를 id => product로 바꿔줌
+  // {id: , count: } => {product: , count: }로 바꿔줌
   products = products.map((product) => {
     return { product: product.id, count: product.count };
   });
 
+  // 배송 정보
   const orderInfo = {
-    recipient: recipient.value, //받는 사람
-    phoneNumber: `${firstPhoneNumber.value}-${middlePhoneNumber.value}-${lastPhoneNumber.value}`, // 전화번호
+    recipient: recipient.value,
+    phoneNumber: `${firstPhoneNumber.value}-${middlePhoneNumber.value}-${lastPhoneNumber.value}`,
     shippingAddress: {
       postalCode: postcode.value,
       address1: address.value,
       address2: `${detailAddress.value}`,
-    }, // 주소
-    products, // 상품
+    },
+    products,
   };
 
   return orderInfo;
@@ -44,24 +45,19 @@ async function getUserInfo() {
     const user = await Api.get("/api/users/userInfo");
 
     if (!user) {
-      return;
+      throw new Error("유저 정보가 없습니다.");
     }
 
-    const { fullName, phoneNumber, address, role } = user;
-    if (role === "administrator") {
-      recipient.value = fullName;
-    } else {
-      recipient.value = fullName;
-      postcode.value = address.postalCode;
-      address.value = address.address1;
-      detailAddress.value = address.address2;
-      middlePhoneNumber.value = phoneNumber.split("-")[1];
-      lastPhoneNumber.value = phoneNumber.split("-")[2];
-
-      for (let i = 0; i < firstPhoneNumber.length; i++) {
-        if (firstPhoneNumber.options[i].value === phoneNumber.split("-")[0]) {
-          firstPhoneNumber.options[i].selected = true;
-        }
+    const { fullName, phoneNumber, address } = user;
+    recipient.value = fullName;
+    postcode.value = address.postalCode;
+    address.value = address.address1;
+    detailAddress.value = address.address2;
+    middlePhoneNumber.value = phoneNumber.split("-")[1];
+    lastPhoneNumber.value = phoneNumber.split("-")[2];
+    for (let i = 0; i < firstPhoneNumber.length; i++) {
+      if (firstPhoneNumber.options[i].value === phoneNumber.split("-")[0]) {
+        firstPhoneNumber.options[i].selected = true;
       }
     }
   } catch (err) {
@@ -70,27 +66,24 @@ async function getUserInfo() {
   }
 }
 
+// 주문 post 요청
 async function createOrder(e) {
   e.preventDefault();
   try {
     const orderInfo = submitOrderInfo();
-
+    console.log(orderInfo);
     inputs.forEach((input) => {
       if (input.value === "") {
         throw new Error("배송 정보를 모두 채워주세요.");
       }
     });
 
-    console.log(orderInfo);
-
     if (orderInfo.products.length < 1) {
-      //장바구니 리다이렉트
       window.location.replace("/cart");
       throw new Error("주문할 상품이 없습니다.");
     }
 
     await Api.post("/api/orders", orderInfo);
-    //주문성공페이지 리다이렉트
     window.location.replace("/orderSuccess");
     localStorage.removeItem("products");
   } catch (err) {
