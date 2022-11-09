@@ -41,8 +41,6 @@ function sample3_execDaumPostcode() {
           extraAddr +=
             extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
         }
-      } else {
-        document.getElementById("sample3_extraAddress").value = "";
       }
 
       // 우편번호와 주소 정보를 해당 필드에 넣는다.

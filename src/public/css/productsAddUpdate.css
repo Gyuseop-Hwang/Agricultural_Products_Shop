@@ -1,3 +1,29 @@
+h2 {
+  display: block;
+  font-size: 1.5em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+h3 {
+  display: block;
+  font-size: 1.17em;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+h4 {
+  display: block;
+  margin-block-start: 1.33em;
+  margin-block-end: 1.33em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
 .hidden {
   display: none;
 }
@@ -46,6 +72,10 @@
 .ck-editor__editable {
   height: 500px;
   margin-bottom: 1.5rem;
+}
+.ck-content .table table td,
+.ck-content .table table th {
+  height: 0;
 }
 
 #addOrUpdateButton,

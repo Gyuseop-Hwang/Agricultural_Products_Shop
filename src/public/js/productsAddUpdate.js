@@ -15,8 +15,26 @@ const discountInput = document.getElementById("discountInput");
 // CK Editor
 let editor;
 
-ClassicEditor.create(document.querySelector("#editor"))
-  .then((newEditor) => (editor = newEditor))
+ClassicEditor.create(document.querySelector("#editor"), {
+  toolbar: {
+    items: [
+      "heading",
+      "|",
+      "bold",
+      "italic",
+      "|",
+      "undo",
+      "redo",
+      "|",
+      "blockQuote",
+      "insertTable",
+    ],
+  },
+  innerHeight: 350,
+})
+  .then((newEditor) => {
+    editor = newEditor;
+  })
   .catch((error) => {
     console.error(error);
   });
@@ -88,10 +106,7 @@ async function addOrUpdateProduct(data, discount, id) {
   try {
     // 빈 데이터 값이 있으면 에러
     for (let key of data.keys()) {
-      if (
-        data.get(key) === "" ||
-        (data.get("image") === "undefined" && !thumbnailImage.src)
-      ) {
+      if (data.get(key) === "") {
         throw new Error("모든 정보를 입력해주세요.");
       }
     }
@@ -147,7 +162,7 @@ async function deleteProduct() {
     const id = window.location.pathname.split("/")[3];
     if (id !== "add") {
       await Api.delete("/api/admin/products", id);
-      window.location.replace("/adminProducts");
+      window.location.replace("/admin/products");
     }
   } catch (err) {
     console.error(err.stack);

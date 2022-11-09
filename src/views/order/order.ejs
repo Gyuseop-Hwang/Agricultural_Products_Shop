@@ -17,17 +17,18 @@
       src="https://kit.fontawesome.com/9daa42bcef.js"
       crossorigin="anonymous"
     ></script>
+
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="/css/order.css" />
+    <link rel="stylesheet" href="/css/cart.css" />
+    <script src="/js/order.js" type="module" defer></script>
+    <script src="/js/cart.js" type="module" defer></script>
     <!-- 다음 주소 API -->
     <script
       src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
       defer
     ></script>
     <script src="/js/daumPostApi.js" defer></script>
-    <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="/css/order.css" />
-    <link rel="stylesheet" href="/css/cart.css" />
-    <script src="/js/order.js" type="module" defer></script>
-    <script src="/js/cart.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 -->
@@ -85,6 +86,7 @@
                         type="text"
                         id="sample3_address"
                         placeholder="주소"
+                        value=""
                         required
                       /><br />
                       <input

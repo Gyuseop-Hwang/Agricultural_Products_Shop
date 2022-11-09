@@ -2,7 +2,7 @@ import * as Api from "./api.js";
 
 const recipient = document.getElementById("name");
 const postcode = document.getElementById("sample3_postcode");
-const address = document.getElementById("sample3_address");
+const addressInput = document.getElementById("sample3_address");
 const detailAddress = document.getElementById("sample3_detailAddress");
 const firstPhoneNumber = document.getElementById("firstPhoneNumber");
 const middlePhoneNumber = document.getElementById("middlePhoneNumber");
@@ -30,7 +30,7 @@ function submitOrderInfo() {
     phoneNumber: `${firstPhoneNumber.value}-${middlePhoneNumber.value}-${lastPhoneNumber.value}`,
     shippingAddress: {
       postalCode: postcode.value,
-      address1: address.value,
+      address1: addressInput.value,
       address2: `${detailAddress.value}`,
     },
     products,
@@ -49,9 +49,10 @@ async function getUserInfo() {
     }
 
     const { fullName, phoneNumber, address } = user;
+
     recipient.value = fullName;
     postcode.value = address.postalCode;
-    address.value = address.address1;
+    addressInput.value = address.address1;
     detailAddress.value = address.address2;
     middlePhoneNumber.value = phoneNumber.split("-")[1];
     lastPhoneNumber.value = phoneNumber.split("-")[2];
@@ -60,6 +61,7 @@ async function getUserInfo() {
         firstPhoneNumber.options[i].selected = true;
       }
     }
+    console.log(address.value);
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
