@@ -19,32 +19,33 @@
 	<!--헤더-->
 	<%-include("../common/header")%>
 		<!-- 상품 목록-->
-			<div id="productsContainer" class="columns products-container mx-6">
-				<%products.forEach(product => {%>
-				<div class="column is-flex-direction-column m-1">
-					<div>
-						<figure class="image is-1by1">
-							<img class="" src="<%=product.image.path%>" alt="<%=product.title%> 이미지">
-						</figure>
+			<div id="productsContainer"
+				class="columns products-container mx-5 is-flex is-flex-wrap-wrap is-justify-content-flex-start">
+				<%products.forEach(product=> {%>
+					<div class="column is-flex-direction-column m-1 product-list">
+						<a href="/product/<%=product._id%>">
+							<div>
+								<figure class="image is-1by1 product-image">
+									<img src="<%=product.image.path%>" alt="<%=product.title%> 이미지">
+								</figure>
+							</div>
+							<div class="product-contents">
+								<div class="has-text-weight-medium is-size-5 p-1">
+									<%=product.title%>
+								</div>
+								<div class="has-text-weight-bold is-size-4 px-1 main-color">
+									<span>
+										<%=product.price.toLocaleString('ko-KR')%>원
+									</span>
+								</div>
+							</div>
+						</a>
 					</div>
-					<div class="product-contents">
-						<div class="product-title">
-							<a href="/product/<%=product._id%>">
-								<%=product.title%>
-							</a>
-						</div>
-						<div class="product-price">
-							<span>
-								<%=product.price.toLocaleString('ko-KR')%>원
-							</span>
-						</div>
-					</div>
-				</div>
-				<%})%>
+					<%})%>
 			</div>
 		</div>
-		<!--헤더-->
-	<%-include("../common/footer")%>
+		<!--푸터-->
+		<%-include("../common/footer")%>
 </body>
 
 </html>

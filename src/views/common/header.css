@@ -19,6 +19,9 @@
 	color: var(--main-color);
 	border: none;
 }
+.btn-main-color.border {
+	border: var(--main-color) 1px solid;
+}
 .is-full{
 	height: 100%;
 	width: 100%;
