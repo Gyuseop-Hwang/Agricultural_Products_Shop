@@ -150,3 +150,9 @@ table td.product-total-price {
   line-height: 300px;
   text-align: center;
 }
+
+@media screen and (max-width: 769px) {
+  .cart-container {
+    padding: 0 15px;
+  }
+}

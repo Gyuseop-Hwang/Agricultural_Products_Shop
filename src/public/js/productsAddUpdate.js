@@ -60,7 +60,7 @@ function printProduct(result) {
   editor.setData(description);
   deleteButton.classList.remove("hidden");
   for (let i = 0; i < categorySelect.options.length; i++) {
-    if (categorySelect.options[i].value === category.name) {
+    if (categorySelect.options[i].value === category._id) {
       categorySelect.options[i].selected = true;
     }
   }
