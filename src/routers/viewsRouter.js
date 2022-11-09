@@ -42,6 +42,7 @@ viewsRouter.use("/errorPage", async (req, res) => {
   res
     .status(statusCode)
     .render("errorPage/errorPage.ejs", { statusCode, message });
+});
 
 viewsRouter.use("/adminPage", async (req, res, next) => {
   res.render("adminPage/adminPage.ejs");
