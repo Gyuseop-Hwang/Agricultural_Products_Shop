@@ -7,9 +7,6 @@ const email = document.getElementById("email");
 const fullName = document.getElementById("name");
 const password = document.getElementById("password");
 const phone = document.getElementById("phone");
-// const postalCode = document.getElementById("postalCode");
-// const address = document.getElementById("address");
-// const detailAddress = document.getElementById("detailAddress");
 
 // 이메일 , 이름, 비밀번호, 전화번호, 주소 등
 const emailText = document.getElementById("emailText");
@@ -195,7 +192,7 @@ async function onClickDeleteBtn(e) {
   //
 
   // 메인 페이지로 이동
-  window.location.href = "/";
+  window.location.href = "/home";
 }
 
 editBtn.addEventListener("click", onClickEditBtn);
