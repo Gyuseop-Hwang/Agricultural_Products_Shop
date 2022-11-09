@@ -81,13 +81,15 @@ function printProduct(result) {
     }
   }
 
+  deleteButton.classList.remove("hidden");
+
   if (sale.onSale === true) {
     onSaleCheckBox.checked = true;
+    discountInput.disabled = false;
     discountInput.value = sale.discountedPrice;
+    return;
   }
   onSaleCheckBox.checked = false;
-
-  deleteButton.classList.remove("hidden");
 }
 
 // 수정 화면일 경우(url에 id 포함되어 있을 경우) 상품 get요청
