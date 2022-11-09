@@ -55,7 +55,7 @@ deleteCategoryButton.addEventListener("click", async (ev) => {
 		alert(`${name}이(가) 정상적으로 삭제되었습니다.`)
 		location.reload();
 	} catch (e) {
-		alert(e.message)
+		alert(`삭제할 수 없는 카테고리입니다.`)
 	}
 })
 
