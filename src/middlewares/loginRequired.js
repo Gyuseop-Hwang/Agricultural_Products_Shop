@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { UnauthorizedError } from '../utils';
+import { UnauthorizedError } from '../utils/index.js';
 
 function loginRequired(req, res, next) {
   const userToken = req.headers['authorization']?.split(' ')[1];

@@ -1,7 +1,9 @@
 import { Schema } from 'mongoose';
-import { CommentSchema } from './commentSchema'
+import { CommentSchema } from './commentSchema.js';
 
-const { Types: { ObjectId } } = Schema;
+const {
+  Types: { ObjectId },
+} = Schema;
 
 const ProductSchema = new Schema(
   {
@@ -16,7 +18,7 @@ const ProductSchema = new Schema(
     sale: {
       onSale: {
         type: Boolean,
-        default: false
+        default: false,
       },
       discountedPrice: Number,
     },
