@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>계란후라이 | 관리자 주문 관리</title>
+  <title>쇼핑-n팀</title>
   <!-- 아이콘 -->
   <link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
   <!-- bulma css -->
@@ -44,12 +44,12 @@
         </tr>
       </thead>
       <tbody id="orderList">
-        <% for(let i=0; i<orders.length; i++) { %>
+        <% for(let i=0; i < orders.length; i++) { %>
         <tr class="tr" data-id="<%=orders[i]._id%>">
           <td class="order-date createdAt<%=i%>"></td>
           <td class="user-email"><%= orders[i].user.email %> </td>
           <td class="order-products"><% const products = orders[i].products.map((product)=> {%>
-            <p><%=product.title%> * <%=product.count%></p>
+            <p><%=product.product.title%> * <%=product.count%></p>
             <%})%>
           </td>
           <td class="total-price"><%= orders[i].totalPrice.toLocaleString() %>원</td>
