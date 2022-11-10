@@ -9,7 +9,7 @@ const adminInfoList = document.getElementById("adminInfoList");
 
 const usersToken = sessionStorage.getItem("token");
 if (usersToken) {
-  fetch(`http://kdt-sw3-team14.elicecoding.com/api/users/userInfo`, {
+  fetch(`/api/users/userInfo`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -30,13 +30,13 @@ if (usersToken) {
 }
 //전체 상품 및 카테고리 조회
 function getAllProducts() {
-  const response = fetch("http://kdt-sw3-team14.elicecoding.com/api/products");
+  const response = fetch("/api/products");
   return response.then((res) => res.json());
 }
 //카테고리 ID로 상품 조회
 function getProductsByCategory(categoryID) {
   const response = fetch(
-    `http://kdt-sw3-team14.elicecoding.com/api/products/categorization/${categoryID}`
+    `/api/products/categorization/${categoryID}`
   );
   return response.then((res) => res.json());
 }
@@ -44,7 +44,7 @@ function getProductsByCategory(categoryID) {
 async function getProductBySearch(keyword) {
   const encoded = encodeURI(encodeURIComponent(keyword));
   const response = fetch(
-    `http://kdt-sw3-team14.elicecoding.com/api/products/search?title=${encoded}`
+    `/api/products/search?title=${encoded}`
   );
   return response.then((res) => res.json());
 }

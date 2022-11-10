@@ -8,7 +8,7 @@ const tableHead = document.getElementById("tableHead");
 
 const usersToken = sessionStorage.getItem("token");
 
-fetch("http://localhost:5500/api/orders", {
+fetch("/api/orders", {
   method: "GET",
   headers: {
     "Content-Type": "application/json",

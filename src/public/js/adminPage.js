@@ -6,7 +6,7 @@ const greeting = document.getElementById("greeting");
 
 const usersToken = sessionStorage.getItem("token");
 
-fetch(`http://localhost:5500/api/users/userInfo`, {
+fetch(`/api/users/userInfo`, {
   method: "GET",
   headers: {
     "Content-Type": "application/json",

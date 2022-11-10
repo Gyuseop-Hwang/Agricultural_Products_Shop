@@ -38,7 +38,7 @@ noButton.classList.add("is-invisible");
 // 토큰 가져오기
 const usersToken = sessionStorage.getItem("token");
 
-fetch(`http://localhost:5500/api/users/userInfo`, {
+fetch(`/api/users/userInfo`, {
   method: "GET",
   headers: {
     "Content-Type": "application/json",
@@ -128,7 +128,7 @@ async function onClickEditBtn(e) {
     };
 
     // 끝부분에 식별할 수 있는 id를 넣어줘야 작동함
-    await fetch("http://localhost:5500/api/users/userInfo", {
+    await fetch("/api/users/userInfo", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -184,7 +184,7 @@ async function onClickDeleteBtn(e) {
   e.preventDefault();
 
   // 끝부분에 식별할 수 있는 아이디를 넣어줘야 작동함
-  await fetch("http://localhost:5500/api/users/withdrawal", {
+  await fetch("/api/users/withdrawal", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

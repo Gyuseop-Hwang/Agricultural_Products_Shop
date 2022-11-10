@@ -68,7 +68,7 @@ cancleCategoryButton.addEventListener("click", () => {
 async function getCategories() {
   try {
     const result = await Api.get("/api/admin/categories");
-    //http://localhost:5500/api/admin/products/categories
+
     console.log(result);
     return result;
   } catch (e) {
