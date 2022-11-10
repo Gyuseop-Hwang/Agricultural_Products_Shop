@@ -96,6 +96,12 @@ h4 {
   color: white;
 }
 
+#addOrUpdateButton:hover,
+#deleteButton:hover,
+.image-input:hover {
+  color: #363636;
+}
+
 @media screen and (max-width: 769px) {
   .product-image {
     width: 60%;

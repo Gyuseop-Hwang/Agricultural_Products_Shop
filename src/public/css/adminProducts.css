@@ -91,6 +91,14 @@ a:hover {
   line-height: 30px;
 }
 
+.updateButton a:hover {
+  color: #363636;
+}
+
+button:hover {
+  color: #363636;
+}
+
 @media screen and (max-width: 769px) {
   .admin-products-container {
     padding: 0 10px;
