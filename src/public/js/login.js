@@ -10,7 +10,7 @@ addAllElements();
 addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-async function addAllElements() {}
+async function addAllElements() { }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
@@ -52,7 +52,7 @@ async function handleSubmit(e) {
     // 로그인 성공
 
     // 기본 페이지로 이동
-    window.location.href = "/home";
+    window.location.href = "/";
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
