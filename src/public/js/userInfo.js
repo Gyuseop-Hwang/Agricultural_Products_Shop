@@ -61,7 +61,9 @@ fetch(`http://localhost:5500/api/users/userInfo`, {
     sample6_address.value = data.address.address1;
     sample6_detailAddress.value = data.address.address2;
   })
-  .catch((err) => console.error("Error : ", err));
+  .catch((err) => {
+    window.location.href = '/errorPage'
+  });
 
 async function onClickEditBtn(e) {
   e.preventDefault();
