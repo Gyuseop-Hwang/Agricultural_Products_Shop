@@ -1,9 +1,8 @@
 import Joi from 'joi';
-import { BadRequestError } from '../utils';
-import { cloudinary } from '../cloudinary';
+import { BadRequestError } from '../utils/index.js';
+import { cloudinary } from '../cloudinary/index.js';
 
 async function productValidator(req, res, next) {
-
   const productSchema = Joi.object({
     title: Joi.string().required().min(3).max(20),
     image: [Joi.object().optional(), Joi.allow(null)],
@@ -16,7 +15,6 @@ async function productValidator(req, res, next) {
   const { error } = productSchema.validate(req.body);
 
   if (error) {
-
     if (req.file) {
       await cloudinary.uploader.destroy(req.file.filename);
     }

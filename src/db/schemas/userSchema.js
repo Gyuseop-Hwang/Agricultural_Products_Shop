@@ -1,5 +1,5 @@
-import { Schema } from "mongoose";
-import { addressSchema } from "./addressSchema";
+import { Schema } from 'mongoose';
+import { addressSchema } from './addressSchema.js';
 
 const UserSchema = new Schema(
   {
@@ -10,8 +10,8 @@ const UserSchema = new Schema(
     address: addressSchema,
     role: {
       type: String,
-      default: "basic-user",
-    }
+      default: 'basic-user',
+    },
   },
   {
     timestamps: true,

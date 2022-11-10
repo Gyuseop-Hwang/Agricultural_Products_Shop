@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "start": "nodemon index.js --exec babel-node",
     "test": "jest --forceExit "
