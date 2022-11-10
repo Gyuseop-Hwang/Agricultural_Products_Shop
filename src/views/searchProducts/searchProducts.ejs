@@ -35,7 +35,12 @@
 								</div>
 								<div class="has-text-weight-bold is-size-4 px-1 main-color">
 									<span>
-										<%=product.price.toLocaleString('ko-KR')%>원
+										<%const actualPrice = product.sale.onSale?product.sale.discountedPrice:product.price %>
+										<%if(product.sale.onSale){%>
+											<%=actualPrice.toLocaleString("ko-KR")%>원<span id="oridinPriceSpan" class="ml-1"><%=product.price.toLocaleString("ko-KR")%>원</span>
+										<%}else{%>
+										<%=actualPrice.toLocaleString()%>원
+										<%}%>
 									</span>
 								</div>
 							</div>
