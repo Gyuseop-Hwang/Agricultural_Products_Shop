@@ -5,6 +5,9 @@
 #productImage{
 	border-radius: 0.75rem;
     overflow: hidden;
+	height: 460px;
+	width: 460px;
+	object-fit: fill;
 }
 .width-100{
 	width: 100px;
