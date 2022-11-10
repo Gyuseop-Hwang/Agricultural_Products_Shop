@@ -2,6 +2,10 @@ const modal = document.getElementById("modal");
 const noButton = document.getElementById("noButton");
 const yesButton = document.getElementById("yesButton");
 
+if (location.pathname.split("/")[1] === "product") {
+  yesButton.style.backgroundColor = "var(--main-color)";
+}
+
 function showModal(title, message) {
   document.getElementById("modalTitle").innerText = title;
   document.getElementById("modalMessage").innerText = message;
