@@ -35,10 +35,11 @@
 				</div>
 				<div class="mx-6 p-1 has-text-right ">
 					<p class="is-size-3 has-text-weight-bold main-color">
+						<%const actualPrice = product.sale.onSale?product.sale.discountedPrice:product.price%>
 						<%if(product.sale.onSale){%>
-							할인가 <%=product.sale.discountedPrice.toLocaleString()%>원
+							<span id="oridinPriceSpan" class="mr-2"><%=product.price.toLocaleString()%>원</span><%=actualPrice.toLocaleString()%>원
 						<%}else{%>
-						<%=product.price.toLocaleString()%>원
+						<%=actualPrice.toLocaleString()%>원
 						<%}%>
 					</p>
 					<p class="is-size-5 has-text-weight-bold">
@@ -65,7 +66,11 @@
 					</div>
 					<div class="column mr-4 has-text-right main-color">
 						<p id="totalPrice" class="is-size-4 has-text-weight-bold">
-							<%=`${product.price.toLocaleString()}원`%>
+							<%if(product.sale.onSale){%>
+								</span><%=product.sale.discountedPrice.toLocaleString()%>원
+							<%}else{%>
+							<%=product.price.toLocaleString()%>원
+							<%}%>
 						</p>
 					</div>
 				</div>
@@ -104,7 +109,7 @@
 			})
 		//수량 변경 시 가격도 변경되는 기능
 		function updateTotalPrice(){
-			let totalPrice = Number(countInput.value) * "<%=product.price%>";
+			let totalPrice = Number(countInput.value) * "<%=actualPrice%>";
 			totalPriceSpan.innerText = `${totalPrice.toLocaleString()}원`
 		}
 		//0이하의 수가 들어오는 것 방지
