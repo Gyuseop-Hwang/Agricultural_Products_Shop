@@ -1,5 +1,5 @@
 import * as Api from "/js/api.js";
-
+import { showModal, addModalEvent } from "/js/modal.js";
 const editBtn = document.getElementById("editBtn");
 const deleteBtn = document.getElementById("deleteBtn");
 
@@ -32,7 +32,9 @@ const sample6_extraAddress = document.getElementById("sample6_extraAddress");
 // 비밀번호 확인
 const conformPassword = document.getElementById("conformPassword");
 const conformPasswordInput = document.getElementById("conformPasswordInput");
-
+/*모달창 아니오 버튼 숨기기*/
+const noButton = document.getElementById("noButton");
+noButton.classList.add("is-invisible");
 // 토큰 가져오기
 const usersToken = sessionStorage.getItem("token");
 
@@ -190,11 +192,17 @@ async function onClickDeleteBtn(e) {
     },
   })
     .then(() => sessionStorage.removeItem("token"))
-    .catch((err) => console.error(err));
+    .then(() => {
+      addModalEvent(() => { window.location.href = "/"; })
+      showModal("탈퇴", "탈퇴가 완료되었습니다.")
+    })
+    .catch((err) => {
+      console.error(err)
+      window.location.href = "/";
+    });
   //
 
   // 메인 페이지로 이동
-  window.location.href = "/";
 }
 
 editBtn.addEventListener("click", onClickEditBtn);
