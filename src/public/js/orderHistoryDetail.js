@@ -22,7 +22,7 @@ fetch("http://localhost:5500/api/orders", {
 
       item.products.forEach((product) => {
         const productImage = product.product.image.path;
-        const productQuantity = product.product.quantity;
+        const productQuantity = product.count;
         const productTitle = product.product.title;
         const productPrice = product.product.price.toLocaleString("ko-KR");
 
