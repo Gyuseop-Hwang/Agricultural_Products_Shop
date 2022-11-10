@@ -1,5 +1,10 @@
-#image{
-	object-fit: contain;
+.image.is-460x460 {
+	height: 460px;
+	width: 460px;
+  }
+#productImage{
+	border-radius: 0.75rem;
+    overflow: hidden;
 }
 .width-100{
 	width: 100px;
@@ -9,6 +14,12 @@
 }
 .width-200{
 	width: 200px;
+}
+.height-auto{
+	height: 100px;
+}
+.main-container{
+	width: 960px;
 }
 #oridinPriceSpan {
 	font-size: 13px;

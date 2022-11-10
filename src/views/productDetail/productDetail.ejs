@@ -19,13 +19,13 @@
 	<!--헤더-->
 	<%-include("../common/header")%>
 	<!--상세 페이지-->
-	<div class="box container is-three-quarters mx-auto">
+	<div class="container box mx-auto main-container">
 		<!--상품 사진, 이름, 가격, 남은 재고, 카테고리, 가격-->
 		<div class="container columns is-full is-flex">
 			<!--이미지-->
-			<div class="column is-half">
-				<img id="image" src="<%=product.image.path%>">
-			</div>
+			<figure class="column is-half image is-460x460">
+				<img id="productImage" src="<%=product.image.path%>">
+			</figure>
 			<!--이름, 가격, 남은 재고, 카테고리-->
 			<div class="column container">
 				<div class="mx-6 p-1">
@@ -33,14 +33,18 @@
 						<%=product.title%>
 					</h1>
 				</div>
-				<div class="mx-6 p-1 has-text-right ">
+				<!--가격-->
+				<div class="mr-6 p-1 has-text-right ">
 					<p class="is-size-3 has-text-weight-bold main-color">
-						<%const actualPrice = product.sale.onSale?product.sale.discountedPrice:product.price%>
-						<%if(product.sale.onSale){%>
-							<span id="oridinPriceSpan" class="mr-2"><%=product.price.toLocaleString()%>원</span><%=actualPrice.toLocaleString()%>원
-						<%}else{%>
-						<%=actualPrice.toLocaleString()%>원
-						<%}%>
+						<%const actualPrice=product.sale.onSale?product.sale.discountedPrice:product.price%>
+							<%if(product.sale.onSale){%>
+								<span id="oridinPriceSpan" class="mr-2">
+									<%=product.price.toLocaleString()%>원
+								</span>
+								<%=actualPrice.toLocaleString()%>원
+									<%}else{%>
+										<%=actualPrice.toLocaleString()%>원
+											<%}%>
 					</p>
 					<p class="is-size-5 has-text-weight-bold">
 						<%=product.quantity%>EA
@@ -51,38 +55,39 @@
 						카테고리 : <%=product.category.name%>
 					</p>
 				</div>
-				<div class="columns is-flex is-align-items-center m-4 p-1 ">
-					<div class="column is-three-fifths is-flex is-align-items-center is-justify-content-end">
-						<p class="is-size-5 has-text-weight-bold width-100 has-text-right mx-2">구매 수량</p>
+				<div class="height-auto"></div>
+				<!--수량 및 총 가격-->
+				<div class="columns is-flex is-align-items-center p-1 m-4">
+					<!--수량-->
+					<div class="column is-two-fifths is-flex is-align-items-center is-justify-content-end">
+						<p class="is-size-5 has-text-weight-bold width-100 has-text-right mx-2">수량</p>
 						<div class="product-count-subtract">
 							<i id="substractBtn" class="fa fa-chevron-left"></i>
 						</div>
 						<div>
-							<input type="text" class="input is-rounded width-64 has-text-right" id="countInput" type="number" value="1" min="1" max="99">
+							<input type="text" class="input is-rounded width-64 has-text-right" id="countInput" type="number"
+								value="1" min="1" max="99">
 						</div>
 						<div class="product-count-add">
 							<i id="addBtn" class="fa fa-chevron-right"></i>
 						</div>
 					</div>
+					<!--총 가격-->
 					<div class="column mr-4 has-text-right main-color">
 						<p id="totalPrice" class="is-size-4 has-text-weight-bold">
-							<%if(product.sale.onSale){%>
-								</span><%=product.sale.discountedPrice.toLocaleString()%>원
-							<%}else{%>
-							<%=product.price.toLocaleString()%>원
-							<%}%>
+							<%=actualPrice.toLocaleString()%>원
 						</p>
 					</div>
 				</div>
 				<!--버튼 영역-->
-				<div class="container is-flex is-justify-content-right  m-4 p-1">
-					<button class="button mr-1 width-200 btn-main-color" id="addCartBtn">장바구니 추가</button>
-					<button class="button mr-5 width-200 btn-main-color" id="buyBtn">구매</button>
+				<div class="container is-flex is-justify-content-right  mt-4 mx-4 p-1">
+					<button class="button mr-1 width-200 btn-main-color has-text-weight-bold" id="addCartBtn">장바구니 추가</button>
+					<button class="button mr-5 width-200 btn-main-color has-text-weight-bold" id="buyBtn">구매</button>
 				</div>
 			</div>
 		</div>
 		<!--상품 discription-->
-		<div id="descriptionDiv">
+		<div id="descriptionDiv" class="container mx-3">
 		</div>
 	</div>
 	<%-include("../common/footer")%>
