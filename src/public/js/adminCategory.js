@@ -24,7 +24,7 @@ createCategoryButton.addEventListener("click", async (ev) => {
     alert(`${categoryName}이 정상적으로 추가되었습니다.`)
     location.reload();
   } catch (e) {
-    alert(e.message)
+    window.location.href = "/errorPage"
   }
 })
 /*카테고리 수정 버튼 클릭 */
@@ -40,7 +40,7 @@ updateCategoryButton.addEventListener("click", async (ev) => {
     alert(`${name}이(가) ${newCategoryName}로 수정되었습니다.`)
     location.reload();
   } catch (e) {
-    alert(e.message)
+    window.location.href = "/errorPage"
   }
 })
 /*카테고리 삭제 버튼 클릭 */
@@ -55,7 +55,7 @@ deleteCategoryButton.addEventListener("click", async (ev) => {
     alert(`${name}이(가) 정상적으로 삭제되었습니다.`)
     location.reload();
   } catch (e) {
-    alert(`삭제할 수 없는 카테고리입니다.`)
+    window.location.href = "/errorPage"
   }
 })
 
