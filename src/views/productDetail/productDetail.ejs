@@ -82,10 +82,7 @@
 			</div>
 		</div>
 		<!--상품 discription-->
-		<div>
-			<span id="description">
-				<%=product.description%>
-			</span>
+		<div id="descriptionDiv">
 		</div>
 	</div>
 	<%-include("../common/footer")%>
@@ -93,6 +90,7 @@
 
 		const countInput = document.getElementById("countInput");
 		const totalPriceSpan = document.getElementById("totalPrice");
+		const descriptionDiv = document.getElementById("descriptionDiv");
 		//버튼
 		const addBtn = document.getElementById("addBtn")
 		const subtractBtn = document.getElementById("substractBtn");
@@ -154,6 +152,8 @@
 			}
 			location.href="/order";
 		});
+		/*상품 설명*/
+		descriptionDiv.innerHTML="<%=product.description%>".replace(/&lt;/g, '<').replace(/&gt;/g, '>')
 	</script>
 </body>
 
