@@ -16,3 +16,8 @@
 .login-form-box .button {
   font-weight: bold;
 }
+.button.is-login {
+  background-color: var(--main-color);
+  border-color: transparent;
+  color: #fff;
+}
