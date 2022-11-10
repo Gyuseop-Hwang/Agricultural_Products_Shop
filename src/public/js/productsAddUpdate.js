@@ -17,18 +17,7 @@ let editor;
 
 ClassicEditor.create(document.querySelector("#editor"), {
   toolbar: {
-    items: [
-      "heading",
-      "|",
-      "bold",
-      "italic",
-      "|",
-      "undo",
-      "redo",
-      "|",
-      "blockQuote",
-      "insertTable",
-    ],
+    items: ["heading", "|", "bold", "italic", "|", "undo", "redo"],
   },
   innerHeight: 350,
 })
@@ -46,7 +35,6 @@ function submitProduct(e) {
   let discount = {};
 
   if (onSaleCheckBox.checked === true) {
-    console.log(true);
     discount.discountedPrice = discountInput.value;
   } else if (onSaleCheckBox.checked === false) {
     discount.discountedPrice = "cancel";
