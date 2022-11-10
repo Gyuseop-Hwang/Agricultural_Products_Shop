@@ -100,6 +100,7 @@
 		/*모달창 아니오 버튼 숨기기*/
 		const noButton = document.getElementById("noButton");
 		noButton.classList.add("is-invisible");
+		addModalEvent(()=>{});
 		//버튼
 		const addBtn = document.getElementById("addBtn")
 		const subtractBtn = document.getElementById("substractBtn");
@@ -157,8 +158,10 @@
 		buyBtn.addEventListener("click", ()=>{
 			const token = sessionStorage.getItem("token");
 			if (!token){
-				alert("로그인이 필요한 서비스입니다.");
-				location.href="/login";
+				addModalEvent(()=>{
+					location.href="/login";
+				})
+				showModal("로그인", "로그인이 필요한 서비스입니다");
 				return;
 			}
 			location.href="/order";
