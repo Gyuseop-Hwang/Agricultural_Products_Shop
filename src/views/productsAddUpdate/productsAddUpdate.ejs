@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>상품 검색 페이지</title>
+    <title>계란후라이 | 상품 관리</title>
     <!-- 아이콘 -->
     <link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
     <!-- bulma css -->
@@ -49,7 +49,7 @@
           <div class="detail-contents-left">
             <div class="detail-contents-left-inner">
               <div class="mb-3">
-                <span>상품명</span>
+                <span>상품명</span><span class="required">*</span>
                 <input
                   class="input is-small"
                   id="title"
@@ -57,7 +57,7 @@
                 />
               </div>
               <div class="price-quantity-box">
-                <span>가격(원가)</span>
+                <span>가격(원가)</span><span class="required">*</span>
                 <input
                   class="input is-small mb-3"
                   id="price"
@@ -74,7 +74,7 @@
                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                   disabled
                 />
-                <span>EA</span>
+                <span>EA</span><span class="required">*</span>
                 <input
                   class="input is-small mb-3"
                   id="quantity"
@@ -83,7 +83,7 @@
                 />
               </div>
               <div class="category-name">
-                <span>카테고리</span>
+                <span>카테고리</span><span class="required">*</span>
                 <div class="select is-small mb-3">
                   <select id="categorySelect" name="카테고리">
                     <% for(let i = 0; i < categories.length; i++){ %>
@@ -104,6 +104,9 @@
         </div>
         <!--상품 discription-->
         <div>
+          <p class="description-title">
+            상품 설명<span class="required">*</span>
+          </p>
           <div id="editor"><% %></div>
         </div>
         <div class="has-text-right">

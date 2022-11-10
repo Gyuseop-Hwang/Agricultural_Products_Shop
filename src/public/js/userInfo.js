@@ -61,7 +61,9 @@ fetch(`http://localhost:5500/api/users/userInfo`, {
     sample6_address.value = data.address.address1;
     sample6_detailAddress.value = data.address.address2;
   })
-  .catch((err) => console.error("Error : ", err));
+  .catch((err) => {
+    window.location.href = '/errorPage'
+  });
 
 async function onClickEditBtn(e) {
   e.preventDefault();
@@ -192,7 +194,7 @@ async function onClickDeleteBtn(e) {
   //
 
   // 메인 페이지로 이동
-  window.location.href = "/home";
+  window.location.href = "/";
 }
 
 editBtn.addEventListener("click", onClickEditBtn);

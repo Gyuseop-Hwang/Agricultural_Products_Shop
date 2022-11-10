@@ -17,18 +17,7 @@ let editor;
 
 ClassicEditor.create(document.querySelector("#editor"), {
   toolbar: {
-    items: [
-      "heading",
-      "|",
-      "bold",
-      "italic",
-      "|",
-      "undo",
-      "redo",
-      "|",
-      "blockQuote",
-      "insertTable",
-    ],
+    items: ["heading", "|", "bold", "italic", "|", "undo", "redo"],
   },
   innerHeight: 350,
 })
@@ -54,8 +43,8 @@ function submitProduct(e) {
   const formData = new FormData();
   formData.append("title", titleInput.value);
   formData.append("image", fileInput.files[0]);
-  formData.append("price", priceInput.value);
-  formData.append("quantity", quantityInput.value);
+  formData.append("price", Number(priceInput.value));
+  formData.append("quantity", Number(quantityInput.value));
   formData.append("description", editor.getData());
   formData.append(
     "category",
@@ -115,8 +104,11 @@ async function addOrUpdateProduct(data, discount, id) {
     if (onSaleCheckBox.checked && discount.discountedPrice === "0") {
       throw new Error("할인 금액을 입력해주세요.");
     }
-    if (discount.discountedPrice < 100) {
-      throw new Error("상품할인 가격은 2자리 이상이어야 합니다.");
+    if (Number(discount.discountedPrice) < 100) {
+      throw new Error("할인 가격은 2자리 이상이어야 합니다.");
+    }
+    if (Number(discount.discountedPrice) >= data.get("price")) {
+      throw new Error("할인 가격은 현재 상품의 가격보다 낮아야 합니다.");
     }
 
     //업데이트 요청시 put 요청
@@ -154,7 +146,7 @@ async function addOrUpdateProduct(data, discount, id) {
     window.location.replace("/admin/products");
   } catch (err) {
     console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+    alert(err.message);
   }
 }
 
@@ -168,7 +160,7 @@ async function deleteProduct() {
     }
   } catch (err) {
     console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+    alert(err.message);
   }
 }
 

@@ -52,6 +52,7 @@ button {
   color: var(--main-color);
   font-size: 13px;
 }
+
 .delete-button {
   display: block;
   margin: auto;
@@ -62,6 +63,10 @@ button {
   background-color: var(--btn-color);
   color: var(--main-color);
   font-size: 13px;
+}
+
+button:hover {
+  color: #363636;
 }
 
 @media screen and (max-width: 769px) {

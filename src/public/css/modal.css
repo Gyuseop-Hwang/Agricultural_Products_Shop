@@ -45,3 +45,11 @@ button {
   background-color: #e12d3a;
   color: white;
 }
+
+.modal-content .modal-box .yes-button:hover {
+  background-color: #a02b33;
+}
+
+.modal-content .modal-box .no-button:hover {
+  background-color: #bbb;
+}

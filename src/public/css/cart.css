@@ -33,7 +33,7 @@ button {
 }
 
 .cart-item.table td {
-  padding: 20px 0 20px 0;
+  padding: 19px 0 20px 0;
   height: 130px;
   color: #363636;
 }
@@ -62,6 +62,10 @@ button {
   color: #363636;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.product-name a:hover {
+  text-decoration: underline;
 }
 
 .cart-item.table td.product-quantity input,
@@ -96,10 +100,6 @@ button {
   color: var(--main-color);
 }
 
-.change-count-button:hover {
-  background-color: #c9e6ce;
-}
-
 table td.product-total-price {
   line-height: 90px;
   font-size: 20px;
@@ -124,10 +124,6 @@ table td.product-total-price {
   width: 110px;
 }
 
-.delete-button-box button:hover {
-  background-color: #c9e6ce;
-}
-
 .cart-container .total-price {
   font-size: 24px;
   margin-top: 80px;
@@ -142,6 +138,12 @@ table td.product-total-price {
   border: none;
   border-radius: 40px;
   font-size: 15px;
+}
+
+.change-count-button:hover,
+.delete-button-box button:hover,
+.order-button:hover {
+  color: #363636;
 }
 
 #emptyCartMessage {

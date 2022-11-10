@@ -5,9 +5,9 @@
 
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>관리자 카테고리 수정페이지</title>
+	<title>계란후라이 | 카테고리 수정페이지</title>
 	<!-- 아이콘 -->
-	<link rel="icon" type="image/png" sizes="16x16" href="/elice-rabbit-favicon.png" />
+	<link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
 	<!-- bulma css -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
 	<!-- 폰트 어썸: 아이콘 -->
@@ -20,10 +20,10 @@
 	<!--헤더-->
 	<%-include("../common/header") %>
 		<!--카테고리 버튼 영역-->
-		<div id="categoryBtnDiv" class="block px-4">
+		<div id="categoryBtnDiv" class="block px-4 container">
 		</div>
 		<!-- 카테고리 추가 영역-->
-		<div id="createCategoryDiv">
+		<div id="createCategoryDiv" class="container mb-3">
 			<form class="box">
 				<p class="title is-4 main-color">카테고리 추가</p>
 				<div class="field">
@@ -38,7 +38,7 @@
 			</form>
 		</div>
 		<!-- 카테고리 수정 영역-->
-		<div id="updateCategoryDiv" class="is-invisible">
+		<div id="updateCategoryDiv" class="is-invisible container">
 			<form class="box">
 				<p class="title is-4 main-color">카테고리 수정</p>
 				<div class="field-body field">

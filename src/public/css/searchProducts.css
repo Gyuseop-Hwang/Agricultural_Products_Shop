@@ -21,4 +21,10 @@ a{
 	max-width: 258px;
 	height: 360px;
 }
+#oridinPriceSpan {
+	font-size: 13px;
+	line-height: 22px;
+	color: #949494;
+	text-decoration: line-through;
+}
 

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>쇼핑-n팀</title>
+    <title>계란후라이 | 주문페이지</title>
     <!-- 아이콘 -->
     <link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
     <!-- bulma css -->
@@ -54,6 +54,7 @@
             <table class="table delivery-info-form">
               <tbody>
                 <tr>
+                  <th>수령인<span class="required">*</span></th>
                   <td>
                     <input
                       class="input is-small"
@@ -65,6 +66,7 @@
                   </td>
                 </tr>
                 <tr>
+                  <th>주소<span class="required">*</span></th>
                   <td>
                     <form>
                       <input
@@ -125,8 +127,9 @@
                   </td>
                 </tr>
                 <tr>
+                  <th>전화번호<span class="required">*</span></th>
                   <td>
-                    <div class="select is-small">
+                    <div class="select is-small first-phone-number-box">
                       <select id="firstPhoneNumber">
                         <option value="010">010</option>
                         <option value="011">011</option>

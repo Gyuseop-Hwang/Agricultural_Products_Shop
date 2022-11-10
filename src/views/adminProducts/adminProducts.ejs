@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>쇼핑-n팀</title>
+    <title>계란후라이 | 상품 목록 관리</title>
     <!-- 아이콘 -->
     <link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
     <!-- bulma css -->
@@ -44,7 +44,6 @@
           <col width="10%" />
           <col width="10%" />
           <col width="15%" />
-
         </colgroup>
         <thead>
           <tr>
@@ -57,7 +56,7 @@
           </tr>
         </thead>
         <tbody id="productListTable">
-          <% for(let i = 0; i<products.length;i++){ %> 
+          <% for(let i = 0; i<products.length;i++){ %>
             <tr class='tr' data-id="<%=products[i]._id%>">
               <td><%=products[i].category.name%></td>
               <td class="product-image"><img class="thumbnail" src="<%=products[i].image.path%>" alt="<%=products[i].title%> "/></td>
@@ -67,7 +66,7 @@
               <td class="button-box"><button class="updateButton"><a href="/admin/products/<%=products[i]._id%>">수정</a></button>
               <button class="deleteButton modal-trigger" data-id="<%=products[i]._id%>">삭제</button></td>
             </tr>
-          <% } %>  
+          <% } %>
         </tbody>
       </table>
     </div>

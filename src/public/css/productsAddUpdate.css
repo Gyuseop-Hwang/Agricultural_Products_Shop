@@ -69,6 +69,10 @@ h4 {
   height: 100%;
 }
 
+.description-title {
+  margin-bottom: 5px;
+}
+
 .ck-editor__editable {
   height: 500px;
   margin-bottom: 1.5rem;
@@ -94,6 +98,17 @@ h4 {
   width: 100px;
   background-color: var(--main-color);
   color: white;
+}
+
+#addOrUpdateButton:hover,
+#deleteButton:hover,
+.image-input:hover {
+  color: #363636;
+}
+
+.required {
+  color: var(--main-color);
+  font-weight: 900;
 }
 
 @media screen and (max-width: 769px) {
