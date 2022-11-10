@@ -9,7 +9,7 @@ async function productValidator(req, res, next) {
     image: [Joi.object().optional(), Joi.allow(null)],
     price: Joi.number().required().min(0),
     quantity: Joi.number().required().min(0),
-    description: Joi.string().required().min(5).max(50),
+    description: Joi.string().required().min(5),
     category: Joi.string().required(),
   });
 
