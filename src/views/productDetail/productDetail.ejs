@@ -91,11 +91,15 @@
 		</div>
 	</div>
 	<%-include("../common/footer")%>
-	<script>
-
+	<%-include("../common/modal")%>
+	<script type="module">
+		import { showModal, addModalEvent } from "/js/modal.js";
 		const countInput = document.getElementById("countInput");
 		const totalPriceSpan = document.getElementById("totalPrice");
 		const descriptionDiv = document.getElementById("descriptionDiv");
+		/*모달창 아니오 버튼 숨기기*/
+		const noButton = document.getElementById("noButton");
+		noButton.classList.add("is-invisible");
 		//버튼
 		const addBtn = document.getElementById("addBtn")
 		const subtractBtn = document.getElementById("substractBtn");
@@ -141,12 +145,14 @@
 				products = [];
 			}
 			if (products.find(product => product.id === newProduct.id)) {
-				alert("이미 같은 상품이 장바구니에 존재합니다.");
+				addModalEvent(() => {}); //모달 기본 설정
+				showModal("상품 중복", "장바구니에 이미 존재하는 상품입니다.")
 				return;
 			}
 			products.push(newProduct);
 			localStorage.setItem("products", JSON.stringify(products))
-			alert("장바구니에 추가되었습니다.");
+			addModalEvent(() => {}); //모달 기본 설정
+			showModal("장바구니 추가", "상품이 추가되었습니다")
 		})
 		buyBtn.addEventListener("click", ()=>{
 			const token = sessionStorage.getItem("token");
