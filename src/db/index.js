@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { dbTestHandler } from './dbTestHandler';
+import { dbTestHandler } from './dbTestHandler.js';
 
 const DB_URL =
   process.env.MONGODB_URL ||
@@ -20,7 +20,7 @@ db.on('error', (error) =>
   console.error('\nMongoDB 연결에 실패하였습니다...\n' + DB_URL + '\n' + error)
 );
 
-export * from './models/userModel';
-export * from './models/productModel';
-export * from './models/categoryModel';
-export * from './models/orderModel';
+export * from './models/userModel.js';
+export * from './models/productModel.js';
+export * from './models/categoryModel.js';
+export * from './models/orderModel.js';
