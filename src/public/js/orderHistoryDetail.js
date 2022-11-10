@@ -32,8 +32,12 @@ fetch("http://localhost:5500/api/orders", {
           <img src="${productImage}" id="productImage" alt="productImage">
           <span id="productTitle">${productTitle}</span>
         </td>
-        <td id="productQuantity"><span id="quantity">${productQuantity}</span></td>
-        <td id="productPrice"><span id="price">${productPrice} 원</span></td>
+        <td id="productQuantity">
+          <span id="quantity">${productQuantity}</span>
+        </td>
+        <td id="productPrice">
+          <span id="price">${productPrice} 원</span>
+        </td>
       </tr>
       `;
         tableBody.innerHTML += itemData;

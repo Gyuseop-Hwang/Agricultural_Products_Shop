@@ -16,11 +16,13 @@
   justify-content: center;
   padding-top: 30px;
   padding-left: 250px;
-  width: 50%;
+
   height: 100vh;
 }
 
 #errorTitle {
+  width: 380px;
+  text-align: center;
   margin-bottom: 10px;
   font-size: 100px;
   height: 125px;
@@ -28,15 +30,22 @@
 }
 
 #errorSubtitle {
+  text-align: center;
   font-size: 30px;
   margin-bottom: 20px;
   color: var(--main--color);
 }
 
 #errorDescription {
+  text-align: center;
   color: var(--desc--color);
   font-size: 20px;
   width: 400px;
+}
+
+#container {
+  margin: auto;
+  width: 1400px;
 }
 
 #containerRight {
@@ -46,7 +55,7 @@
   align-items: center;
   justify-content: center;
   padding-right: 30px;
-  width: 50%;
+
   height: 100vh;
 }
 

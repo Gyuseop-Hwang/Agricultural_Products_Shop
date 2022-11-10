@@ -55,18 +55,19 @@ table {
 }
 
 #productTitle {
-  margin-bottom: 30px;
+  display: inline-block;
 }
 
 #quantity,
 #price {
+  display: inline-block;
   width: 80px;
   height: 80px;
-  margin: 10px auto;
+  margin: auto;
+  text-align: center;
 }
 
 #productImage,
-#productTitle,
 #productPrice,
 #productQuantity {
   width: 100px;

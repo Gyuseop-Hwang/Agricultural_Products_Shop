@@ -9,6 +9,8 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
     />
+    <!-- 아이콘 -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
     <!-- 폰트 어썸 아이콘 -->
     <script
       defer
@@ -17,16 +19,18 @@
     ></script>
     <link rel="stylesheet" href="/css/errorPage.css" />
     <script defer src="/js/errorPage.js" type="module"></script>
-    <title>errorPage</title>
+    <title>error <%=statusCode%></title>
   </head>
   <body>
     <%-include("../common/header")%>
-    <div id="containerLeft">
-      <h1 id="errorTitle"><%=statusCode%></h1>
-      <p id="errorDescription"><%=message%></p>
-    </div>
-    <div id="containerRight">
-      <img id="errorImage" src="/img/errorImage.png" alt="errorImage" />
+    <div id="container">
+      <div id="containerLeft">
+        <h1 id="errorTitle"><%=statusCode%></h1>
+        <p id="errorDescription"><%=message%></p>
+      </div>
+      <div id="containerRight">
+        <img id="errorImage" src="/img/errorImage.png" alt="errorImage" />
+      </div>
     </div>
   </body>
 </html>
