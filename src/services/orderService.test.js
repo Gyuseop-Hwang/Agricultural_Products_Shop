@@ -1,13 +1,14 @@
-require('dotenv').config();
-const { orderService } = require('./orderService');
+import 'dotenv/config';
+
+import { orderService } from './orderService.js';
 
 jest.mock('../db/models/orderModel');
-const { orderModel } = require('../db/models/orderModel');
+import { orderModel } from '../db/models/orderModel.js';
 
 jest.mock('../db/models/productModel');
-const { productModel } = require('../db/models/productModel');
+import { productModel } from '../db/models/productModel.js';
 
-const { NotFoundError } = require('../utils');
+import { NotFoundError } from '../utils/index.js';
 
 describe('test orderService methods', () => {
   describe('test findAllOrders', () => {

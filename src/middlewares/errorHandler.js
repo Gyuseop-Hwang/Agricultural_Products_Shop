@@ -7,8 +7,13 @@ function notFoundErrorHandler(req, res, next) {
 
 function errorHandler(error, req, res, next) {
   console.log('\x1b[33m%s\x1b[0m', error.stack);
-  app.locals.statusCode = error.statusCode;
-  app.locals.message = error.message;
+
+  const { statusCode = 500, message = 'Server-side Problem' } = error;
+  app.locals = {
+    statusCode,
+    message,
+  };
+
   res.redirect('/errorPage');
 }
 

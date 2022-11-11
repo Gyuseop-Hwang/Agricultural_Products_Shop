@@ -1,7 +1,7 @@
 jest.mock('jsonwebtoken');
 import jwt from 'jsonwebtoken';
-import { UnauthorizedError } from '../utils';
-import { loginRequired } from './loginRequired';
+import { UnauthorizedError } from '../utils/index.js';
+import { loginRequired } from './loginRequired.js';
 
 describe('test loginRequired', () => {
   test('req.headers.authorization이 없어서 에러를 던진다.', () => {
