@@ -27,7 +27,7 @@ fetch("/api/orders", {
       <tr>
         <td id="orderDate">${date}</td>
         <td id="orderedProduct">
-          <a href="/orderHistoryDetail"><span id="orderReciptId">${item._id}</span></a>
+          <a href="/orderHistoryDetail/${item._id}"><span id="orderReciptId">${item._id}</span></a>
         </td>
         <td><span id="shippingStatus">${item.status}</span></td>
         <td id="totalPrice">${totalPrice} 원</td>

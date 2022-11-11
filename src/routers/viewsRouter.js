@@ -33,8 +33,10 @@ viewsRouter.use("/orderHistory", (req, res, next) => {
   res.render("orderHistory/orderHistory.ejs");
 });
 
-viewsRouter.use("/orderHistoryDetail", (req, res, next) => {
-  res.render("orderHistoryDetail/orderHistoryDetail.ejs");
+viewsRouter.use(`/orderHistoryDetail/:orderId`, (req, res, next) => {
+  const { orderId } = req.params;
+
+  res.render("orderHistoryDetail/orderHistoryDetail.ejs", { orderId });
 });
 
 viewsRouter.use("/errorPage", (req, res) => {

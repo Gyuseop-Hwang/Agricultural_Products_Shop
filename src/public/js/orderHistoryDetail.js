@@ -8,7 +8,9 @@ const tableHead = document.getElementById("tableHead");
 
 const usersToken = sessionStorage.getItem("token");
 
-fetch("/api/orders", {
+const path = location.pathname.split("/")[2];
+
+fetch(`/api/orders/${path}`, {
   method: "GET",
   headers: {
     "Content-Type": "application/json",
@@ -17,14 +19,14 @@ fetch("/api/orders", {
 })
   .then((res) => res.json())
   .then((data) => {
-    data.forEach((item) => {
-      item.products.forEach((product) => {
-        const productImage = product.product.image.path;
-        const productQuantity = product.count;
-        const productTitle = product.product.title;
-        const productPrice = product.product.price.toLocaleString("ko-KR");
+    console.log(data);
+    data.products.forEach((item) => {
+      const productImage = item.product.image.path;
+      const productQuantity = item.count;
+      const productTitle = item.product.title;
+      const productPrice = item.product.price.toLocaleString("ko-KR");
 
-        let itemData = `
+      let itemData = `
       <tr>
         <td id="tableData">
           <img src="${productImage}" id="productImage" alt="productImage">
@@ -38,8 +40,8 @@ fetch("/api/orders", {
         </td>
       </tr>
       `;
-        tableBody.innerHTML += itemData;
-      });
+      tableBody.innerHTML += itemData;
     });
   })
   .catch((err) => console.error("Error : ", err));
+console.log(location.pathname);
