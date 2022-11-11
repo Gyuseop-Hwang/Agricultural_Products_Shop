@@ -9,7 +9,7 @@ class OrderService {
   async findAllOrders() {
     const allOrders = await this.orderModel.findAll();
 
-    if (allOrders.length < 1) return {};
+    if (allOrders.length < 1) return [];
 
     return allOrders;
   }
@@ -25,7 +25,7 @@ class OrderService {
   async findOrdersByUserId(userId) {
     const foundOrderArr = await this.orderModel.findByUserId(userId);
 
-    if (foundOrderArr.length < 1) return {};
+    if (foundOrderArr.length < 1) return [];
 
     return foundOrderArr;
   }
