@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
+    <!-- bulma css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/css/adminPage.css" />
+    <script defer src="/js/adminPage.js" type="module"></script>
+    <title>계란후라이 | 관리자 페이지</title>
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <%-include("../common/header")%>
+    <div id="bodyDiv">
+      <div id="title">
+        <h1 id="greeting"></h1>
+      </div>
+
+      <div id="layer">
+        <button id="productBtn">제품 관리</button>
+        <button id="categoryBtn">카테고리 관리</button>
+        <button id="orderBtn">주문 관리</button>
+      </div>
+    </div>
+    <%-include("../common/footer")%>
+  </body>
+</html>

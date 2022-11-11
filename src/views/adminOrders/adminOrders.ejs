@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>계란후라이 | 전체 주문 내역</title>
+    <!-- 아이콘 -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
+    <!-- bulma css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="/css/adminOrders.css" />
+    <script src="/js/adminOrders.js" type="module" defer></script>
+  </head>
+
+  <body>
+    <!-- 헤더 -->
+    <%-include("../common/header")%>
+    <!-- 전체 주문 내역 -->
+    <section
+      class="container is-flex is-align-items-center is-flex-direction-column admin-order-container"
+    >
+      <h2 class="title is-4">전체 주문내역</h2>
+      <table class="table is-bordered is-fullwidth admin-orders">
+        <colgroup>
+          <col width="10%" />
+          <col width="15%" />
+          <col width="20%" />
+          <col width="10%" />
+          <col width="25%" />
+          <col width="10%" />
+          <col width="10%" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>주문 날짜</th>
+            <th>이메일</th>
+            <th>주문 정보</th>
+            <th>총액</th>
+            <th>배송 정보</th>
+            <th>상태</th>
+            <th>삭제</th>
+          </tr>
+        </thead>
+        <tbody id="orderList">
+          <% for(let i=0; i < orders.length; i++) { %>
+          <tr class="tr" data-id="<%=orders[i]._id%>">
+            <td class="order-date createdAt<%=i%>"></td>
+            <td class="user-email"><%= orders[i].user.email %></td>
+            <td class="order-products">
+              <% const products = orders[i].products.map((product)=> {%>
+              <p><%=product.product.title%> * <%=product.count%></p>
+              <%})%>
+            </td>
+            <td class="total-price">
+              <%= orders[i].totalPrice.toLocaleString() %>원
+            </td>
+            <td class="order-address">
+              <p><%=orders[i].recipient%></p>
+              <p>
+                <%=orders[i].shippingAddress.postalCode%>
+                <%=orders[i].shippingAddress.address1 %>
+                <%=orders[i].shippingAddress.address2 %>
+              </p>
+              <p><%=orders[i].phoneNumber%></p>
+            </td>
+            <td class="update-button-box">
+              <select class="select is-success" id="statusSelect<%=i%>">
+                <option value="주문 완료" selected>주문 완료</option>
+                <option value="배송 준비중">배송 준비중</option>
+                <option value="배송중">배송중</option>
+                <option value="배송 완료">배송 완료</option>
+              </select>
+              <button id="modifyStatusBtn<%=i%>">수정</button>
+            </td>
+            <td>
+              <button class="delete-button" data-id="<%=orders[i]._id%>">
+                주문삭제
+              </button>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </section>
+    <%-include("../common/footer")%> <%-include("../common/modal")%>
+  </body>
+</html>

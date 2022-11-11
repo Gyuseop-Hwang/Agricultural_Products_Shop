@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 import { orderModel, userModel } from '../db';
 import { productModel } from '../db';
 import { BadRequestError } from '../utils';
+=======
+import { orderModel, productModel } from '../db/index.js';
+import { BadRequestError, NotFoundError } from '../utils/index.js';
+>>>>>>> dev
 
 class OrderService {
   constructor(orderModel) {
@@ -10,7 +15,11 @@ class OrderService {
   async findAllOrders() {
     const allOrders = await this.orderModel.findAll();
 
+<<<<<<< HEAD
     if (allOrders.length < 1) return '주문 내역이 존재하지 않습니다.';
+=======
+    if (allOrders.length < 1) return [];
+>>>>>>> dev
 
     return allOrders;
   }
@@ -26,7 +35,11 @@ class OrderService {
   async findOrdersByUserId(userId) {
     const foundOrderArr = await this.orderModel.findByUserId(userId);
 
+<<<<<<< HEAD
     if (foundOrderArr.length < 1) return '주문 내역이 존재하지 않습니다.';
+=======
+    if (foundOrderArr.length < 1) return [];
+>>>>>>> dev
 
     return foundOrderArr;
   }
@@ -90,10 +103,12 @@ class OrderService {
   async calculateTotalPrice(requestedProducts) {
     const allProducts = await productModel.findProducts();
     const totalPrice = requestedProducts.reduce((acc, { product, count }) => {
-      const pickedProduct = allProducts.find(
-        (v) => v._id.toString() === product
-      );
-      return acc + pickedProduct.price * count;
+      const pickedProduct = allProducts.find((v) => String(v._id) === product);
+      let price = pickedProduct.price;
+      if (pickedProduct.sale.onSale) {
+        price = pickedProduct.sale.discountedPrice;
+      }
+      return acc + price * count;
     }, 0);
     return totalPrice;
   }

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>계란후라이 | 주문페이지</title>
+    <!-- 아이콘 -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
+    <!-- bulma css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="/css/order.css" />
+    <link rel="stylesheet" href="/css/cart.css" />
+    <script src="/js/order.js" type="module" defer></script>
+    <script src="/js/cart.js" type="module" defer></script>
+    <!-- 다음 주소 API -->
+    <script
+      src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+      defer
+    ></script>
+    <script src="/js/daumPostApi.js" defer></script>
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <%-include("../common/header")%>
+    <!-- 주문 -->
+    <div class="container order-container">
+      <form>
+        <section class="is-flex is-flex-direction-column is-align-items-center">
+          <h3 class="block is-align-self-flex-start title is-5">
+            주문 상품 정보
+          </h3>
+          <%-include("../cart/cart.ejs")%>
+          <p class="is-align-self-flex-end count-info">
+            수량 변경은 장바구니에서 가능합니다.
+          </p>
+          <button class="delete-button" id="deleteSelectedButton" type="button">
+            선택 항목 삭제
+          </button>
+        </section>
+        <div class="is-flex is-justify-content-space-between order-bottom-box">
+          <section class="delivery-info mb-6">
+            <h3 class="title is-5">배송 정보</h3>
+            <table class="table delivery-info-form">
+              <tbody>
+                <tr>
+                  <th>수령인<span class="required">*</span></th>
+                  <td>
+                    <input
+                      class="input is-small"
+                      id="name"
+                      type="text"
+                      placeholder="수령인"
+                      required
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th>주소<span class="required">*</span></th>
+                  <td>
+                    <form>
+                      <input
+                        class="input is-small"
+                        type="text"
+                        id="sample3_postcode"
+                        placeholder="우편번호"
+                        required
+                      />
+                      <input
+                        class="button is-small"
+                        type="button"
+                        onclick="sample3_execDaumPostcode()"
+                        value="우편번호 찾기"
+                        required
+                      /><br />
+                      <input
+                        class="input is-small"
+                        type="text"
+                        id="sample3_address"
+                        placeholder="주소"
+                        value=""
+                        required
+                      /><br />
+                      <input
+                        class="input is-small"
+                        type="text"
+                        id="sample3_detailAddress"
+                        placeholder="상세주소"
+                        required
+                      />
+                    </form>
+                    <div
+                      id="wrap"
+                      style="
+                        display: none;
+                        border: 1px solid;
+                        width: 500px;
+                        height: 300px;
+                        margin: 5px 0;
+                        position: relative;
+                      "
+                    >
+                      <img
+                        src="//t1.daumcdn.net/postcode/resource/images/close.png"
+                        id="btnFoldWrap"
+                        style="
+                          cursor: pointer;
+                          position: absolute;
+                          right: 0px;
+                          top: -1px;
+                          z-index: 1;
+                        "
+                        onclick="foldDaumPostcode()"
+                        alt="접기 버튼"
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th>전화번호<span class="required">*</span></th>
+                  <td>
+                    <div class="select is-small first-phone-number-box">
+                      <select id="firstPhoneNumber">
+                        <option value="010">010</option>
+                        <option value="011">011</option>
+                        <option value="016">016</option>
+                        <option value="017">017</option>
+                        <option value="018">018</option>
+                        <option value="019">019</option>
+                      </select>
+                    </div>
+                    -<input
+                      id="middlePhoneNumber"
+                      class="input is-small"
+                      type="text"
+                      maxlength="4"
+                      oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                      required
+                    />-<input
+                      id="lastPhoneNumber"
+                      class="input is-small"
+                      type="text"
+                      maxlength="4"
+                      oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                      required
+                    />
+                  </td>
+                </tr>
+                <!-- <tr>
+              <th scope="row">이메일</th>
+              <td><input type="text" /></td>
+            </tr> -->
+              </tbody>
+            </table>
+          </section>
+          <div class="payment-box">
+            <section class="order-total-price is-align-self-flex-start mb-6">
+              <h3 class="title is-5 mr-4">결제 예정 금액 :</h3>
+              <p class="is-size-5 has-text-weight-bold total-price">
+                <span id="totalPrice">0</span>원
+              </p>
+            </section>
+            <section class="order-payment is-align-self-flex-start mb-6">
+              <h3 class="title is-5">결제 수단</h3>
+              <div>
+                <input
+                  type="radio"
+                  id="bankPayment"
+                  value="bankPayment"
+                  checked="true"
+                />
+                <label for="bankPayment">무통장입금</label>
+              </div>
+            </section>
+            <button type="submit" class="mb-6" id="payButton">결제하기</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <%-include("../common/footer")%>
+  </body>
+</html>

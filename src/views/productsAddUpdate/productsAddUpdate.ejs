@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>계란후라이 | 상품 관리</title>
+    <!-- 아이콘 -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
+    <!-- bulma css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <!--css 관련-->
+    <link rel="stylesheet" href="/css/productsAddUpdate.css" />
+    <!-- script-->
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.2.1/classic/ckeditor.js"></script>
+    <script src="/js/productsAddUpdate.js" type="module" defer></script>
+  </head>
+  <body>
+    <!--헤더-->
+    <%-include("../common/header")%>
+    <!--상세 페이지-->
+    <form enctype="multipart/form-data">
+      <div class="box detail-box container">
+        <!--상품 사진, 이름, 가격, 남은 재고, 카테고리, 가격-->
+        <div class="block detail-contents-box is-flex mb-5">
+          <!--이미지-->
+          <div class="product-image">
+            <div class="image-box">
+              <img
+                id="thumbnailImage"
+                src="<%=product.image.path%>"
+                alt="<%=product.title%>"
+              />
+            </div>
+            <label for="imageInput">
+              <div class="image-input">이미지 업로드</div>
+            </label>
+            <input type="file" name="imageInput" id="imageInput" />
+          </div>
+          <!--이름, 가격, 남은 재고, 카테고리-->
+          <div class="detail-contents-left">
+            <div class="detail-contents-left-inner">
+              <div class="mb-3">
+                <span>상품명</span><span class="required">*</span>
+                <input
+                  class="input is-small"
+                  id="title"
+                  value="<%=product.title%>"
+                />
+              </div>
+              <div class="price-quantity-box">
+                <span>가격(원가)</span><span class="required">*</span>
+                <input
+                  class="input is-small mb-3"
+                  id="price"
+                  value="<%=product.price%>"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                />
+                <span>할인 적용</span>
+                <input type="checkbox" name="onSale" id="onSaleCheckbox" />
+                <input
+                  class="input is-small mb-3"
+                  id="discountInput"
+                  type="text"
+                  placeholder="할인 금액"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                  disabled
+                />
+                <span>EA</span><span class="required">*</span>
+                <input
+                  class="input is-small mb-3"
+                  id="quantity"
+                  value="<%=product.quantity%>"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                />
+              </div>
+              <div class="category-name">
+                <span>카테고리</span><span class="required">*</span>
+                <div class="select is-small mb-3">
+                  <select id="categorySelect" name="카테고리">
+                    <% for(let i = 0; i < categories.length; i++){ %>
+                    <option value="<%=categories[i]._id%>">
+                      <%=categories[i].name%>
+                    </option>
+                    <% } %>
+                  </select>
+                </div>
+              </div>
+              <div class="botton-box">
+                <button class="button hidden is-small" id="deleteButton">
+                  삭제
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--상품 discription-->
+        <div>
+          <p class="description-title">
+            상품 설명<span class="required">*</span>
+          </p>
+          <div id="editor"><% %></div>
+        </div>
+        <div class="has-text-right">
+          <button class="button is-small" id="addOrUpdateButton">등록</button>
+        </div>
+      </div>
+    </form>
+    <%-include("../common/footer")%> <%-include("../common/modal")%>
+  </body>
+</html>

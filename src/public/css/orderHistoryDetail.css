@@ -1,0 +1,154 @@
+:root {
+  --main--color: #11b564;
+  --button-color: #eafced;
+  --background-color: #fff;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin: 0 auto 55px auto;
+  width: 300px;
+  text-align: center;
+  align-items: center;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+#orderHistoryDetail {
+  position: relative;
+  margin: 80px auto;
+  width: 800px;
+  height: 800px;
+  padding: 40px;
+  border-radius: 30px;
+  background-color: var(--background-color);
+  box-shadow: 2px 3px 7px 1px rgba(0, 0, 0, 0.15);
+}
+
+table {
+  margin: 0 auto;
+  text-align: center;
+  align-items: center;
+}
+
+#orderedProduct {
+  width: 250px;
+}
+
+#tableHead {
+  background-color: var(--button-color);
+  top: 100px;
+  width: 720px;
+  text-align: center;
+}
+
+#tableData {
+  width: 100px;
+}
+
+#productImage {
+  margin-right: 15px;
+}
+
+#productTitle {
+  display: inline-block;
+}
+
+#quantity,
+#price {
+  line-height: 100px;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  margin: auto;
+  text-align: center;
+}
+
+#productImage,
+#productPrice,
+#productQuantity {
+  width: 100px;
+  height: 100px;
+}
+
+#wholeTable {
+  height: 600px;
+  overflow-y: scroll;
+}
+
+#wholeTable::-webkit-scrollbar {
+  display: none;
+}
+
+@media screen and (max-width: 950px) {
+  #orderHistoryDetail {
+    position: relative;
+    margin: 80px auto;
+    width: 600px;
+    height: 600px;
+    padding: 40px;
+    border-radius: 30px;
+    background-color: var(--background-color);
+    font-size: 10px;
+    box-shadow: 2px 3px 7px 1px rgba(0, 0, 0, 0.15);
+  }
+
+  table {
+    margin: 0 auto;
+    text-align: center;
+    align-items: center;
+  }
+
+  #orderedProduct {
+    width: 250px;
+  }
+
+  #tableHead {
+    background-color: var(--button-color);
+    top: 100px;
+    width: 520px;
+    text-align: center;
+  }
+
+  #tableData {
+    width: 100px;
+  }
+
+  #productImage {
+    margin-right: 15px;
+  }
+
+  #productTitle {
+    display: inline-block;
+  }
+
+  #quantity,
+  #price {
+    line-height: 100px;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    margin: auto;
+    text-align: center;
+  }
+
+  #productImage,
+  #productPrice,
+  #productQuantity {
+    width: 100px;
+    height: 100px;
+  }
+
+  #wholeTable {
+    height: 600px;
+    overflow-y: scroll;
+  }
+
+  #wholeTable::-webkit-scrollbar {
+    display: none;
+  }
+}

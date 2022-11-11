@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>계란후라이 | 주문 내역 페이지</title>
+    <!-- 아이콘 -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
+    <!-- bulma css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="/css/orderHistory.css" />
+    <script defer src="/js/orderHistory.js" type="module"></script>
+  </head>
+
+  <body>
+    <div class="layer">
+      <%-include("../common/header")%>
+      <div id="orderHistory">
+        <h1>전체 주문 내역</h1>
+        <div id="wholeTable">
+          <table class="table is-fullwidth">
+            <tbody id="tableBody">
+              <tr id="tableHead">
+                <td id="tableData">주문 일자</td>
+                <td id="tableData">주문서 아이디</td>
+                <td id="tableData">주문 상태</td>
+                <td id="tableData">주문 총액</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <%-include("../common/footer")%>
+  </body>
+</html>

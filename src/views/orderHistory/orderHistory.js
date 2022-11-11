@@ -6,9 +6,18 @@ const quantity = document.getElementById("quantity");
 const tableBody = document.getElementById("tableBody");
 const tableHead = document.getElementById("tableHead");
 
-fetch("http://localhost:4000/orders")
+const usersToken = sessionStorage.getItem("token");
+
+fetch("/api/orders", {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${usersToken}`,
+  },
+})
   .then((res) => res.json())
   .then((data) => {
+    if (JSON.stringify(data) === "{}") return;
     data.forEach((item) => {
       console.log(item);
 
@@ -16,25 +25,14 @@ fetch("http://localhost:4000/orders")
       <tr>
         <td id="orderDate">${item.timestamps}</td>
         <td id="orderedProduct">
-          <a href="#"><span id="orderReciptId">${item.products[0].productId}</span></a>
+          <a href="/orderHistoryDetail/${item._id}"><span id="orderReciptId">${item._id}</span></a>
         </td>
         <td><span id="shippingStatus">${item.status}</span></td>
-        <td id="quantity">${item.products[0].quantity}</td>
+        <td id="totalPrice">${totalPrice} 원</td>
       </tr>
       `;
 
       tableBody.innerHTML += itemData;
     });
   })
-  .catch((err) => console.log("Error : ", err));
-
-/**
-       * <tr>
-        <td id="orderDate">2022-10-10</td>
-        <td id="orderedProduct">
-          <a href="#"><span id="orderReciptId">주문서 id</span></a>
-        </td>
-        <td><span id="shippingStatus">배송 상태</span></td>
-        <td id="quantity">1</td>
-      </tr>
-       */
+  .catch((err) => console.error("Error : ", err));

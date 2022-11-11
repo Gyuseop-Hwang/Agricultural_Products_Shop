@@ -1,0 +1,47 @@
+:root {
+	--main-color : #11B564;
+	--btn-color : #EAFCED;
+	--light-gray : #E5E5E5;
+}
+.brand-font{
+	font-family: 'Jua','Noto Sans KR', sans-serif;
+	font-size: x-large;
+}
+.main-color {
+	color: var(--main-color);
+}
+.search-btn {
+	background-color: var(--main-color);
+	color : white;
+}
+.btn-main-color {
+	background-color: var(--btn-color);
+	color: var(--main-color);
+	border: none;
+}
+.btn-main-color.border {
+	border: var(--main-color) 1px solid;
+}
+.is-full{
+	height: 100%;
+	width: 100%;
+}
+.second-nav{
+	border-top: solid 1px var(--light-gray);
+	border-bottom: solid 1px var(--light-gray);
+}
+
+.navbar-link:not(.is-arrowless)::after {
+    border-color: var(--main-color);
+}
+#searchDiv{
+	display: flex;
+}
+@media screen and (max-width: 1023px) {
+	.navbar>.container {
+		display: flex;
+	}
+	#searchDiv{
+		display: none;
+	}
+}

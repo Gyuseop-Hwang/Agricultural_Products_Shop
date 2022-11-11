@@ -1,0 +1,115 @@
+<!-- script-->
+<script src="/common/header.js" type="module" defer></script>
+<link rel="stylesheet" href="/common/header.css" />
+<!--구글 폰트-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@500;700&family=Poppins:wght@500;700&display=swap"
+  rel="stylesheet"
+/>
+
+<nav class="navbar my-4" role="navigation" aria-label="main navigation">
+  <div class="container my-3">
+    <div class="navbar-brand">
+      <a class="navbar-item mr-6" href="/">
+        <img src="/img/fried-egg.png" width="30" height="30" />
+        <span class="main-color brand-font">계란후라이</span>
+      </a>
+    </div>
+    <!-- 검색 form기능-->
+    <div class="is-align-items-center" id="searchDiv">
+      <div class="field has-addons">
+        <div class="control">
+          <input id="searchInput" class="input is-rounded" type="text" />
+        </div>
+        <div class="control">
+          <button id="searchBtn" class="button search-btn is-rounded">
+            검색
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--장바구니, 로그인, 회원가입 버튼-->
+    <div class="navbar-end my-auto" aria-label="breadcrumbs">
+      <ul id="navbar" class="is-flex is-align-items-center">
+        <li class="mx-1">
+          <a href="/cart">
+            <span class="icon">
+              <i
+                class="fas fa-lg fa-cart-shopping main-color"
+                font-size="48px"
+              ></i>
+            </span>
+          </a>
+        </li>
+        <li class="mx-1" id="loginList">
+          <a href="/login" class="button btn-main-color is-rounded">로그인</a>
+        </li>
+        <li class="mx-1" id="registerList">
+          <a href="/register" class="button btn-main-color is-rounded"
+            >회원가입</a
+          >
+        </li>
+        <li class="mx-1" id="logoutList">
+          <a
+            href="/"
+            id="logoutBtn"
+            class="button btn-main-color is-rounded"
+            >로그아웃</a
+          >
+        </li>
+        <li class="mx-1" id="userInfoList">
+          <a href="/userInfo" class="button btn-main-color is-rounded"
+            >마이페이지</a
+          >
+        </li>
+        <li class="mx-1 is-hidden" id="adminInfoList">
+          <a href="/adminPage" class="button btn-main-color is-rounded"
+            >관리자 페이지</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<nav class="navbar mb-4 second-nav">
+  <div class="container navbar-menu">
+    <div class="navbar-item has-dropdown is-hoverable">
+      <a class="navbar-link" href="/search">
+        <p class="title is-5">
+          <i class="fa-solid fa-lg fa-bars main-color pr-3"></i>전체 카테고리
+        </p>
+      </a>
+      <!--네비게이션 드롭다운-->
+      <div class="navbar-dropdown" id="categoryDropdown"></div>
+    </div>
+  </div>
+</nav>
+<script type="module">
+  const searchInput = document.getElementById("searchInput");
+  const searchBtn = document.getElementById("searchBtn");
+  const loginList = document.getElementById("loginList");
+  const registerList = document.getElementById("registerList");
+  const logoutList = document.getElementById("logoutList");
+  const userInfoList = document.getElementById("userInfoList");
+  const logoutBtn = document.getElementById("logoutBtn");
+  searchBtn.addEventListener(
+    "click",
+    () => (location.href = `/search?title=${searchInput.value.trim()}`)
+  );
+  const usersToken = sessionStorage.getItem("token");
+  //로그인 상태라면 로그인 버튼과 회원가입 버튼 보이지 않음
+  if (usersToken) {
+    loginList.classList.add("is-hidden");
+    registerList.classList.add("is-hidden");
+    logoutList.classList.remove("is-hidden");
+    userInfoList.classList.remove("is-hidden");
+  } else {
+    loginList.classList.remove("is-hidden");
+    registerList.classList.remove("is-hidden");
+    logoutList.classList.add("is-hidden");
+    userInfoList.classList.add("is-hidden");
+  }
+  logoutBtn.addEventListener("click", () => sessionStorage.removeItem("token"));
+</script>

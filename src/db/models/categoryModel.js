@@ -1,11 +1,12 @@
 import { model } from 'mongoose';
-import { CategorySchema } from '../schemas/categorySchema';
+import { CategorySchema } from '../schemas/categorySchema.js';
 
 class CategoryModel {
     constructor(Category) {
         this.Category = Category;
     }
 
+<<<<<<< HEAD
     async create(catetoryInfo) {
         const createdCategory = await this.Category.create(catetoryInfo);
         return createdCategory;
@@ -33,6 +34,30 @@ class CategoryModel {
         const deletedCategory = await Category.findOneAndDelete(filter);
         return deletedCategory;
     }
+=======
+export class CategoryModel {
+  async findCategory(id) {
+    return await Category.findById(id);
+  }
+
+  async findAllCategories() {
+    return await Category.find({});
+  }
+
+  async createCategory(categoryInfo) {
+    return await Category.create({ ...categoryInfo });
+  }
+
+  async updateCategory(name, update) {
+    return await Category.findOneAndUpdate({ name }, update, {
+      returnOriginal: false,
+    });
+  }
+
+  async deleteCategory(id) {
+    return await Category.findByIdAndDelete(id);
+  }
+>>>>>>> dev
 }
 
 const categoryModel = new CategoryModel(model('Category', CategorySchema));

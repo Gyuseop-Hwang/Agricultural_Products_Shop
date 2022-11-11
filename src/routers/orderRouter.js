@@ -1,12 +1,22 @@
+<<<<<<< HEAD
 import { Router } from "express";
 import { orderService } from "../services";
 import { wrapAsync } from "../utils";
+=======
+import { Router } from 'express';
+import { orderService } from '../services/index.js';
+import { wrapAsync } from '../utils/index.js';
+>>>>>>> dev
 import {
   orderCreateValidator,
   orderStatusUpdateValidator,
   orderShippingAddressUpdateValidator,
   authRequired,
+<<<<<<< HEAD
 } from "../middlewares";
+=======
+} from '../middlewares/index.js';
+>>>>>>> dev
 
 const orderRouter = Router();
 
@@ -31,6 +41,18 @@ orderRouter.get(
   })
 );
 
+orderRouter.get(
+  '/orders/:orderId',
+  wrapAsync(async (req, res) => {
+    const { orderId } = req.params;
+    console.log(orderId);
+
+    const orders = await orderService.findOrder(orderId);
+
+    res.status(200).send(orders);
+  })
+);
+
 orderRouter.post(
   "/orders",
   orderCreateValidator,
@@ -39,7 +61,7 @@ orderRouter.post(
     const userId = req.currentUserId;
 
     const totalPrice = await orderService.calculateTotalPrice(products);
-
+    console.log(products);
     const result = await orderService.createOrder({
       ...req.body,
       userId,
