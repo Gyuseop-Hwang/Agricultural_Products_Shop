@@ -14,7 +14,7 @@ function errorHandler(error, req, res, next) {
     message,
   };
 
-  res.status(statusCode).json({ result: 'error', reason: message });
+  res.redirect('/errorPage');
 }
 
 export { notFoundErrorHandler, errorHandler };
