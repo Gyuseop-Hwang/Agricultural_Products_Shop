@@ -15,12 +15,7 @@ const address2Input = document.getElementById("address2Input");
 const postalCodeBtn = document.getElementById("postalCodeBtn");
 const btnFoldWrap = document.getElementById("btnFoldWrap");
 const submitButton = document.getElementById("submitButton");
-
-addAllElements();
 addAllEvents();
-
-// html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-async function addAllElements() { }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
@@ -83,8 +78,6 @@ async function handleSubmit(e) {
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
-
-
 
 /*다음 주소 API*/
 postalCodeBtn.addEventListener("click", sample3_execDaumPostcode);

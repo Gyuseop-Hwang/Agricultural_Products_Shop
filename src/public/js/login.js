@@ -8,13 +8,8 @@ const submitButton = document.querySelector("#submitButton");
 /*모달창 아니오 버튼 숨기기*/
 const noButton = document.getElementById("noButton");
 noButton.classList.add("is-invisible");
-addAllElements();
 addAllEvents();
 
-// html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-async function addAllElements() { }
-
-// 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   submitButton.addEventListener("click", handleSubmit);
 }
