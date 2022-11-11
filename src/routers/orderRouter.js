@@ -31,6 +31,18 @@ orderRouter.get(
   })
 );
 
+orderRouter.get(
+  '/orders/:orderId',
+  wrapAsync(async (req, res) => {
+    const { orderId } = req.params;
+    console.log(orderId);
+
+    const orders = await orderService.findOrder(orderId);
+
+    res.status(200).send(orders);
+  })
+);
+
 orderRouter.post(
   '/orders',
   orderCreateValidator,
