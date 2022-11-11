@@ -18,8 +18,6 @@ fetch("/api/orders", {
   .then((res) => res.json())
   .then((data) => {
     data.forEach((item) => {
-      //const totalPrice = item.totalPrice.toLocaleString("ko-KR");
-
       item.products.forEach((product) => {
         const productImage = product.product.image.path;
         const productQuantity = product.count;
@@ -44,4 +42,4 @@ fetch("/api/orders", {
       });
     });
   })
-  .catch((err) => console.log("Error : ", err));
+  .catch((err) => console.error("Error : ", err));
