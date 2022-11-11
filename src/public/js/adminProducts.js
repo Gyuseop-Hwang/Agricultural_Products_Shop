@@ -40,7 +40,6 @@ async function getAllProducts() {
     const { products } = await Api.get("/api/products");
     printDiscountedPrice(products);
   } catch (err) {
-    console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
@@ -50,7 +49,6 @@ async function deleteProduct(id) {
     await Api.delete("/api/admin/products", id);
     alert("삭제되었습니다.");
   } catch (err) {
-    console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }

@@ -7,7 +7,6 @@ const totalPriceTxt = document.getElementById("totalPrice");
 const orderButton = document.getElementById("orderButton");
 
 const cartOrOrderPage = window.location.pathname.split("/")[1];
-console.log(cartOrOrderPage);
 
 let products = []; // 상품 전체 정보가 담김
 let savedProducts = JSON.parse(localStorage.getItem("products")); // [id, count]

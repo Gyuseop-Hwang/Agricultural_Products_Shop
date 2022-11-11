@@ -87,7 +87,6 @@ async function getProduct(productId) {
     const result = await Api.get("/api/products", productId);
     printProduct(result);
   } catch (err) {
-    console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
@@ -145,7 +144,6 @@ async function addOrUpdateProduct(data, discount, id) {
     alert("상품이 추가 되었습니다.");
     window.location.replace("/admin/products");
   } catch (err) {
-    console.error(err.stack);
     alert(err.message);
   }
 }
@@ -159,7 +157,6 @@ async function deleteProduct() {
       window.location.replace("/admin/products");
     }
   } catch (err) {
-    console.error(err.stack);
     alert(err.message);
   }
 }
@@ -197,8 +194,8 @@ if (window.location.pathname.split("/")[3] !== "add") {
 }
 
 // form submit 막기
-document.addEventListener("keydown", function (event) {
-  if (event.code === "Enter") {
-    event.preventDefault();
+document.addEventListener("keydown", function (e) {
+  if (e.code === "Enter") {
+    e.preventDefault();
   }
 });
