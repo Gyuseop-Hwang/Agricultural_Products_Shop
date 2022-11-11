@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import mongoose, { Schema } from "mongoose";
 
 const {
   Types: { ObjectId },
@@ -8,7 +8,7 @@ const OrderSchema = new Schema(
   {
     status: {
       type: String,
-      default: '주문 완료',
+      default: "주문 완료",
     },
     recipient: {
       type: String,
@@ -35,14 +35,14 @@ const OrderSchema = new Schema(
 
     products: [
       {
-        product: { type: ObjectId, ref: 'Product', required: true },
+        product: { type: ObjectId, ref: "Product", required: true },
         count: { type: Number, required: true },
       },
     ],
 
     user: {
       type: ObjectId,
-      ref: 'User',
+      ref: "User",
       required: true,
     },
   },

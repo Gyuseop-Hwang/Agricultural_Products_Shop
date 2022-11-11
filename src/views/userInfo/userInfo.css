@@ -1,11 +1,22 @@
 body {
   margin: 0;
   padding: 0;
+  z-index: 1;
+}
+
+.dataSplit {
+  position: relative;
+  z-index: 0;
+  background: linear-gradient(180deg, #e4e9be 50%, #ffffff 50%);
 }
 
 header {
   width: auto;
   height: 50px;
+}
+
+.navbar {
+  background-color: #e4e9be;
 }
 
 .navbar-brand {
@@ -75,33 +86,37 @@ hr {
   text-align: center;
 }
 
-#daumAddressText {
-  font-weight: 800;
-  margin-bottom: 5px;
+/* 주문내역 더보기 안에 들어갈 부분
+#orderedProduct {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  width: 700px;
 }
 
-#sample6_postcode,
-#sample6_address,
-#sample6_detailAddress,
-#sample6_extraAddress {
-  width: 180px;
-  height: 35px;
-  margin-bottom: 8px;
-  border: 0.5px solid #a9a9a9;
-  border-radius: 3px;
-  padding: 7px;
+p.title,
+p.subtitle {
+  margin: 0;
+  display: flex;
 }
 
-#sample6_postcode,
-#sample6_detailAddress {
-  margin-right: 2px;
+#productImage {
+  display: flex;
 }
 
-#sample6_postcode_btn {
-  width: 100px;
-  height: 35px;
-  margin-bottom: 8px;
-  border: 0.5px solid #a9a9a9;
-  border-radius: 3px;
-  padding-left: 2px;
+.media-content {
+  width: 600px;
+  margin-top: 10px;
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
 }
+
+.productNumber {
+  bottom: 0;
+  display: flex;
+}
+
+#emptyOrderlist {
+  text-align: center;
+} */

@@ -1,10 +1,6 @@
 import { model } from 'mongoose';
-<<<<<<< HEAD
 import { ProductSchema } from '../schemas/productSchema';
 import { CategorySchema } from '../schemas/categorySchema';
-=======
-import { ProductSchema } from '../schemas/productSchema.js';
->>>>>>> dev
 
 const Product = model('Product', ProductSchema);
 const Category = model('Category', CategorySchema);
@@ -15,20 +11,11 @@ export class ProductModel {
   }
 
   async findOneProduct(productId) {
-<<<<<<< HEAD
     return await Product.findById(productId).populate('category');
   }
 
   async findCategory(id) {
     return await Category.findById(id);
-=======
-    return await Product.findById(productId)
-      .populate('category')
-      .populate({
-        path: 'comments',
-        populate: { path: 'user', select: 'fullName' },
-      });
->>>>>>> dev
   }
 
   async findProductsByTitle(title) {
@@ -37,12 +24,8 @@ export class ProductModel {
   }
 
   async createProduct(productInfo) {
-<<<<<<< HEAD
     const product = new Product(productInfo);
     return await product.save();
-=======
-    return await Product.create(productInfo);
->>>>>>> dev
   }
 
   async updateProduct(productId, update) {
@@ -50,7 +33,6 @@ export class ProductModel {
   }
 
   async deleteProduct(productId) {
-<<<<<<< HEAD
     await Product.findByIdAndDelete(productId);
   }
 
@@ -71,10 +53,6 @@ export class ProductModel {
   async deleteCategory(id) {
     await Category.findByIdAndDelete(id);
   }
-=======
-    return await Product.findByIdAndDelete(productId);
-  }
->>>>>>> dev
 }
 
 const productModel = new ProductModel();
