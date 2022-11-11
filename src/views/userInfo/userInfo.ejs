@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>계란후라이 | 회원 정보 페이지</title>
+    <!-- 아이콘 -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
+    <!-- bulma css 관련 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="/css/userInfo.css" />
+    <script defer src="/js/userInfo.js" type="module"></script>
+    <!-- <script defer src="/js/sampleAdd.js" type="module"></script> -->
+  </head>
+
+  <body>
+    <div class="data-split">
+      <%-include("../common/header")%>
+      <form>
+        <div id="userInfo">
+          <h1>회원정보</h1>
+          <hr id="firstHr" />
+          <div id="emailInput" class="field">
+            <label for="email" class="label">이메일</label>
+            <div class="control">
+              <input
+                id="email"
+                class="input hidden"
+                type="email"
+                placeholder="vegetable@gmail.com"
+              />
+              <p id="emailText" class="defaultText">11</p>
+            </div>
+          </div>
+
+          <div id="nameInput" class="field">
+            <label for="name" class="label">이름</label>
+            <div class="control">
+              <input
+                id="name"
+                class="input hidden"
+                type="text"
+                placeholder="vegetable"
+              />
+              <p id="nameText" class="defaultText"></p>
+            </div>
+          </div>
+
+          <div id="passwordInput" class="field">
+            <label for="password" class="label">비밀번호</label>
+            <div class="control">
+              <input
+                id="password"
+                class="input hidden"
+                type="text"
+                placeholder="새 비밀번호를 입력해주세요"
+              />
+              <p id="passwordText" class="defaultText"></p>
+            </div>
+          </div>
+
+          <div id="phoneInput" class="field">
+            <label for="phone" class="label">전화번호</label>
+            <div class="control">
+              <input
+                id="phone"
+                class="input hidden"
+                type="tel"
+                placeholder="010-1111-1111"
+              />
+              <p id="phoneText" class="defaultText"></p>
+            </div>
+          </div>
+
+          <div id="postalCodeInput" class="field">
+            <label for="postalCode" id="postalCodeLabel" class="label"
+              >우편주소</label
+            >
+            <div class="control">
+              <input
+                id="postalCode"
+                class="input hidden"
+                type="text"
+                placeholder="01122"
+              />
+              <p id="postalCodeText" class="default-text"></p>
+            </div>
+          </div>
+
+          <div id="addressInput" class="field">
+            <label for="address" id="addressLabel" class="label">주소</label>
+            <div class="control">
+              <input
+                id="address"
+                class="input hidden"
+                type="text"
+                placeholder="서울시 야채구"
+              />
+              <p id="addressText" class="defaultText"></p>
+            </div>
+          </div>
+
+          <div id="detailAddressInput" class="field">
+            <label for="detailAddress" id="detailAddressLabel" class="label"
+              >상세주소</label
+            >
+            <div class="control">
+              <input
+                id="detailAddress"
+                class="input hidden"
+                type="text"
+                placeholder="서울시 야채구"
+              />
+              <p id="detailAddressText" class="defaultText"></p>
+            </div>
+          </div>
+
+          <div id="conformPasswordInput" class="field hidden">
+            <label for="conformPassword" class="label"
+              >이전 비밀번호 확인</label
+            >
+            <div class="control">
+              <input
+                id="conformPassword"
+                class="input hidden"
+                type="text"
+                placeholder="수정하시려면 이전 비밀번호를 입력하세요."
+              />
+            </div>
+          </div>
+
+          <p id="daumAddressText" class="hidden">주소</p>
+          <input
+            class="hidden"
+            type="text"
+            id="sample6_postcode"
+            placeholder="우편번호"
+          />
+          <input
+            class="hidden"
+            type="button"
+            id="sample6_postcode_btn"
+            onclick="sample6_execDaumPostcode()"
+            value="우편번호 찾기"
+          /><br />
+          <input
+            class="hidden"
+            type="text"
+            id="sample6_address"
+            placeholder="주소"
+          /><br />
+          <input
+            class="hidden"
+            type="text"
+            id="sample6_detailAddress"
+            placeholder="상세주소"
+          />
+          <input
+            class="hidden"
+            type="text"
+            id="sample6_extraAddress"
+            placeholder="참고항목"
+          />
+        </div>
+        <button id="editBtn" type="submit" class="button is-light">수정</button>
+        <button id="deleteBtn" type="submit" class="button is-danger">
+          탈퇴
+        </button>
+      </form>
+      <hr />
+      <div id="orderList">
+        <h1>주문내역</h1>
+        <div id="orderedInfo">
+          <p id="orderText">자세한 주문 내역은 아래의 더보기를 눌러주세요 !</p>
+
+          <a id="moreLink" href="/orderHistory">더보기</a>
+        </div>
+      </div>
+    </div>
+    <%-include("../common/footer")%> <%-include("../common/modal")%>
+  </body>
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script type="module">
+    function sample6_execDaumPostcode() {
+      new daum.Postcode({
+        oncomplete: function (data) {
+          // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+          // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+          // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+          var addr = ""; // 주소 변수
+          var extraAddr = ""; // 참고항목 변수
+
+          //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+          if (data.userSelectedType === "R") {
+            // 사용자가 도로명 주소를 선택했을 경우
+            addr = data.roadAddress;
+          } else {
+            // 사용자가 지번 주소를 선택했을 경우(J)
+            addr = data.jibunAddress;
+          }
+
+          // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+          if (data.userSelectedType === "R") {
+            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+            if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
+              extraAddr += data.bname;
+            }
+            // 건물명이 있고, 공동주택일 경우 추가한다.
+            if (data.buildingName !== "" && data.apartment === "Y") {
+              extraAddr +=
+                extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
+            }
+            // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+            if (extraAddr !== "") {
+              extraAddr = " (" + extraAddr + ")";
+            }
+            // 조합된 참고항목을 해당 필드에 넣는다.
+            document.getElementById("sample6_extraAddress").value = extraAddr;
+          } else {
+            document.getElementById("sample6_extraAddress").value = "";
+          }
+
+          // 우편번호와 주소 정보를 해당 필드에 넣는다.
+          document.getElementById("sample6_postcode").value = data.zonecode;
+          document.getElementById("sample6_address").value = addr;
+          // 커서를 상세주소 필드로 이동한다.
+          document.getElementById("sample6_detailAddress").focus();
+        },
+      }).open();
+    }
+  </script>
+</html>

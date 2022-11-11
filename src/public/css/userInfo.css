@@ -1,0 +1,107 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  width: auto;
+  height: 50px;
+}
+
+.navbar-brand {
+  top: 0;
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+#firstHr {
+  width: 460px;
+  margin-left: -20px;
+}
+
+form {
+  margin: 60px auto;
+  width: 500px;
+  padding: 40px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 2px 4px 7px 3px rgba(0, 0, 0, 0.09);
+}
+
+#userInfo {
+  width: 400px;
+  margin-bottom: 30px;
+}
+
+.hidden {
+  display: none;
+}
+
+#editBtn {
+  margin-right: 3px;
+}
+
+hr {
+  margin: 20px auto;
+  width: 800px;
+}
+
+#orderList {
+  margin: 0 auto;
+  width: 800px;
+  height: 300px;
+}
+
+#orderedInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#orderText {
+  height: 115px;
+  padding-top: 80px;
+  text-align: center;
+}
+
+#moreBtn {
+  display: flex;
+  width: 80px;
+  text-align: center;
+}
+
+#daumAddressText {
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+#sample6_postcode,
+#sample6_address,
+#sample6_detailAddress,
+#sample6_extraAddress {
+  width: 180px;
+  height: 35px;
+  margin-bottom: 8px;
+  border: 0.5px solid #a9a9a9;
+  border-radius: 3px;
+  padding: 7px;
+}
+
+#sample6_postcode,
+#sample6_detailAddress {
+  margin-right: 2px;
+}
+
+#sample6_postcode_btn {
+  width: 100px;
+  height: 35px;
+  margin-bottom: 8px;
+  border: 0.5px solid #a9a9a9;
+  border-radius: 3px;
+  padding-left: 2px;
+}

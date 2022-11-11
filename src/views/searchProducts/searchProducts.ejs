@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>계란후라이 | 상품 검색 페이지</title>
+	<!-- 아이콘 -->
+	<link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
+	<!-- bulma css -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+	<!-- 폰트 어썸: 아이콘 -->
+	<script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
+	<!--css 관련-->
+	<link rel="stylesheet" href="/css/searchProducts.css" />
+</head>
+
+<body>
+	<!--헤더-->
+	<%-include("../common/header")%>
+		<!-- 상품 목록-->
+			<div id="productsContainer"
+				class="container products-container is-flex is-flex-wrap-wrap is-justify-content-flex-start">
+				<%products.forEach(product=> {%>
+					<div class="column is-flex-direction-column m-1 product-list">
+						<a href="/product/<%=product._id%>">
+							<div>
+								<figure class="image is-1by1 product-image">
+									<img src="<%=product.image.path%>" alt="<%=product.title%> 이미지">
+								</figure>
+							</div>
+							<div class="product-contents">
+								<div class="has-text-weight-medium is-size-5 p-1">
+									<%=product.title%>
+								</div>
+								<div class="has-text-weight-bold is-size-4 px-1 main-color">
+									<span>
+										<%const actualPrice = product.sale.onSale?product.sale.discountedPrice:product.price %>
+										<%if(product.sale.onSale){%>
+											<%=actualPrice.toLocaleString("ko-KR")%>원<span id="oridinPriceSpan" class="ml-1"><%=product.price.toLocaleString("ko-KR")%>원</span>
+										<%}else{%>
+										<%=actualPrice.toLocaleString()%>원
+										<%}%>
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+					<%})%>
+			</div>
+		</div>
+		<!--푸터-->
+		<%-include("../common/footer")%>
+</body>
+
+</html>

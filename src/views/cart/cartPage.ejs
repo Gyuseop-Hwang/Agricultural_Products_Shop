@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>계란후라이 | 장바구니</title>
+    <!-- 아이콘 -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
+    <!-- bulma css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="/css/cart.css" />
+    <script src="/js/cart.js" type="module" defer></script>
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <%-include("../common/header")%>
+    <!-- 장바구니 -->
+    <div class="container cart-container">
+      <h2 class="block is-align-self-flex-start title is-5">장바구니</h2>
+      <%-include("./cart.ejs")%>
+      <div>
+        <p id="emptyCartMessage">장바구니가 비어 있습니다.</p>
+      </div>
+      <div class="delete-button-box mb-4">
+        <button class="" id="deleteSelectedButton">선택 항목 삭제</button>
+        <button class="" id="deleteAllButton">전체 삭제</button>
+      </div>
+      <div class="total-price">
+        <p>총 <span id="totalPrice">0</span>원</p>
+      </div>
+      <div>
+        <button class="order-button" id="orderButton">전체 주문하기</button>
+      </div>
+    </div>
+    <%-include("../common/footer")%>
+  </body>
+</html>

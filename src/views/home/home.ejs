@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>계란후라이 | 홈</title>
+  <!-- 아이콘 -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
+  <!-- bulma css -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+  <!-- 폰트 어썸: 아이콘 -->
+  <script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
+  <!-- 커스텀 css, js -->
+  <link rel="stylesheet" href="/css/home.css" />
+  <!-- swiper script, css -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+</head>
+<body>
+  <!-- 헤더 -->
+  <%-include("../common/header")%>
+    <div class="main-container container is-flex my-6">
+      <div class="swiper box m-4">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <img class="slide-image" src="/img/main1.jpg" alt="첫번째 이미지">
+          </div>
+          <div class="swiper-slide slide-image"><div class="swiper-slide">
+            <img class="slide-image"  src="/img/main2.jpg" alt="두번째 이미지">
+          </div></div>
+          <div class="swiper-slide slide-image"><div class="swiper-slide">
+            <img class="slide-image" src="/img/main3.jpg" alt="세번째 이미지">
+          </div></div>
+        </div>
+        <!-- pagination -->
+        <div class="swiper-pagination main-color"></div>
+        <!-- navigation buttons -->
+        <div class="swiper-button-prev swiper-button-"></div>
+        <div class="swiper-button-next swiper-button-white"></div>
+
+        <!-- scrollbar -->
+        <div class="swiper-scrollbar"></div>
+
+        </div>
+      <ul class="mt-4 side">
+        <li class="side-item box"><a href="/cart">
+            <div class="is-full is-flex is-align-items-center">
+              <p class="title is-4 main-color">장바구니</p>
+            </div>
+          </a></li>
+        <li class="side-item box"><a href="/search">
+            <div class="is-full is-flex is-align-items-center">
+              <p class="title is-4 main-color">상품목록</p>
+            </div>
+          </a></li>
+        <li class="side-item box"><a href="/">
+            <div class="is-full is-flex is-align-items-center">
+              <p class="title is-4 main-color">계란후라이</p>
+            </div>
+          </a></li>
+      </ul>
+    </div>
+    <%-include("../common/footer")%>
+</body>
+<script type="module">
+  import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.esm.browser.min.js'
+    const swiper = new Swiper('.swiper', {
+      loop: true,
+      //pagination
+      pagination: {
+        el: '.swiper-pagination',
+      },
+      // Navigation arrows
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      autoplay: {
+        delay: 3000,
+      },
+    });
+</script>
+</html>

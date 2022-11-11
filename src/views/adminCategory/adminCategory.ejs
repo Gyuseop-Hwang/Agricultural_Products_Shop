@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>계란후라이 | 카테고리 수정페이지</title>
+	<!-- 아이콘 -->
+	<link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
+	<!-- bulma css -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+	<!-- 폰트 어썸: 아이콘 -->
+	<script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
+	<!-- 커스텀 js -->
+	<script src="/js/adminCategory.js" type="module" defer></script>
+</head>
+
+<body>
+	<!--헤더-->
+	<%-include("../common/header") %>
+		<!--카테고리 버튼 영역-->
+		<div id="categoryBtnDiv" class="block px-4 container">
+		</div>
+		<!-- 카테고리 추가 영역-->
+		<div id="createCategoryDiv" class="container mb-3">
+			<form class="box">
+				<p class="title is-4 main-color">카테고리 추가</p>
+				<div class="field">
+					<label class="label" for="createCategoryInput">카테고리 이름</label>
+					<div class="control">
+						<input class="input" id="createCategoryInput" type="text" autocomplete="on" />
+					</div>
+				</div>
+				<button class="button btn-main-color" id="createCategoryButton">
+					카테고리 추가하기
+				</button>
+			</form>
+		</div>
+		<!-- 카테고리 수정 영역-->
+		<div id="updateCategoryDiv" class="is-invisible container">
+			<form class="box">
+				<p class="title is-4 main-color">카테고리 수정</p>
+				<div class="field-body field">
+					<div class="field">
+						<label class="label" for="updateCategoryInput">카테고리 이름</label>
+						<div class="control">
+							<input class="input" id="updateCategoryInput" type="text" />
+						</div>
+					</div>
+					<div>
+						<label class="label">개수</label>
+						<div class="control">
+							<input class="input" id="totalByCategoryInput" type="text" disabled/>
+						</div>
+					</div>
+				</div>
+				<div class="">
+					<button class="button btn-main-color" id="updateCategoryButton">
+						카테고리 수정하기
+					</button>
+					<button class="button btn-main-color " id="deleteCategoryButton">
+						카테고리 삭제하기
+					</button>
+					<button class="button" id="cancleCategoryButton">
+						취소
+					</button>
+				</div>
+			</form>
+		</div>
+		<%-include("../common/footer")%>
+</body>
+
+</html>

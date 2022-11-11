@@ -1,0 +1,30 @@
+*{
+	padding : 0;
+	margin : 0;
+	box-sizing : border-box; /*패딩의 영역도 크기에 포함*/
+}
+a{
+	text-decoration: none;
+	color : black;
+}
+.products-container{
+	min-height: 450px;
+}
+
+.product-image{
+    border-radius: 0.75rem;
+	overflow: hidden;
+}
+.product-list{
+	width: 258px;
+	min-width: 258px;
+	max-width: 258px;
+	height: 360px;
+}
+#oridinPriceSpan {
+	font-size: 13px;
+	line-height: 22px;
+	color: #949494;
+	text-decoration: line-through;
+}
+

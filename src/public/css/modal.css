@@ -1,0 +1,55 @@
+button {
+  cursor: pointer;
+}
+
+.modal-content {
+  width: 500px;
+}
+
+.modal-content .modal-box {
+  padding: 1.5rem;
+}
+
+.modal-content .modal-box .modal-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.modal-content .modal-box .modal-message {
+  height: 100px;
+  margin-bottom: 20px;
+  padding-top: 40px;
+  font-size: 18px;
+}
+
+.modal-content .modal-box .modal-button-box {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-content .modal-box button {
+  font-size: 18px;
+  width: 100px;
+  height: 50px;
+  border-radius: 40px;
+  border: none;
+}
+
+.modal-content .modal-box .no-button {
+  background-color: #ddd;
+  color: white;
+  margin-right: 20px;
+}
+
+.modal-content .modal-box .yes-button {
+  background-color: #e12d3a;
+  color: white;
+}
+
+.modal-content .modal-box .yes-button:hover {
+  background-color: #a02b33;
+}
+
+.modal-content .modal-box .no-button:hover {
+  background-color: #bbb;
+}

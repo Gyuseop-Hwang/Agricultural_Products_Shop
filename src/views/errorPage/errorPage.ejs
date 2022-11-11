@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- bulma css 관련 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 아이콘 -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
+    <!-- 폰트 어썸 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/css/errorPage.css" />
+    <title>error <%=statusCode%></title>
+  </head>
+  <body>
+    <%-include("../common/header")%>
+    <div id="container">
+      <div id="containerLeft">
+        <h1 id="errorTitle"><%=statusCode%></h1>
+        <p id="errorDescription"><%=message%></p>
+      </div>
+      <div id="containerRight">
+        <img id="errorImage" src="/img/errorImage.png" alt="errorImage" />
+      </div>
+    </div>
+  </body>
+</html>

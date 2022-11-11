@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>계란후라이 | 상품 목록 관리</title>
+    <!-- 아이콘 -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
+    <!-- bulma css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/9daa42bcef.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="/css/adminProducts.css" />
+    <script src="/js/adminProducts.js" type="module" defer></script>
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <%-include("../common/header")%>
+    <!-- 관리자 상품 리스트 -->
+    <div
+      class="container is-flex is-flex-direction-column is-align-items-center admin-products-container"
+    >
+      <h2 class="title is-5">전체 상품 리스트</h2>
+      <a
+        href="/admin/products/add"
+        class="is-align-self-flex-end mb-4 add-product-button"
+        >상품 추가</a
+      >
+      <table
+        class="table is-bordered is-fullwidth has-text-centered admin-products"
+      >
+        <colgroup>
+          <col width="12%" />
+          <col width="13%"/>
+          <col width="40%" />
+          <col width="10%" />
+          <col width="10%" />
+          <col width="15%" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>카테고리</th>
+            <th class="product-image-th">이미지</th>
+            <th>상품명</th>
+            <th>가격</th>
+            <th>EA</th>
+            <th>수정</th>
+          </tr>
+        </thead>
+        <tbody id="productListTable">
+          <% for(let i = 0; i<products.length;i++){ %>
+            <tr class='tr' data-id="<%=products[i]._id%>">
+              <td><%=products[i].category.name%></td>
+              <td class="product-image"><img class="thumbnail" src="<%=products[i].image.path%>" alt="<%=products[i].title%> "/></td>
+              <td class="product-title"><%=products[i].title%></td>
+              <td id="price<%=products[i]._id%>"><span><%=products[i].price.toLocaleString()%>원</span></td>
+              <td><%=products[i].quantity%></td>
+              <td class="button-box"><button class="updateButton"><a href="/admin/products/<%=products[i]._id%>">수정</a></button>
+              <button class="deleteButton modal-trigger" data-id="<%=products[i]._id%>">삭제</button></td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <%-include("../common/footer")%>
+    <%-include("../common/modal")%>
+  </body>
+</html>

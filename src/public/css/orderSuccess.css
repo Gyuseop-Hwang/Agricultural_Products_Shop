@@ -1,0 +1,18 @@
+.order-success {
+  min-height: calc(100vh - 330px);
+}
+
+.order-history-button,
+.products-list-button {
+  display: block;
+  padding: 10px 40px;
+  border: none;
+  border-radius: 40px;
+  background-color: var(--btn-color);
+  color: var(--main-color);
+  font-size: 13px;
+}
+
+.order-history-button {
+  margin-bottom: 10px;
+}
