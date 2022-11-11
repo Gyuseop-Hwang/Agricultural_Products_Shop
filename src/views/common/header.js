@@ -26,7 +26,7 @@ if (usersToken) {
         userInfoList.classList.remove("is-hidden");
       }
     })
-    .catch((err) => console.error("Error : ", err));
+    .catch((err) => { window.location.href = "/errorPage" });
 }
 //전체 상품 및 카테고리 조회
 function getAllProducts() {

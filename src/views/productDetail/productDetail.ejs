@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>상품 상세 페이지</title>
+	<title>계란후라이 | 상품 상세 페이지</title>
 	<!-- 아이콘 -->
 	<link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
 	<!-- bulma css -->
@@ -142,7 +142,6 @@
 			if (localProducts)
 				products = JSON.parse(localProducts);
 			if (!products) {
-				console.log("새 리스트 생성");
 				products = [];
 			}
 			if (products.find(product => product.id === newProduct.id)) {

@@ -61,9 +61,7 @@ async function getUserInfo() {
         firstPhoneNumber.options[i].selected = true;
       }
     }
-    console.log(address.value);
   } catch (err) {
-    console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
@@ -73,7 +71,6 @@ async function createOrder(e) {
   e.preventDefault();
   try {
     const orderInfo = submitOrderInfo();
-    console.log(orderInfo);
     inputs.forEach((input) => {
       if (input.value === "") {
         throw new Error("배송 정보를 모두 채워주세요.");
@@ -89,7 +86,6 @@ async function createOrder(e) {
     window.location.replace("/orderSuccess");
     localStorage.removeItem("products");
   } catch (err) {
-    console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
