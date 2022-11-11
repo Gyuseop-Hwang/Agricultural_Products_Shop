@@ -112,6 +112,7 @@ async function updateCategory(categoryId, newCategoryName) {
   })
   return result;
 }
+/*delete 요청 : 카테고리 삭제*/
 async function deleteCategory(categoryId) {
   const result = await Api.delete("/api/admin/categories", categoryId)
   return result;
