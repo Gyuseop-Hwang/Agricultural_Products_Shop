@@ -68,8 +68,6 @@ cancleCategoryButton.addEventListener("click", () => {
 async function getCategories() {
   try {
     const result = await Api.get("/api/admin/categories");
-
-    console.log(result);
     return result;
   } catch (e) {
     window.location.href = "/errorPage"
@@ -114,6 +112,7 @@ async function updateCategory(categoryId, newCategoryName) {
   })
   return result;
 }
+/*delete 요청 : 카테고리 삭제*/
 async function deleteCategory(categoryId) {
   const result = await Api.delete("/api/admin/categories", categoryId)
   return result;

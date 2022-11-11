@@ -52,10 +52,8 @@ function printOrders(order, index) {
 async function updateOrderStatus(id, status) {
   try {
     await Api.put("/api/admin/orders", id, status);
-  } catch (err) {
-    console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
-  }
+    alert("배송 상태가 수정되었습니다.");
+  } catch (err) {}
 }
 
 // 주문 삭제
@@ -64,8 +62,7 @@ async function deleteOrder(id) {
     await Api.delete("/api/admin/orders", id);
     alert("삭제되었습니다.");
   } catch (err) {
-    console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+    alert(err.message);
   }
 }
 
@@ -75,8 +72,7 @@ async function getOrders() {
     const result = await Api.get("/api/admin/orders");
     result.forEach((order, index) => printOrders(order, index));
   } catch (err) {
-    console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+    alert(err.message);
   }
 }
 

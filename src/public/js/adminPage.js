@@ -4,8 +4,10 @@ const orderBtn = document.getElementById("orderBtn");
 
 const greeting = document.getElementById("greeting");
 
+// 토큰 가져오기
 const usersToken = sessionStorage.getItem("token");
 
+// 개인 정보 접근
 fetch(`/api/users/userInfo`, {
   method: "GET",
   headers: {

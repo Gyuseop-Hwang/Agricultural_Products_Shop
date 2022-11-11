@@ -37,4 +37,4 @@ fetch("/api/orders", {
       tableBody.innerHTML += itemData;
     });
   })
-  .catch((err) => console.log(err));
+  .catch((err) => console.error("Error : ", err));

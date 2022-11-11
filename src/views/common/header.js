@@ -26,7 +26,7 @@ if (usersToken) {
         userInfoList.classList.remove("is-hidden");
       }
     })
-    .catch((err) => console.error("Error : ", err));
+    .catch((err) => { window.location.href = "/errorPage" });
 }
 //전체 상품 및 카테고리 조회
 function getAllProducts() {
@@ -51,7 +51,7 @@ async function getProductBySearch(keyword) {
 
 //화면에 카테고리 버튼과 전체상품 목록 렌더링
 async function renderBtnProducts() {
-  const { categories, products } = await getAllProducts();
+  const { categories } = await getAllProducts();
   printCategoryBtn(categories);
 }
 
