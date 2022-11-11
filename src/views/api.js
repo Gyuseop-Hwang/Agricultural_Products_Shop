@@ -1,6 +1,7 @@
 // api 로 GET 요청 (/endpoint/params 형태로 요청함)
 async function get(endpoint, params = "") {
   const apiUrl = `${endpoint}/${params}`;
+  console.log(`%cGET 요청: ${apiUrl} `, "color: #a25cd1;");
 
   const res = await fetch(apiUrl, {
     // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
@@ -28,6 +29,8 @@ async function post(endpoint, data) {
   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
   // 예시: {name: "Kim"} => {"name": "Kim"}
   const bodyData = JSON.stringify(data);
+  console.log(`%cPOST 요청: ${apiUrl}`, "color: #296aba;");
+  console.log(`%cPOST 요청 데이터: ${bodyData}`, "color: #296aba;");
 
   const res = await fetch(apiUrl, {
     method: "POST",
@@ -58,6 +61,8 @@ async function patch(endpoint, params = "", data) {
   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
   // 예시: {name: "Kim"} => {"name": "Kim"}
   const bodyData = JSON.stringify(data);
+  console.log(`%cPATCH 요청: ${apiUrl}`, "color: #059c4b;");
+  console.log(`%cPATCH 요청 데이터: ${bodyData}`, "color: #059c4b;");
 
   const res = await fetch(apiUrl, {
     method: "PATCH",
@@ -88,6 +93,8 @@ async function put(endpoint, params = "", data) {
   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
   // 예시: {name: "Kim"} => {"name": "Kim"}
   const bodyData = JSON.stringify(data);
+  console.log(`%cPUT 요청: ${apiUrl}`, "color: #cccc5a;");
+  console.log(`%cPUT 요청 데이터: ${bodyData}`, "color: #cccc5a;");
 
   const res = await fetch(apiUrl, {
     method: "PUT",
@@ -117,6 +124,9 @@ async function del(endpoint, params = "", data = {}) {
   const apiUrl = `${endpoint}/${params}`;
   const bodyData = JSON.stringify(data);
 
+  console.log(`DELETE 요청 ${apiUrl}`, "color: #7c7ccc;");
+  console.log(`DELETE 요청 데이터: ${bodyData}`, "color: #7c7ccc;");
+
   const res = await fetch(apiUrl, {
     method: "DELETE",
     headers: {
@@ -141,3 +151,5 @@ async function del(endpoint, params = "", data = {}) {
 
 // 아래처럼 export하면, import * as Api 로 할 시 Api.get, Api.post 등으로 쓸 수 있음.
 export { get, post, put, patch, del as delete };
+
+

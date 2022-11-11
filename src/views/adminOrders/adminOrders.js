@@ -1,28 +1,7 @@
-import * as Api from "./api.js";
-import { showModal, addModalEvent } from "./modal.js";
+import * as Api from "/api.js";
+const orderList = document.getElementById("orderList");
 
-const deleteOrderButton = document.querySelectorAll(".delete-button");
-const trs = document.querySelectorAll(".tr");
-let ORDER_ID;
-
-// 주문 삭제 클릭시 모달 나타남
-deleteOrderButton.forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    ORDER_ID = e.currentTarget.dataset.id;
-    showModal("주문 삭제", "해당 주문을 삭제하시겠습니까?");
-  });
-});
-// 모달 이벤트
-addModalEvent(() => {
-  deleteOrder(ORDER_ID);
-  trs.forEach((tr) => {
-    if (tr.dataset.id === ORDER_ID) {
-      tr.remove();
-    }
-  });
-});
-
-// 받아온 주문내역 중 주문일자, 배송상태 출력 및 삭제, 수정 이벤트 등록
+// 받아온 주문내역 화면에 출력, ejs로 수정 예정
 function printOrders(order, index) {
   const {
     _id,
@@ -44,8 +23,8 @@ function printOrders(order, index) {
   <td>${user.email}</td>
   <td>
   ${products
-      .map((product) => `<p>${product.product.title} * ${product.count}</p>`)
-      .join("")}
+    .map((product) => `<p>${product.product.title} * ${product.count}</p>`)
+    .join("")}
   </td>
   <td>${totalPrice.toLocaleString()}원</td>
   <td>
@@ -96,8 +75,10 @@ function printOrders(order, index) {
 async function updateOrderStatus(id, status) {
   try {
     await Api.put("/api/admin/orders", id, status);
-    alert("배송 상태가 수정되었습니다.");
-  } catch (err) { }
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
 }
 
 // 주문 삭제
@@ -106,7 +87,8 @@ async function deleteOrder(id) {
     await Api.delete("/api/admin/orders", id);
     alert("삭제되었습니다.");
   } catch (err) {
-    alert(err.message);
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
 
@@ -116,7 +98,8 @@ async function getOrders() {
     const result = await Api.get("/api/admin/orders");
     result.forEach((order, index) => printOrders(order, index));
   } catch (err) {
-    alert(err.message);
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
 

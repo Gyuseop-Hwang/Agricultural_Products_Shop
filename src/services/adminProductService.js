@@ -1,54 +1,32 @@
-<<<<<<< HEAD
 import { productModel } from '../db';
 import { BadRequestError } from '../utils'
-=======
-import { productModel, categoryModel } from '../db/index.js';
-import { BadRequestError } from '../utils/index.js';
-import { cloudinary } from '../cloudinary/index.js';
->>>>>>> dev
 
 class AdminProductService {
+
   constructor(productModel) {
     this.productModel = productModel;
   }
 
-<<<<<<< HEAD
   async createProduct(id, productInfo) {
     const category = await this.productModel.findCategory(id);
-=======
-  async createProduct(productInfo) {
-    const { category: categoryId } = productInfo;
-    const category = await categoryModel.findCategory(categoryId);
-
->>>>>>> dev
     if (!category) {
-      throw new BadRequestError('존재하지 않는 카테고리입니다.');
+      throw new BadRequestError('존재하지 않는 카테고리입니다.')
     }
     category.total++;
     await category.save();
-<<<<<<< HEAD
     const createdProduct = await this.productModel.createProduct(productInfo)
     return createdProduct
-=======
-
-    return await this.productModel.createProduct(productInfo);
->>>>>>> dev
   }
 
   async updateProduct(productId, update) {
     const product = await this.productModel.findOneProduct(productId);
     if (!product) {
-      throw new BadRequestError('존재하지 않는 상품입니다.');
+      throw new BadRequestError("존재하지 않는 상품입니다.")
     }
     const { category } = update;
-<<<<<<< HEAD
     const categoryDoc = await this.productModel.findCategory(category)
-=======
-    const categoryDoc = await categoryModel.findCategory(category);
-
->>>>>>> dev
     if (!categoryDoc) {
-      throw new BadRequestError('존재하지 않는 카테고리입니다.');
+      throw new BadRequestError("존재하지 않는 카테고리입니다.")
     }
     const oldCategory = await this.productModel.findCategory(product.category._id);
     oldCategory.total--;
@@ -56,19 +34,14 @@ class AdminProductService {
     categoryDoc.total++;
     await categoryDoc.save();
     update.category = categoryDoc;
-<<<<<<< HEAD
     const newProduct = await this.productModel.updateProduct(productId, update)
     return newProduct;
-=======
-
-    return await this.productModel.updateProduct(productId, update);
->>>>>>> dev
   }
 
   async deleteProduct(productId) {
     const product = await this.productModel.findOneProduct(productId);
     if (!product) {
-      throw new BadRequestError('존재하지 않는 상품입니다.');
+      throw new BadRequestError('존재하지 않는 상품입니다.')
     }
     const category = await this.productModel.findCategory(product.category._id);
     category.total--;
@@ -76,7 +49,6 @@ class AdminProductService {
     await this.productModel.deleteProduct(productId);
   }
 
-<<<<<<< HEAD
   async getAllCategories() {
     return await this.productModel.findAllCategories();
   }
@@ -115,35 +87,6 @@ class AdminProductService {
     }
     await this.productModel.deleteCategory(id)
   }
-=======
-  async toggleSale(productId, discountedPrice) {
-    const product = await this.productModel.findOneProduct(productId);
-
-    if (!product) {
-      throw new BadRequestError('존재하지 않는 상품입니다.');
-    }
-
-    if (!isNaN(discountedPrice)) {
-      if (discountedPrice >= product.price) {
-        throw new BadRequestError(
-          '할인 가격은 현재 상품의 가격보다 낮아야 합니다.'
-        );
-      }
-
-      product.sale.onSale = true;
-      product.sale.discountedPrice = discountedPrice;
-      return await product.save();
-    }
-    if (discountedPrice === 'cancel') {
-      product.sale.onSale = false;
-      return await product.save();
-    } else {
-      throw new BadRequestError(
-        '가격을 올바른 숫자 string이나 "cancel"로 입력해주세요.'
-      );
-    }
-  }
->>>>>>> dev
 }
 
 const adminProductService = new AdminProductService(productModel);

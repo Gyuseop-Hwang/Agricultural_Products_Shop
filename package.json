@@ -4,10 +4,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "type": "module",
   "scripts": {
-    "start": "nodemon index.js --exec babel-node",
-    "test": "jest --forceExit "
+    "start": "nodemon index.js --exec babel-node"
   },
   "dependencies": {
     "@sindresorhus/is": "^4.6.0",
@@ -28,7 +26,6 @@
     "@babel/node": "^7.20.0",
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
-    "jest": "^29.2.2",
     "nodemon": "^2.0.15"
   },
   "repository": {

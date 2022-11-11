@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 import { Schema } from "mongoose";
-=======
-import { Schema } from 'mongoose';
-import { addressSchema } from './addressSchema.js';
->>>>>>> dev
 
 const UserSchema = new Schema(
   {
@@ -38,12 +33,8 @@ const UserSchema = new Schema(
     },
     role: {
       type: String,
-<<<<<<< HEAD
       required: false,
       default: "basic-user",
-=======
-      default: 'basic-user',
->>>>>>> dev
     },
   },
   {

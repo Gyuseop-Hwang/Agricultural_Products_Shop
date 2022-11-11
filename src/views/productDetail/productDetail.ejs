@@ -4,15 +4,17 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>계란후라이 | 상품 상세 페이지</title>
+	<title>상품 검색 페이지</title>
 	<!-- 아이콘 -->
-	<link rel="icon" type="image/png" sizes="16x16" href="/img/fried-egg.png" />
+	<link rel="icon" type="image/png" sizes="16x16" href="/elice-rabbit-favicon.png" />
 	<!-- bulma css -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
 	<!-- 폰트 어썸: 아이콘 -->
 	<script defer src="https://kit.fontawesome.com/9daa42bcef.js" crossorigin="anonymous"></script>
 	<!--css 관련-->
-	<link rel="stylesheet" href="/css/productDetail.css" />
+	<link rel="stylesheet" href="./productDetail.css" />
+	<!-- script-->
+	<script src="./productDetail.js" type="module" defer></script>
 </head>
 
 <body>
@@ -50,155 +52,48 @@
 		</div>
 	</nav>
 	<!--상세 페이지-->
-	<div class="container box mx-auto main-container">
+	<div class="box detail-box">
 		<!--상품 사진, 이름, 가격, 남은 재고, 카테고리, 가격-->
-		<div class="container columns is-full is-flex">
+		<div class="block detail-contents-box">
 			<!--이미지-->
-			<figure class="column is-half image is-460x460">
-				<img id="productImage" src="<%=product.image.path%>">
-			</figure>
+			<div class="product-image">
+				<img id="image">
+			</div>
 			<!--이름, 가격, 남은 재고, 카테고리-->
-			<div class="column container">
-				<div class="mx-6 p-1">
-					<h1 class="is-size-2 has-text-weight-bold has-text-right">
-						<%=product.title%>
-					</h1>
-				</div>
-				<!--가격-->
-				<div class="mr-6 p-1 has-text-right ">
-					<p class="is-size-3 has-text-weight-bold main-color">
-						<%const actualPrice=product.sale.onSale?product.sale.discountedPrice:product.price%>
-							<%if(product.sale.onSale){%>
-								<span id="oridinPriceSpan" class="mr-2">
-									<%=product.price.toLocaleString()%>원
-								</span>
-								<%=actualPrice.toLocaleString()%>원
-									<%}else{%>
-										<%=actualPrice.toLocaleString()%>원
-											<%}%>
-					</p>
-					<p class="is-size-5 has-text-weight-bold">
-						<%=product.quantity%>EA
-					</p>
-				</div>
-				<div class="mx-6 p-1 has-text-right ">
-					<p class="is-size-6 has-text-weight-bold">
-						카테고리 : <%=product.category.name%>
-					</p>
-				</div>
-				<div class="height-auto"></div>
-				<!--수량 및 총 가격-->
-				<div class="columns is-flex is-align-items-center p-1 m-4">
-					<!--수량-->
-					<div class="column is-two-fifths is-flex is-align-items-center is-justify-content-end">
-						<p class="is-size-5 has-text-weight-bold width-100 has-text-right mx-2">수량</p>
-						<div class="product-count-subtract">
-							<i id="substractBtn" class="fa fa-chevron-left"></i>
-						</div>
-						<div>
-							<input type="text" class="input is-rounded width-64 has-text-right" id="countInput" type="number"
-								value="1" min="1" max="99">
-						</div>
-						<div class="product-count-add">
-							<i id="addBtn" class="fa fa-chevron-right"></i>
-						</div>
+			<div class="detail-contents-left">
+				<div class="detail-contents-left-inner">
+					<div class="title-box">
+						<span id="title"><%=product.title%></span>
 					</div>
-					<!--총 가격-->
-					<div class="column mr-4 has-text-right main-color">
-						<p id="totalPrice" class="is-size-4 has-text-weight-bold">
-							<%=actualPrice.toLocaleString()%>원
-						</p>
+					<div class="price-quantity-box">
+						<span id="price"><%=product.price%></span>
+						<span id="quantity"><%=product.quantity%></span>
 					</div>
-				</div>
-				<!--버튼 영역-->
-				<div class="container is-flex is-justify-content-right  mt-4 mx-4 p-1">
-					<button class="button mr-1 width-200 btn-main-color has-text-weight-bold" id="addCartBtn">장바구니 추가</button>
-					<button class="button mr-5 width-200 btn-main-color has-text-weight-bold" id="buyBtn">구매</button>
+					<div class="category-name">
+						<span id="categoryName"><%=product.category.name%></span>
+					</div>
+					<form class="form">
+						<div class="count-price">
+							<div class="count">
+								<label>수량</label>
+								<input type="number" value=1 id="count" min="1" max="9">
+							</div>
+							<span id="totalPrice"></span>
+						</div>
+						<div class="botton-box">
+							<button class="button" id="addCartBtn">장바구니 추가</button>
+							<button class="button" id="buyBtn">구매</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
 		<!--상품 discription-->
-		<div id="descriptionDiv" class="container mx-3 mt-6">
+		<div>
+			<span id="discription"></span>
 		</div>
 	</div>
-	<%-include("../common/footer")%>
-	<%-include("../common/modal")%>
-	<script type="module">
-		import { showModal, addModalEvent } from "/js/modal.js";
-		const countInput = document.getElementById("countInput");
-		const totalPriceSpan = document.getElementById("totalPrice");
-		const descriptionDiv = document.getElementById("descriptionDiv");
-		/*모달창 아니오 버튼 숨기기*/
-		const noButton = document.getElementById("noButton");
-		noButton.classList.add("is-invisible");
-		addModalEvent(()=>{});
-		//버튼
-		const addBtn = document.getElementById("addBtn")
-		const subtractBtn = document.getElementById("substractBtn");
-		const addCartBtn = document.getElementById("addCartBtn");
-		const buyBtn = document.getElementById("buyBtn");
 
-		addBtn.addEventListener("click", () => {
-				countInput.value = Number(countInput.value) + 1;
-				preventionOutOfScope(); updateTotalPrice()
-			})
-		substractBtn.addEventListener("click", () => {
-				countInput.value = Number(countInput.value) - 1;
-				preventionOutOfScope(); updateTotalPrice()
-			})
-		//수량 변경 시 가격도 변경되는 기능
-		function updateTotalPrice(){
-			let totalPrice = Number(countInput.value) * "<%=actualPrice%>";
-			totalPriceSpan.innerText = `${totalPrice.toLocaleString()}원`
-		}
-		//0이하의 수가 들어오는 것 방지
-		function preventionOutOfScope(){
-			let count = Number(countInput.value);
-			if (!count)countInput.value = 1;
-			if (count <= 0) countInput.value=1;
-			if (count > 99) countInput.value=99;
-		}
-		countInput.addEventListener("change", (ev) => {
-			ev.preventDefault();
-			preventionOutOfScope();
-			updateTotalPrice()
-		})
-		//장바구니 추가 시 localStorage에 저장되는 기능
-		addCartBtn.addEventListener("click", (ev) => {
-			const count = countInput.value;
-			let newProduct = { id: "<%=product._id%>", count: Number(count) };
-			//장바구니에 products 가져오기
-			const localProducts = localStorage.getItem("products");
-			let products;
-			if (localProducts)
-				products = JSON.parse(localProducts);
-			if (!products) {
-				products = [];
-			}
-			if (products.find(product => product.id === newProduct.id)) {
-				addModalEvent(() => {}); //모달 기본 설정
-				showModal("상품 중복", "장바구니에 이미 존재하는 상품입니다.")
-				return;
-			}
-			products.push(newProduct);
-			localStorage.setItem("products", JSON.stringify(products))
-			addModalEvent(() => {}); //모달 기본 설정
-			showModal("장바구니 추가", "상품이 추가되었습니다")
-		})
-		buyBtn.addEventListener("click", ()=>{
-			const token = sessionStorage.getItem("token");
-			if (!token){
-				addModalEvent(()=>{
-					location.href="/login";
-				})
-				showModal("로그인", "로그인이 필요한 서비스입니다");
-				return;
-			}
-			location.href="/order";
-		});
-		/*상품 설명*/
-		descriptionDiv.innerHTML="<%=product.description%>".replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-	</script>
 </body>
 
 </html>

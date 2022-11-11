@@ -1,6 +1,5 @@
-import { showModal, addModalEvent } from "/js/modal.js";
+import * as Api from "/api.js";
 
-// 버튼
 const editBtn = document.getElementById("editBtn");
 const deleteBtn = document.getElementById("deleteBtn");
 
@@ -8,8 +7,11 @@ const email = document.getElementById("email");
 const fullName = document.getElementById("name");
 const password = document.getElementById("password");
 const phone = document.getElementById("phone");
+const postalCode = document.getElementById("postalCode");
+const address = document.getElementById("address");
+const detailAddress = document.getElementById("detailAddress");
 
-// 이메일 , 이름, 비밀번호, 전화번호, 주소 등 - 접속시 첫 화면에 나타나는 정보 텍스트
+// 이메일 , 이름, 비밀번호, 전화번호, 주소 등
 const emailText = document.getElementById("emailText");
 const nameText = document.getElementById("nameText");
 const passwordText = document.getElementById("passwordText");
@@ -34,14 +36,10 @@ const sample6_extraAddress = document.getElementById("sample6_extraAddress");
 const conformPassword = document.getElementById("conformPassword");
 const conformPasswordInput = document.getElementById("conformPasswordInput");
 
-// 모달창 아니오 버튼 숨기기
-const noButton = document.getElementById("noButton");
-noButton.classList.add("is-invisible");
-
 // 토큰 가져오기
 const usersToken = sessionStorage.getItem("token");
 
-fetch(`/api/users/userInfo`, {
+fetch(`http://localhost:5500/api/users/userInfo`, {
   method: "GET",
   headers: {
     "Content-Type": "application/json",
@@ -66,10 +64,7 @@ fetch(`/api/users/userInfo`, {
     sample6_address.value = data.address.address1;
     sample6_detailAddress.value = data.address.address2;
   })
-  .catch((err) => {
-    console.error("Error : ", err);
-    window.location.href = "/errorPage";
-  });
+  .catch((err) => console.error("Error : ", err));
 
 async function onClickEditBtn(e) {
   e.preventDefault();
@@ -108,7 +103,6 @@ async function onClickEditBtn(e) {
     ].forEach((item) => {
       item.classList.add("hidden");
     });
-    // 폼이 나타나게 함 (글씨 숨김) -> 첫페이지에선 보여야함.
   } else if (editBtn.innerText === "완료") {
     editBtn.innerText = "수정";
 
@@ -121,6 +115,7 @@ async function onClickEditBtn(e) {
       password: password.value,
       phone: phone.value,
       address: {
+        // 스키마 참고해서 그대로..!
         postalCode: sample6_postcode.value,
         address1: sample6_address.value,
         address2: sample6_detailAddress.value,
@@ -129,7 +124,7 @@ async function onClickEditBtn(e) {
     };
 
     // 끝부분에 식별할 수 있는 id를 넣어줘야 작동함
-    await fetch("/api/users/userInfo", {
+    await fetch("http://localhost:5500/api/users/userInfo", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -138,46 +133,7 @@ async function onClickEditBtn(e) {
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
-      .catch((err) => console.error("Error : ", err));
-
-    [
-      emailText,
-      nameText,
-      passwordText,
-      phoneText,
-      postalCodeText,
-      addressText,
-      detailAddressText,
-      postalCodeLabel,
-      addressLabel,
-      detailAddressLabel,
-    ].forEach((item) => {
-      item.classList.remove("hidden");
-    });
-
-    [
-      email,
-      fullName,
-      password,
-      phone,
-      sample6_postcode,
-      sample6_postcode_btn,
-      sample6_address,
-      sample6_detailAddress,
-      sample6_extraAddress,
-      daumAddressText,
-      conformPassword,
-      conformPasswordInput,
-    ].forEach((item) => {
-      item.classList.add("hidden");
-    });
-
-    emailText.innerHTML = email.value;
-    nameText.innerHTML = fullName.value;
-    phoneText.innerHTML = phone.value;
-    postalCodeText.innerHTML = sample6_postcode.value;
-    addressText.innerHTML = sample6_address.value;
-    detailAddressText.innerHTML = sample6_detailAddress.value;
+      .catch((err) => console.error(err));
   }
 }
 
@@ -186,7 +142,7 @@ async function onClickDeleteBtn(e) {
   //confirm("탈퇴하시겠습니까?");
 
   // 끝부분에 식별할 수 있는 아이디를 넣어줘야 작동함
-  await fetch("/api/users/withdrawal", {
+  await fetch("http://localhost:5500/api/users/withdrawal", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -194,17 +150,11 @@ async function onClickDeleteBtn(e) {
     },
   })
     .then(() => sessionStorage.removeItem("token"))
-    .then(() => {
-      addModalEvent(() => {
-        window.location.href = "/";
-      });
-      showModal("탈퇴", "탈퇴가 완료되었습니다.");
-    })
-    .catch((err) => {
-      console.error("Error : ", err);
-      window.location.href = "/";
-      // 메인 페이지로 이동
-    });
+    .catch((err) => console.error(err));
+  //
+
+  // 메인 페이지로 이동
+  window.location.href = "/";
 }
 
 editBtn.addEventListener("click", onClickEditBtn);
